@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class technicalform extends StatefulWidget {
   const technicalform({Key? key}) : super(key: key);
@@ -9,6 +12,7 @@ class technicalform extends StatefulWidget {
 }
 
 class _technicalformState extends State<technicalform> {
+
   TextEditingController Suggtxtctlr = TextEditingController();
   TextEditingController Urlctlr = TextEditingController();
   TextEditingController Namectlr = TextEditingController();
@@ -29,7 +33,8 @@ class _technicalformState extends State<technicalform> {
   TextEditingController SecretIdCntrlr = TextEditingController();
   TextEditingController AdditionalCntrlr = TextEditingController();
 
-  late String suggtxt,name,url,password,link,address,fname,lname,email,mobile;
+  late String suggtxt,pages,name,url,password,link,address,fname,lname,email,mobile;
+
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   bool _value = false;
   bool _obscureText = true;
@@ -52,6 +57,7 @@ class _technicalformState extends State<technicalform> {
       yes = false;
     });
   }
+  final firestoreInstance = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,8 +68,8 @@ class _technicalformState extends State<technicalform> {
       ),
       body: Form(
         key: _formkey,
-        child: ListView(
-        children: [
+        child: SingleChildScrollView(
+        child: Column(children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text('1.Do you have a domain for your website?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
@@ -84,7 +90,7 @@ class _technicalformState extends State<technicalform> {
             ),
           ),
           ListTile(
-           // onTap: showTextWidget,
+            // onTap: showTextWidget,
             title: Text("No",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
             leading: Radio(
               value: 2,
@@ -109,15 +115,6 @@ class _technicalformState extends State<technicalform> {
                   hintText: "Enter Your Suggestions",
                   border: OutlineInputBorder(),
                 ),
-                validator: (String? value){
-                  if(value!.isEmpty){
-                    return 'Please Enter Your Suggestions';
-                  }
-                  return null;
-                },
-                onSaved: (String? value){
-                  suggtxt = value!;
-                },
               ),
             ),
           ),
@@ -134,15 +131,7 @@ class _technicalformState extends State<technicalform> {
                       hintText: "Enter Your URL",
                       border: OutlineInputBorder(),
                     ),
-                    validator: (String? value){
-                      if(value!.isEmpty){
-                        return 'Please Enter Your URL';
-                      }
-                      return null;
-                    },
-                    onSaved: (String? value){
-                      url = value!;
-                    },
+
                   ),
                 ),
                 Padding(
@@ -154,15 +143,6 @@ class _technicalformState extends State<technicalform> {
                       hintText: "Username",
                       border: OutlineInputBorder(),
                     ),
-                    validator: (String? value){
-                      if(value!.isEmpty){
-                        return 'Please Enter Name';
-                      }
-                      return null;
-                    },
-                    onSaved: (String? value){
-                      name = value!;
-                    },
                   ),
                 ),
                 Padding(
@@ -179,18 +159,6 @@ class _technicalformState extends State<technicalform> {
                         hintText: 'Password',
                         border: OutlineInputBorder()
                     ),
-                    validator: (String? value){
-                      if(value!.isEmpty){
-                        return 'Please Enter Password';
-                      }
-                      if(value.length<=7){
-                        return 'Password Must be 8 Characters';
-                      }
-                      return null;
-                    },
-                    onSaved: (String? value){
-                      password = value!;
-                    },
                   ),
                 ),
               ],
@@ -210,6 +178,15 @@ class _technicalformState extends State<technicalform> {
               ),
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              validator: (String? value){
+                if(value!.isEmpty){
+                  return 'Please Enter No.of.Pages';
+                }
+                return null;
+              },
+              onSaved: (String? value){
+                pages = value!;
+              },
             ),
           ),
           Padding(
@@ -225,15 +202,7 @@ class _technicalformState extends State<technicalform> {
                 hintText: "Provide Link Here",
                 border: OutlineInputBorder(),
               ),
-              validator: (String? value){
-                if(value!.isEmpty){
-                  return 'Please Enter Link';
-                }
-                return null;
-              },
-              onSaved: (String? value){
-                link = value!;
-              },
+
             ),
           ),
           Padding(
@@ -287,26 +256,26 @@ class _technicalformState extends State<technicalform> {
 
             ),
           ),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: TextFormField(
-          controller: LastnameCntrlr,
-          decoration: InputDecoration(
-            suffixIcon: Icon(Icons.person_outline_outlined),
-            hintText: "Enter Your Last Name",
-            border: OutlineInputBorder(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              controller: LastnameCntrlr,
+              decoration: InputDecoration(
+                suffixIcon: Icon(Icons.person_outline_outlined),
+                hintText: "Enter Your Last Name",
+                border: OutlineInputBorder(),
+              ),
+              validator: (String? value){
+                if(value!.isEmpty){
+                  return 'Please Enter Last Name';
+                }
+                return null;
+              },
+              onSaved: (String? value){
+                lname = value!;
+              },
+            ),
           ),
-          validator: (String? value){
-            if(value!.isEmpty){
-              return 'Please Enter Last Name';
-            }
-            return null;
-          },
-          onSaved: (String? value){
-            lname = value!;
-          },
-        ),
-      ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(
@@ -333,7 +302,9 @@ class _technicalformState extends State<technicalform> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(
+              maxLength: 10,
               controller: MobileCntrlr,
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 suffixIcon: Icon(Icons.phone_android_rounded),
                 hintText: "Enter Your Mobile Number",
@@ -342,6 +313,9 @@ class _technicalformState extends State<technicalform> {
               validator: (String? value){
                 if(value!.isEmpty){
                   return 'Please Enter Mobile No';
+                }
+                if(value.length<=9){
+                  return 'Mobile.No has 10 digits';
                 }
                 return null;
               },
@@ -363,15 +337,6 @@ class _technicalformState extends State<technicalform> {
                 hintText: "Enter Your Facebook-ID",
                 border: OutlineInputBorder(),
               ),
-              // validator: (String? value){
-              //   if(value!.isEmpty){
-              //     return 'Please Enter Mobile No';
-              //   }
-              //   return null;
-              // },
-              // onSaved: (String? value){
-              //   mobile = value!;
-              // },
             ),
           ),
           Padding(
@@ -383,15 +348,6 @@ class _technicalformState extends State<technicalform> {
                 hintText: "Enter Your Twitter Link",
                 border: OutlineInputBorder(),
               ),
-              // validator: (String? value){
-              //   if(value!.isEmpty){
-              //     return 'Please Enter Mobile No';
-              //   }
-              //   return null;
-              // },
-              // onSaved: (String? value){
-              //   mobile = value!;
-              // },
             ),
           ),
           Padding(
@@ -403,15 +359,6 @@ class _technicalformState extends State<technicalform> {
                 hintText: "Enter Your Instagram Link",
                 border: OutlineInputBorder(),
               ),
-              // validator: (String? value){
-              //   if(value!.isEmpty){
-              //     return 'Please Enter Mobile No';
-              //   }
-              //   return null;
-              // },
-              // onSaved: (String? value){
-              //   mobile = value!;
-              // },
             ),
           ),
           Padding(
@@ -423,15 +370,6 @@ class _technicalformState extends State<technicalform> {
                 hintText: "Enter Your LinkedIn Link",
                 border: OutlineInputBorder(),
               ),
-              // validator: (String? value){
-              //   if(value!.isEmpty){
-              //     return 'Please Enter Mobile No';
-              //   }
-              //   return null;
-              // },
-              // onSaved: (String? value){
-              //   mobile = value!;
-              // },
             ),
           ),
           Padding(
@@ -443,15 +381,6 @@ class _technicalformState extends State<technicalform> {
                 hintText: "Enter Your Youtube Link",
                 border: OutlineInputBorder(),
               ),
-              // validator: (String? value){
-              //   if(value!.isEmpty){
-              //     return 'Please Enter Mobile No';
-              //   }
-              //   return null;
-              // },
-              // onSaved: (String? value){
-              //   mobile = value!;
-              // },
             ),
           ),
           Padding(
@@ -467,15 +396,6 @@ class _technicalformState extends State<technicalform> {
                 hintText: "Enter Your Key-Id",
                 border: OutlineInputBorder(),
               ),
-              // validator: (String? value){
-              //   if(value!.isEmpty){
-              //     return 'Please Enter Mobile No';
-              //   }
-              //   return null;
-              // },
-              // onSaved: (String? value){
-              //   mobile = value!;
-              // },
             ),
           ),
           Padding(
@@ -487,15 +407,6 @@ class _technicalformState extends State<technicalform> {
                 hintText: "Enter Your Secret ID",
                 border: OutlineInputBorder(),
               ),
-              // validator: (String? value){
-              //   if(value!.isEmpty){
-              //     return 'Please Enter Mobile No';
-              //   }
-              //   return null;
-              // },
-              // onSaved: (String? value){
-              //   mobile = value!;
-              // },
             ),
           ),
           Padding(
@@ -506,16 +417,16 @@ class _technicalformState extends State<technicalform> {
             padding: const EdgeInsets.all(8.0),
             child: Text('General Contact Form.',style: TextStyle(fontSize: 20,color: Colors.blue,fontWeight: FontWeight.w500),),
           ),
-      CheckboxListTile(
-        controlAffinity: ListTileControlAffinity.leading,
-        title: Text('Name'),
-        value: chkbx1,
-        onChanged: (value) {
-          setState(() {
-            chkbx1 = !chkbx1;
-          });
-        },
-      ),
+          CheckboxListTile(
+            controlAffinity: ListTileControlAffinity.leading,
+            title: Text('Name'),
+            value: chkbx1,
+            onChanged: (value) {
+              setState(() {
+                chkbx1 = !chkbx1;
+              });
+            },
+          ),
           CheckboxListTile(
             controlAffinity: ListTileControlAffinity.leading,
             title: Text('Email'),
@@ -559,15 +470,6 @@ class _technicalformState extends State<technicalform> {
                 hintText: "Enter Your Additional Contact Information",
                 border: OutlineInputBorder(),
               ),
-              // validator: (String? value){
-              //   if(value!.isEmpty){
-              //     return 'Please Enter Mobile No';
-              //   }
-              //   return null;
-              // },
-              // onSaved: (String? value){
-              //   mobile = value!;
-              // },
             ),
           ),
           Padding(
@@ -577,22 +479,65 @@ class _technicalformState extends State<technicalform> {
                   primary: Colors.deepPurple
               ),
               child: Text("Submit",style: TextStyle(fontSize: 20),),
-              onPressed: (){
+
+              onPressed: () async {
                 if(_formkey.currentState!.validate())
                 {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => const Menu()),
-                  // );
-                  print("successful");
+                  try{
+                    var firebaseUser =  FirebaseAuth.instance.currentUser;
+                    firestoreInstance.collection("TechnicalForm").doc(firebaseUser!.email).set(
+                        {
+                          'Suggestion':Suggtxtctlr.text,'URL':Urlctlr.text,
+                          'Username':Namectlr.text,'Password':Passwordctlr.text,
+                          'Pages':Numctlr.text,'MapLink':Linkctlr.text,
+                          'Address':Addressctlr.text,'FirstName':FirstnameCntrlr.text,
+                          'LastName':LastnameCntrlr.text,'Email-ID':EmailCtrlr.text,
+                          'Mobile No':MobileCntrlr.text,'Facebook-ID':Facebookcntrlr.text,
+                          'Twitter-ID':TwitterCtrlr.text,'Insta-ID':InstagramCntrlr.text,
+                          'LinkedIn-ID':LinkedinCntrlr.text,'Youtube-ID':YoutubeCntrlr.text,
+                          'Key-ID':KeyIdCntrlr.text,'Secret-Key-ID':SecretIdCntrlr.text,
+                          'Additional Contact Information':AdditionalCntrlr.text
+                        }
+                    ).then((value) => {
+                      Suggtxtctlr.clear(),Urlctlr.clear(),Namectlr.clear(),Passwordctlr.clear(),Numctlr.clear(),
+                      Linkctlr.clear(),Addressctlr.clear(),FirstnameCntrlr.clear(),LastnameCntrlr.clear(),EmailCtrlr.clear(),
+                      MobileCntrlr.clear(),Facebookcntrlr.clear(),TwitterCtrlr.clear(),InstagramCntrlr.clear(), LinkedinCntrlr.clear(),
+                      YoutubeCntrlr.clear(),KeyIdCntrlr.clear(),SecretIdCntrlr.clear(),AdditionalCntrlr.clear()
+                    });
+                    Fluttertoast.showToast(
+                        timeInSecForIosWeb: 1,
+                        msg: "Your Details Submitted Successfully..!!!",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        backgroundColor: Colors.deepPurple,
+                        textColor: Colors.white
+                    );
+                  }
+                  catch(e){
+                    Fluttertoast.showToast(
+                        timeInSecForIosWeb: 1,
+                        msg: "Check Internet Connection",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        backgroundColor: Colors.deepOrange,
+                        textColor: Colors.white
+                    );
+                  }
                   return;
                 }else{
-                  print("UnSuccessfull");
+                  Fluttertoast.showToast(
+                      timeInSecForIosWeb: 1,
+                      msg: "Enter Mandatory Fields",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      backgroundColor: Colors.deepOrange,
+                      textColor: Colors.white
+                  );
                 }
               },
             ),
           ),
-        ],
+        ],)
         ),
       ),
     );
