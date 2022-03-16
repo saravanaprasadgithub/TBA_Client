@@ -32,19 +32,33 @@ class _technicalformState extends State<technicalform> {
   TextEditingController KeyIdCntrlr = TextEditingController();
   TextEditingController SecretIdCntrlr = TextEditingController();
   TextEditingController AdditionalCntrlr = TextEditingController();
-
+  TextEditingController ContactformCntrlr = TextEditingController();
   late String suggtxt,pages,name,url,password,link,address,fname,lname,email,mobile;
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-  bool _value = false;
   bool _obscureText = true;
   bool yes = false;
   bool no = true;
   int val = 2;
-  bool chkbx1 = false;
-  bool chkbx2 = false;
-  bool chkbx3 = false;
-  bool chkbx4 = false;
+  Map<String, bool> values = {
+    'Name': false,
+    'Email': false,
+    'Phone': false,
+    'Message': false,
+  };
+  var tmpArray = [];
+  getCheckboxItems(){
+
+    values.forEach((key, value) {
+      if(value == true)
+      {
+        tmpArray.add(key);
+
+      }
+    });
+    print(tmpArray);
+    return tmpArray;
+  }
   void showWidget(){
     setState(() {
       yes = true ;
@@ -417,45 +431,24 @@ class _technicalformState extends State<technicalform> {
             padding: const EdgeInsets.all(8.0),
             child: Text('General Contact Form.',style: TextStyle(fontSize: 20,color: Colors.blue,fontWeight: FontWeight.w500),),
           ),
-          CheckboxListTile(
-            controlAffinity: ListTileControlAffinity.leading,
-            title: Text('Name'),
-            value: chkbx1,
-            onChanged: (value) {
-              setState(() {
-                chkbx1 = !chkbx1;
-              });
-            },
-          ),
-          CheckboxListTile(
-            controlAffinity: ListTileControlAffinity.leading,
-            title: Text('Email'),
-            value: chkbx2,
-            onChanged: (value) {
-              setState(() {
-                chkbx2 = !chkbx2;
-              });
-            },
-          ),
-          CheckboxListTile(
-            controlAffinity: ListTileControlAffinity.leading,
-            title: Text('Phone'),
-            value: chkbx3,
-            onChanged: (value) {
-              setState(() {
-                chkbx3 = !chkbx3;
-              });
-            },
-          ),
-          CheckboxListTile(
-            controlAffinity: ListTileControlAffinity.leading,
-            title: Text('Message'),
-            value: chkbx4,
-            onChanged: (value) {
-              setState(() {
-                chkbx4 = !chkbx4;
-              });
-            },
+          SizedBox(
+            child: Column(
+              children:
+                values.keys.map((String key){
+                  return new CheckboxListTile(
+                    controlAffinity: ListTileControlAffinity.leading,
+                  title: new Text(key), value: values[key],
+                  onChanged:(bool? value)
+                  {
+                    setState(() {
+                      values[key] = value!;
+                    });
+                  },
+                  );
+
+                }).toList()
+
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -496,13 +489,14 @@ class _technicalformState extends State<technicalform> {
                           'Twitter-ID':TwitterCtrlr.text,'Insta-ID':InstagramCntrlr.text,
                           'LinkedIn-ID':LinkedinCntrlr.text,'Youtube-ID':YoutubeCntrlr.text,
                           'Key-ID':KeyIdCntrlr.text,'Secret-Key-ID':SecretIdCntrlr.text,
-                          'Additional Contact Information':AdditionalCntrlr.text
+                          'Additional Contact Information':AdditionalCntrlr.text,
+                          'Contact Form':getCheckboxItems(),
                         }
                     ).then((value) => {
                       Suggtxtctlr.clear(),Urlctlr.clear(),Namectlr.clear(),Passwordctlr.clear(),Numctlr.clear(),
                       Linkctlr.clear(),Addressctlr.clear(),FirstnameCntrlr.clear(),LastnameCntrlr.clear(),EmailCtrlr.clear(),
                       MobileCntrlr.clear(),Facebookcntrlr.clear(),TwitterCtrlr.clear(),InstagramCntrlr.clear(), LinkedinCntrlr.clear(),
-                      YoutubeCntrlr.clear(),KeyIdCntrlr.clear(),SecretIdCntrlr.clear(),AdditionalCntrlr.clear()
+                      YoutubeCntrlr.clear(),KeyIdCntrlr.clear(),SecretIdCntrlr.clear(),AdditionalCntrlr.clear(),
                     });
                     Fluttertoast.showToast(
                         timeInSecForIosWeb: 1,
