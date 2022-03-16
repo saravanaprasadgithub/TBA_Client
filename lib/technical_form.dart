@@ -48,7 +48,6 @@ class _technicalformState extends State<technicalform> {
   };
   var tmpArray = [];
   getCheckboxItems(){
-
     values.forEach((key, value) {
       if(value == true)
       {
