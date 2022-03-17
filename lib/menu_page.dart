@@ -80,10 +80,17 @@ class _MenuState extends State<Menu> {
           children: [
             UserAccountsDrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.deepPurple
+                image: DecorationImage(
+                  image: new AssetImage('assets/logo2.png'),
+                  fit: BoxFit.contain,
+                ),
+               // color: Colors.white
               ),
               accountName: Text("",style: TextStyle(fontSize: 20.0,color: Colors.white),),
-              accountEmail:Text(user.email!,style: TextStyle(fontSize: 16.0,color: Colors.white,fontWeight: FontWeight.w500),),
+              accountEmail:Padding(
+                padding: const EdgeInsets.only(top:20.0),
+                child: Text(user.email!,style: TextStyle(fontSize: 16.0,color: Colors.white,fontWeight: FontWeight.w500),),
+              ),
             ),
             Divider(
               color: Colors.white,

@@ -1,7 +1,13 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:path/path.dart';
+import 'package:first_app/uploadapi.dart';
 
 class graphicsform extends StatefulWidget {
   const graphicsform({Key? key}) : super(key: key);
@@ -71,10 +77,16 @@ class _graphicsformState extends State<graphicsform> {
       yes4 = false;
     });
   }
-  FilePickerResult? result;
-  PlatformFile? file,file1,file2,file3,file4;
+  UploadTask? task;
+  File? file,file1,file2,file3,file4;
+  final firestoreInstance = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
+    final fileName = file != null ? basename(file!.path) : 'No File Selected';
+    final fileName1 = file1 != null ? basename(file1!.path) : 'No File Selected';
+    final fileName2 = file2 != null ? basename(file2!.path) : 'No File Selected';
+    final fileName3 = file3 != null ? basename(file3!.path) : 'No File Selected';
+    final fileName4 = file4 != null ? basename(file4!.path) : 'No File Selected';
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
@@ -84,348 +96,483 @@ class _graphicsformState extends State<graphicsform> {
       body: Form(
         key: _formkey,
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text("1.Do you want to add your management person's image on the web page?",style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
-              ),
-              ListTile(
-                title: Text("Yes",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
-                leading: Radio(
-                  value: 1,
-                  groupValue: val,
-                  onChanged: (value) {
-                    setState(() {
-                      showWidget();
-                      val = value as int;
-                    });
-                  },
-                  activeColor: Colors.deepPurple,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("1.Do you want to add your management person's image on the web page?",style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
                 ),
-              ),
-              ListTile(
-                title: Text("No",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
-                leading: Radio(
-                  value: 2,
-                  groupValue: val,
-                  onChanged: (value) {
-                    setState(() {
-                      hideWidget();
-                      val = value as int;
-                    });
-                  },
-                  activeColor: Colors.deepPurple,
-                ),
-              ),
-              Visibility(
-                visible: yes,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10,10,10,10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton(
-                          onPressed: ()async{
-                            pickFiles(File);
-                          }, child: Text('Choose File')
-                      ),
-                      if (file!=null)
-                      fileDetails(file!),],
-                  ),
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text("2.Do you need the Our Team section on the website?",style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
-              ),
-              ListTile(
-                title: Text("Yes",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
-                leading: Radio(
-                  value: 3,
-                  groupValue: val1,
-                  onChanged: (value) {
-                    setState(() {
-                      showWidget1();
-                      val1 = value as int;
-                    });
-                  },
-                  activeColor: Colors.deepPurple,
-                ),
-              ),
-              ListTile(
-                title: Text("No",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
-                leading: Radio(
-                  value: 4,
-                  groupValue: val1,
-                  onChanged: (value) {
-                    setState(() {
-                      hideWidget1();
-                      val1 = value as int;
-                    });
-                  },
-                  activeColor: Colors.deepPurple,
-                ),
-              ),
-              Visibility(
-                visible: yes1,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10,10,10,10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton(
-                          onPressed: ()async{
-                            pickFiles1(File);
-                          }, child: Text('Choose File')
-                      ),
-                      if (file1!=null)
-                        fileDetails(file1!),],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text("3.Can we include images of your clients in the testimonials section",style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
-              ),
-              ListTile(
-                title: Text("Yes",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
-                leading: Radio(
-                  value: 5,
-                  groupValue: val2,
-                  onChanged: (value) {
-                    setState(() {
-                      showWidget2();
-                      val2 = value as int;
-                    });
-                  },
-                  activeColor: Colors.deepPurple,
-                ),
-              ),
-              ListTile(
-                title: Text("No",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
-                leading: Radio(
-                  value: 6,
-                  groupValue: val2,
-                  onChanged: (value) {
-                    setState(() {
-                      hideWidget2();
-                      val2 = value as int;
-                    });
-                  },
-                  activeColor: Colors.deepPurple,
-                ),
-              ),
-              Visibility(
-                visible: yes2,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10,10,10,10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton(
-                          onPressed: ()async{
-                            pickFiles2(File);
-                          }, child: Text('Choose File')
-                      ),
-                      if (file2!=null)
-                        fileDetails(file2!),],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text("4.Do you prefer us to use your images on the website’s sliders or any other portion?",style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
-              ),
-              ListTile(
-                title: Text("Yes",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
-                leading: Radio(
-                  value: 7,
-                  groupValue: val3,
-                  onChanged: (value) {
-                    setState(() {
-                      showWidget3();
-                      val3 = value as int;
-                    });
-                  },
-                  activeColor: Colors.deepPurple,
-                ),
-              ),
-              ListTile(
-                title: Text("No",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
-                leading: Radio(
-                  value: 8,
-                  groupValue: val3,
-                  onChanged: (value) {
-                    setState(() {
-                      hideWidget3();
-                      val3 = value as int;
-                    });
-                  },
-                  activeColor: Colors.deepPurple,
-                ),
-              ),
-              Visibility(
-                visible: yes3,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10,10,10,10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton(
-                          onPressed: ()async{
-                            pickFiles3(File);
-                          }, child: Text('Choose File')
-                      ),
-                      if (file3!=null)
-                        fileDetails(file3!),],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text("5.Do you have a business logo?",style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
-              ),
-              ListTile(
-                title: Text("Yes",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
-                leading: Radio(
-                  value: 9,
-                  groupValue: val4,
-                  onChanged: (value) {
-                    setState(() {
-                      showWidget4();
-                      val4 = value as int;
-                    });
-                  },
-                  activeColor: Colors.deepPurple,
-                ),
-              ),
-              ListTile(
-                title: Text("No",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
-                leading: Radio(
-                  value: 10,
-                  groupValue: val4,
-                  onChanged: (value) {
-                    setState(() {
-                      hideWidget4();
-                      val4 = value as int;
-                    });
-                  },
-                  activeColor: Colors.deepPurple,
-                ),
-              ),
-              Visibility(
-                visible: yes4,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10,10,10,10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton(
-                          onPressed: ()async{
-                            pickFiles4(File);
-                          }, child: Text('Choose File')
-                      ),
-                      if (file4!=null)
-                        fileDetails(file4!),],
-                  ),
-                ),
-              ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(70,10,70,10),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: Colors.deepPurple
-                    ),
-                    child: Text("Submit",style: TextStyle(fontSize: 20),),
-                    onPressed: (){
-                      if(_formkey.currentState!.validate())
-                      {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => const Reset_Password()),
-                        // );
-                        print("successful");
-                        return;
-                      }else{
-                        print("UnSuccessfull");
-                      }
-
+                ListTile(
+                  title: Text("Yes",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
+                  leading: Radio(
+                    value: 1,
+                    groupValue: val,
+                    onChanged: (value) {
+                      setState(() {
+                        showWidget();
+                        val = value as int;
+                      });
                     },
+                    activeColor: Colors.deepPurple,
                   ),
                 ),
-              ),
-            ],
+                ListTile(
+                  title: Text("No",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
+                  leading: Radio(
+                    value: 2,
+                    groupValue: val,
+                    onChanged: (value) {
+                      setState(() {
+                        hideWidget();
+                        val = value as int;
+                      });
+                    },
+                    activeColor: Colors.deepPurple,
+                  ),
+                ),
+                Visibility(
+                  visible: yes,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(10,10,10,10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                            onPressed: ()async{
+                              //pickFiles(File);
+                              selectFile();
+                            }, child: Text('Choose File')
+                        ),
+                          SizedBox(
+                            width: 150,
+                            child: Text(
+                              fileName,
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("2.Do you need the Our Team section on the website?",style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                ),
+                ListTile(
+                  title: Text("Yes",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
+                  leading: Radio(
+                    value: 3,
+                    groupValue: val1,
+                    onChanged: (value) {
+                      setState(() {
+                        showWidget1();
+                        val1 = value as int;
+                      });
+                    },
+                    activeColor: Colors.deepPurple,
+                  ),
+                ),
+                ListTile(
+                  title: Text("No",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
+                  leading: Radio(
+                    value: 4,
+                    groupValue: val1,
+                    onChanged: (value) {
+                      setState(() {
+                        hideWidget1();
+                        val1 = value as int;
+                      });
+                    },
+                    activeColor: Colors.deepPurple,
+                  ),
+                ),
+                Visibility(
+                  visible: yes1,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(10,10,10,10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                            onPressed: ()async{
+                             // pickFiles1(File);
+                              selectFile1();
+                            }, child: Text('Choose File')
+                        ),
+                          SizedBox(
+                            width: 150,
+                            child: Text(
+                              fileName1,
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("3.Can we include images of your clients in the testimonials section",style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                ),
+                ListTile(
+                  title: Text("Yes",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
+                  leading: Radio(
+                    value: 5,
+                    groupValue: val2,
+                    onChanged: (value) {
+                      setState(() {
+                        showWidget2();
+                        val2 = value as int;
+                      });
+                    },
+                    activeColor: Colors.deepPurple,
+                  ),
+                ),
+                ListTile(
+                  title: Text("No",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
+                  leading: Radio(
+                    value: 6,
+                    groupValue: val2,
+                    onChanged: (value) {
+                      setState(() {
+                        hideWidget2();
+                        val2 = value as int;
+                      });
+                    },
+                    activeColor: Colors.deepPurple,
+                  ),
+                ),
+                Visibility(
+                  visible: yes2,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(10,10,10,10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                            onPressed: ()async{
+                              //pickFiles2(File);
+                              selectFile2();
+                            }, child: Text('Choose File')
+                        ),
+                        SizedBox(
+                          width: 150,
+                          child: Text(
+                            fileName2,
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("4.Do you prefer us to use your images on the website’s sliders or any other portion?",style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                ),
+                ListTile(
+                  title: Text("Yes",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
+                  leading: Radio(
+                    value: 7,
+                    groupValue: val3,
+                    onChanged: (value) {
+                      setState(() {
+                        showWidget3();
+                        val3 = value as int;
+                      });
+                    },
+                    activeColor: Colors.deepPurple,
+                  ),
+                ),
+                ListTile(
+                  title: Text("No",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
+                  leading: Radio(
+                    value: 8,
+                    groupValue: val3,
+                    onChanged: (value) {
+                      setState(() {
+                        hideWidget3();
+                        val3 = value as int;
+                      });
+                    },
+                    activeColor: Colors.deepPurple,
+                  ),
+                ),
+                Visibility(
+                  visible: yes3,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(10,10,10,10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                            onPressed: ()async{
+                              //pickFiles3(File);
+                              selectFile3();
+                            }, child: Text('Choose File')
+                        ),
+                        SizedBox(
+                          width: 150,
+                          child: Text(
+                            fileName3,
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("5.Do you have a business logo?",style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                ),
+                ListTile(
+                  title: Text("Yes",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
+                  leading: Radio(
+                    value: 9,
+                    groupValue: val4,
+                    onChanged: (value) {
+                      setState(() {
+                        showWidget4();
+                        val4 = value as int;
+                      });
+                    },
+                    activeColor: Colors.deepPurple,
+                  ),
+                ),
+                ListTile(
+                  title: Text("No",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
+                  leading: Radio(
+                    value: 10,
+                    groupValue: val4,
+                    onChanged: (value) {
+                      setState(() {
+                        hideWidget4();
+                        val4 = value as int;
+                      });
+                    },
+                    activeColor: Colors.deepPurple,
+                  ),
+                ),
+                Visibility(
+                  visible: yes4,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(10,10,10,10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                            onPressed: ()async{
+                              //pickFiles4(File);
+                              selectFile4();
+                            }, child: Text('Choose File')
+                        ),
+                        SizedBox(
+                          width: 150,
+                          child: Text(
+                            fileName4,
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                task != null ? buildUploadStatus(task!) : Container(),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(70,10,70,10),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.deepPurple
+                      ),
+                      child: Text("Submit",style: TextStyle(fontSize: 20),),
+                      onPressed: (){
+                        if(_formkey.currentState!.validate())
+                        {
+                          try{
+                            uploadFile();
+                            uploadFile1();
+                            uploadFile2();
+                            uploadFile3();
+                            uploadFile4();
+                            var firebaseUser =  FirebaseAuth.instance.currentUser;
+                            firestoreInstance.collection("Creatives & Graphics").doc(firebaseUser!.email).set(
+                                {
+                                  "Upload File":fileName,
+                                  "Upload File1":fileName1,
+                                  "Upload File2":fileName2,
+                                  "Upload File3":fileName3,
+                                  "Upload File4":fileName4,
+
+                                }
+                            ).then((value) => {
+                             // busstypectlr.clear(),
+                            });
+                            Fluttertoast.showToast(
+                                timeInSecForIosWeb: 1,
+                                msg: "Your Details Submitted Successfully..!!!",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                backgroundColor: Colors.deepPurple,
+                                textColor: Colors.white
+                            );
+                          }
+                          catch(e){
+                            Fluttertoast.showToast(
+                                timeInSecForIosWeb: 1,
+                                msg: "Check Internet Connection",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                backgroundColor: Colors.deepOrange,
+                                textColor: Colors.white
+                            );
+                          }
+
+                          return;
+                        }else{
+                          print("UnSuccessfull");
+                        }
+
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
 
         ),
       ),
     );
   }
-  void pickFiles(File) async{
-     result = await FilePicker.platform.pickFiles(
-         allowMultiple: true,
-        type: FileType.custom,
-        allowedExtensions: ['jpg','jpeg','png','gif']
-    );
-     if(result==null) return;
-     file = result!.files.first;
-     setState(() {});
+  Future selectFile() async {
+
+    final result = await FilePicker.platform.pickFiles(allowMultiple: true,type: FileType.custom,
+        allowedExtensions: ['jpg','jpeg','png','gif']);
+
+    if (result == null) return;
+    final path = result.files.single.path!;
+    setState(() => file = File(path));
   }
-  void pickFiles1(File) async{
-    result = await FilePicker.platform.pickFiles(
-        allowMultiple: true,
-        type: FileType.custom,
-        allowedExtensions: ['jpg','jpeg','png','gif']
-    );
-    if(result==null) return;
-    file1 = result!.files.first;
+  Future selectFile1() async {
+
+    final result = await FilePicker.platform.pickFiles(allowMultiple: true,type: FileType.custom,
+        allowedExtensions: ['jpg','jpeg','png','gif']);
+
+    if (result == null) return;
+    final path = result.files.single.path!;
+    setState(() => file1 = File(path));
+  }
+  Future selectFile2() async {
+
+    final result = await FilePicker.platform.pickFiles(allowMultiple: true,type: FileType.custom,
+        allowedExtensions: ['jpg','jpeg','png','gif']);
+
+    if (result == null) return;
+    final path = result.files.single.path!;
+    setState(() => file2 = File(path));
+  }
+  Future selectFile3() async {
+
+    final result = await FilePicker.platform.pickFiles(allowMultiple: true,type: FileType.custom,
+        allowedExtensions: ['jpg','jpeg','png','gif']);
+
+    if (result == null) return;
+    final path = result.files.single.path!;
+    setState(() => file3 = File(path));
+  }
+  Future selectFile4() async {
+
+    final result = await FilePicker.platform.pickFiles(allowMultiple: true,type: FileType.custom,
+        allowedExtensions: ['jpg','jpeg','png','gif']);
+
+    if (result == null) return;
+    final path = result.files.single.path!;
+    setState(() => file4 = File(path));
+  }
+  Future uploadFile() async {
+    if (file == null) return;
+    final fileName = basename(file!.path);
+    final destination = 'files/$fileName';
+    task = FirebaseApi.uploadFile(destination, file!);
     setState(() {});
+    if (task == null) return;
+    final snapshot = await task!.whenComplete(() {});
+    final urlDownload = await snapshot.ref.getDownloadURL();
+    print('Download-Link: $urlDownload');
+    print(fileName);
   }
-  void pickFiles2(File) async{
-    result = await FilePicker.platform.pickFiles(
-        allowMultiple: true,
-        type: FileType.custom,
-        allowedExtensions: ['jpg','jpeg','png','gif']
-    );
-    if(result==null) return;
-    file2 = result!.files.first;
+  Future uploadFile1() async {
+    if (file1 == null) return;
+    final fileName1 = basename(file1!.path);
+    final destination = 'files/$fileName1';
+    task = FirebaseApi.uploadFile(destination, file1!);
     setState(() {});
+    if (task == null) return;
+    final snapshot = await task!.whenComplete(() {});
+    final urlDownload = await snapshot.ref.getDownloadURL();
+    print('Download-Link: $urlDownload');
+    print(fileName1);
   }
-  void pickFiles3(File) async{
-    result = await FilePicker.platform.pickFiles(
-        allowMultiple: true,
-        type: FileType.custom,
-        allowedExtensions: ['jpg','jpeg','png','gif']
-    );
-    if(result==null) return;
-    file3 = result!.files.first;
+  Future uploadFile2() async {
+    if (file2 == null) return;
+    final fileName2 = basename(file2!.path);
+    final destination = 'files/$fileName2';
+    task = FirebaseApi.uploadFile(destination, file2!);
     setState(() {});
+    if (task == null) return;
+    final snapshot = await task!.whenComplete(() {});
+    final urlDownload = await snapshot.ref.getDownloadURL();
+    print('Download-Link: $urlDownload');
+    print(fileName2);
   }
-  void pickFiles4(File) async{
-    result = await FilePicker.platform.pickFiles(
-        allowMultiple: true,
-        type: FileType.custom,
-        allowedExtensions: ['jpg','jpeg','png','gif']
-    );
-    if(result==null) return;
-    file4 = result!.files.first;
+  Future uploadFile3() async {
+    if (file3 == null) return;
+    final fileName3 = basename(file3!.path);
+    final destination = 'files/$fileName3';
+    task = FirebaseApi.uploadFile(destination, file3!);
     setState(() {});
+    if (task == null) return;
+    final snapshot = await task!.whenComplete(() {});
+    final urlDownload = await snapshot.ref.getDownloadURL();
+    print('Download-Link: $urlDownload');
+    print(fileName3);
   }
- Widget fileDetails(PlatformFile file){
-return Column(
-  crossAxisAlignment: CrossAxisAlignment.start,
-  children: [
-    SizedBox(
-      width: 150,
-        child: Text('FileName:${file.name}')),
-Text('FileSize:${file.size}'),
-  ],
-);
+  Future uploadFile4() async {
+    if (file4 == null) return;
+    final fileName4 = basename(file4!.path);
+    final destination = 'files/$fileName4';
+    task = FirebaseApi.uploadFile(destination, file4!);
+    setState(() {});
+    if (task == null) return;
+    final snapshot = await task!.whenComplete(() {});
+    final urlDownload = await snapshot.ref.getDownloadURL();
+    print('Download-Link: $urlDownload');
+    print(fileName4);
   }
+
+  Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
+    stream: task.snapshotEvents,
+    builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        final snap = snapshot.data!;
+        final progress = snap.bytesTransferred / snap.totalBytes;
+        final percentage = (progress * 100).toStringAsFixed(2);
+        return Text(
+          '$percentage %',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        );
+      } else {
+        return Container();
+      }
+    },
+  );
 }
 
 
