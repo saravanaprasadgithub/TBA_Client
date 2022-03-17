@@ -16,7 +16,6 @@ class login extends StatefulWidget {
 }
 
 class _loginState extends State<login> {
-
   final _auth = FirebaseAuth.instance;
   TextEditingController EmailCntrlr = TextEditingController();
   TextEditingController PasswordCntrlr = TextEditingController();
@@ -37,7 +36,7 @@ class _loginState extends State<login> {
     if (newuser == false && FirebaseAuth.instance.currentUser!.emailVerified==true ) {
         Navigator.push(
             context, new MaterialPageRoute(builder: (context) => Menu()));
-    }
+    }//checking both email verification and new user
   }
   @override
   void dispose() {
@@ -242,8 +241,6 @@ class _loginState extends State<login> {
           ),
     );
         }
-
-
   }
 
 

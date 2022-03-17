@@ -41,7 +41,7 @@ class _MenuState extends State<Menu> {
           IconButton(
             icon:Icon(Icons.logout),
             onPressed: (){
-              logindata!.setBool('login', true);
+              logindata!.setBool('login', true);//maintain login data
               Navigator.push(context, MaterialPageRoute(builder: (context) => const login()),);
             },
           )

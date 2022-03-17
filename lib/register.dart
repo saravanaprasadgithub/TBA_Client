@@ -131,7 +131,7 @@ class _registerState extends State<register> {
                        Navigator.push(
                          context,
                          MaterialPageRoute(builder: (context) => const verify_email()),
-                       );
+                       );//checking email verification
                         }).catchError((e){
                        Fluttertoast.showToast(
                            timeInSecForIosWeb: 1,
