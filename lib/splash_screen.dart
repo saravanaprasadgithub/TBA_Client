@@ -21,6 +21,7 @@ class _splash_screenState extends State<splash_screen> {
         )
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -37,7 +38,6 @@ class _splash_screenState extends State<splash_screen> {
                child: CircularProgressIndicator(
                  color: Colors.deepPurple,
                ),
-
              ),
            ],
       ),

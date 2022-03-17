@@ -9,10 +9,8 @@ class register extends StatefulWidget {
   @override
   State<register> createState() => _registerState();
 }
-
 class _registerState extends State<register> {
   final _auth = FirebaseAuth.instance;
-  //TextEditingController NameCntrlr = TextEditingController();
   TextEditingController EmailCntrlr = TextEditingController();
   TextEditingController PasswordCntrlr = TextEditingController();
   TextEditingController CnfrmPassword = TextEditingController();
@@ -39,27 +37,6 @@ class _registerState extends State<register> {
                 padding: const EdgeInsets.all(20.0),
                 child: Center(child: Image.asset('assets/logo.png')),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: TextFormField(
-              //     keyboardType: TextInputType.emailAddress,
-              //     controller: NameCntrlr,
-              //     decoration: InputDecoration(
-              //         suffixIcon: Icon(Icons.person_outline_outlined),
-              //         hintText: 'Username',
-              //         border: OutlineInputBorder()
-              //     ),
-              //     validator: (String? value){
-              //       if(value!.isEmpty){
-              //         return 'Please Enter Name';
-              //       }
-              //       return null;
-              //     },
-              //     onSaved: (String? value){
-              //       name = value!;
-              //     },
-              //   ),
-              // ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
@@ -149,8 +126,8 @@ class _registerState extends State<register> {
                     if(_formkey.currentState!.validate())
                     {
                       try{
-                     await FirebaseAuth.instance.createUserWithEmailAndPassword(email: EmailCntrlr.text.trim(), password: CnfrmPassword.text.trim()).then((user){
-
+                     await FirebaseAuth.instance.createUserWithEmailAndPassword(email: EmailCntrlr.text.trim(), password: CnfrmPassword.text.trim()).then((user)
+                     {
                        Navigator.push(
                          context,
                          MaterialPageRoute(builder: (context) => const verify_email()),
