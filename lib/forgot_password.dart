@@ -72,15 +72,13 @@ class _forgot_passwordState extends State<forgot_password> {
                       Fluttertoast.showToast(
                           timeInSecForIosWeb: 1,
                           msg: "Reset Password Link Sent to Your Email-ID",
-                          toastLength: Toast.LENGTH_SHORT,
+                          toastLength: Toast.LENGTH_LONG,
                           gravity: ToastGravity.BOTTOM,
-                          backgroundColor: Colors.deepPurple,
+                          backgroundColor: Colors.deepOrange,
                           textColor: Colors.white
+
                       );
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const login()),
-                      );
+                      Navigator.of(context).pop();
                     }on FirebaseAuthException catch(e){
                       Fluttertoast.showToast(
                           timeInSecForIosWeb: 1,
@@ -91,12 +89,6 @@ class _forgot_passwordState extends State<forgot_password> {
                           textColor: Colors.white
                       );
                     }
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => const OTP()),
-                    // );
-                    // print("successful");
-                    // return;
                   }else{
                     print("UnSuccessfull");
                   }
