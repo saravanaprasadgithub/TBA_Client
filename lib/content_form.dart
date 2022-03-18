@@ -211,14 +211,6 @@ class _contentformState extends State<contentform> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(onPressed: ()async{
                     selectFile();
-                    // final result = await FilePicker.platform.pickFiles(
-                    //   allowMultiple: true,
-                    // );
-                    // if(result==null) return;
-                    // final file = result.files.first;
-                    // print('FileName:${file.name}');
-                    // print('FileSize:${file.size}');
-                    // print('FileType:${file.extension}');
                   }, child: Text('Choose File')),
                 ),
                 SizedBox(height: 8),
