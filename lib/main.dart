@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:first_app/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'multiple_file.dart';
 
 
 void main() async{

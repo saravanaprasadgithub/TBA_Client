@@ -404,12 +404,11 @@ class _graphicsformState extends State<graphicsform> {
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
                             firestoreInstance.collection("Creatives & Graphics").doc(firebaseUser!.email).set(
                                 {
-                                  "Upload File":fileName,
-                                  "Upload File1":fileName1,
-                                  "Upload File2":fileName2,
-                                  "Upload File3":fileName3,
-                                  "Upload File4":fileName4,
-
+                                  "Upload FileName":fileName,
+                                  "Upload FileName1":fileName1,
+                                  "Upload FileName2":fileName2,
+                                  "Upload FileName3":fileName3,
+                                  "Upload FileName4":fileName4,
                                 }
                             ).then((value) => {
                              // busstypectlr.clear(),
