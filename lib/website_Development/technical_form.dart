@@ -445,10 +445,7 @@ class _technicalformState extends State<technicalform> {
                         values[key] = value!;
                       });
                     },
-                    );
-
-                  }).toList()
-
+                    );}).toList()
               ),
             ),
             Padding(
