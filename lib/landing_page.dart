@@ -1,3 +1,4 @@
+import 'package:first_app/Social_Media_Management/social_media_menu.dart';
 import 'package:first_app/app_Development/app_menu.dart';
 import 'package:first_app/login.dart';
 import 'package:first_app/search_engine_marketing/search_engine_menu.dart';
@@ -131,7 +132,9 @@ class _MainMenuState extends State<MainMenu> {
                   children: [
                     Expanded(
                       child: IconButton(
-                        onPressed: (){},
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const SocialMedia_Menu()),);
+                        },
                         icon: Icon(Icons.facebook,color: Colors.deepPurple,size: 40,),
                       ),
                     ),
