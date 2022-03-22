@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:first_app/uploadapi.dart';
+import 'package:first_app/api/uploadapi.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -237,7 +237,7 @@ class _contentformState extends State<contentform> {
                           try{
                             uploadFile();
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
-                            firestoreInstance.collection("Content Form").doc(firebaseUser!.email).set(
+                            firestoreInstance.collection("Website Content Form").doc(firebaseUser!.email).set(
                                 {
                                   'Business Type':busstypectlr.text,'Products ':Productsctlr.text,
                                   'Unique Service':UniqueServctlr.text,'Misson & Vission':Missionctlr.text,

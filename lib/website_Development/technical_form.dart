@@ -87,7 +87,7 @@ class _technicalformState extends State<technicalform> {
           child: Column(children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('1.Do you have a domain for your website?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+              child: Text('1.Do you have a domain for your website_Development?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
             ),
             ListTile(
               //onTap: showWidget,
@@ -341,7 +341,7 @@ class _technicalformState extends State<technicalform> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('Share your social media links for the website, as mentioned below.',style: TextStyle(fontSize: 20,color: Colors.blue,fontWeight: FontWeight.w500),),
+              child: Text('Share your social media links for the website_Development, as mentioned below.',style: TextStyle(fontSize: 20,color: Colors.blue,fontWeight: FontWeight.w500),),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -426,7 +426,7 @@ class _technicalformState extends State<technicalform> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('6.Which type of contact form do you need for the website?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+              child: Text('6.Which type of contact form do you need for the website_Development?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -479,7 +479,7 @@ class _technicalformState extends State<technicalform> {
                   {
                     try{
                       var firebaseUser =  FirebaseAuth.instance.currentUser;
-                      firestoreInstance.collection("Technical Form").doc(firebaseUser!.email).set(
+                      firestoreInstance.collection("Website Technical Form").doc(firebaseUser!.email).set(
                           {
                             'Suggestion':Suggtxtctlr.text,'URL':Urlctlr.text,
                             'Username':Namectlr.text,'Password':Passwordctlr.text,

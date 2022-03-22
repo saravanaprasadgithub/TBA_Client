@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:first_app/landing_page.dart';
 import 'package:first_app/login.dart';
-import 'package:first_app/menu_page.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -69,7 +69,7 @@ super.dispose();
 
   @override
   Widget build(BuildContext context) {
-      return isEmailVerified ? Menu():Scaffold(
+      return isEmailVerified ? MainMenu():Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
         backgroundColor: Colors.deepPurple,

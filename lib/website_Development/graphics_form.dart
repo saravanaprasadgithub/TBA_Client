@@ -7,7 +7,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path/path.dart';
-import 'package:first_app/uploadapi.dart';
+import 'package:first_app/api/uploadapi.dart';
 
 class graphicsform extends StatefulWidget {
   const graphicsform({Key? key}) : super(key: key);
@@ -160,7 +160,7 @@ class _graphicsformState extends State<graphicsform> {
 
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text("2.Do you need the Our Team section on the website?",style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                  child: Text("2.Do you need the Our Team section on the website_Development?",style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
                 ),
                 ListTile(
                   title: Text("Yes",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
@@ -272,7 +272,7 @@ class _graphicsformState extends State<graphicsform> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text("4.Do you prefer us to use your images on the website’s sliders or any other portion?",style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                  child: Text("4.Do you prefer us to use your images on the website_Development’s sliders or any other portion?",style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
                 ),
                 ListTile(
                   title: Text("Yes",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
@@ -402,7 +402,7 @@ class _graphicsformState extends State<graphicsform> {
                             uploadFile3();
                             uploadFile4();
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
-                            firestoreInstance.collection("Creatives & Graphics").doc(firebaseUser!.email).set(
+                            firestoreInstance.collection("Website Creatives & Graphics").doc(firebaseUser!.email).set(
                                 {
                                   "Upload FileName":fileName,
                                   "Upload FileName1":fileName1,

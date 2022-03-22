@@ -1,6 +1,6 @@
 import 'package:first_app/email_verification.dart';
 import 'package:first_app/forgot_password.dart';
-import 'package:first_app/menu_page.dart';
+import 'package:first_app/landing_page.dart';
 import 'package:first_app/register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -35,7 +35,7 @@ class _loginState extends State<login> {
     print(newuser);
     if (newuser == false && FirebaseAuth.instance.currentUser!.emailVerified==true ) {
         Navigator.push(
-            context, new MaterialPageRoute(builder: (context) => Menu()));
+            context, new MaterialPageRoute(builder: (context) => MainMenu()));
     }//checking both email verification and new user
   }
   @override
@@ -171,7 +171,7 @@ class _loginState extends State<login> {
                             if (user != null && FirebaseAuth.instance.currentUser!.emailVerified==true ){
                               Fluttertoast.showToast(
                                   timeInSecForIosWeb: 1,
-                                  msg: "TBA Welcomes You! You're just one step away from a website.!!!",
+                                  msg: "TBA Welcomes You! You're just one step away from a website_Development.!!!",
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.BOTTOM,
                                   backgroundColor: Colors.deepPurple,
@@ -179,7 +179,7 @@ class _loginState extends State<login> {
                               );
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => const Menu()),
+                                MaterialPageRoute(builder: (context) => const MainMenu()),
                               );
                             }
                             else {
@@ -234,7 +234,6 @@ class _loginState extends State<login> {
                         },
                       ),
                     ],),
-
                 ],
               ),
             ),
