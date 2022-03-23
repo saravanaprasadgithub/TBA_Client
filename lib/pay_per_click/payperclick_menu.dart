@@ -1,17 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:first_app/Social_Media_Management/social_media_form1.dart';
-import 'package:first_app/Social_Media_Management/social_media_form2.dart';
-import 'package:first_app/Social_Media_Management/social_media_form3.dart';
+import 'package:first_app/Creative_Service/creative_service_form.dart';
 import 'package:first_app/landing_page.dart';
+import 'package:first_app/pay_per_click/payperclick_form.dart';
 import 'package:flutter/material.dart';
 
-class SocialMedia_Menu extends StatefulWidget {
-  const SocialMedia_Menu({Key? key}) : super(key: key);
+class Payperclick_Menu extends StatefulWidget {
+  const Payperclick_Menu({Key? key}) : super(key: key);
   @override
-  State<SocialMedia_Menu> createState() => _SocialMedia_MenuState();
+  State<Payperclick_Menu> createState() => _Payperclick_MenuState();
 }
 
-class _SocialMedia_MenuState extends State<SocialMedia_Menu> {
+class _Payperclick_MenuState extends State<Payperclick_Menu> {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
@@ -19,7 +18,7 @@ class _SocialMedia_MenuState extends State<SocialMedia_Menu> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
-        title: Text('Social Media Management',style: TextStyle(fontSize: 20),),
+        title: Text('Payperclick Requirements',style: TextStyle(fontSize: 20),),
         centerTitle: true,
         actions: [
           IconButton(
@@ -41,11 +40,11 @@ class _SocialMedia_MenuState extends State<SocialMedia_Menu> {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Center(child: Text('Social Media Management Requirements',style: TextStyle(fontSize: 22,fontWeight: FontWeight.w500,color: Colors.deepPurple),)),
+            child: Center(child: Text('Pay-Per-Click Requirements',style: TextStyle(fontSize: 22,fontWeight: FontWeight.w500,color: Colors.deepPurple),)),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text("TBA appreciates your onboarding with us. We need some requirements to create an effective app for your business.",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.black),),
+            child: Text("TBA appreciates your onboarding with us. Our team needs some requirements to run an effective campaign for your business.",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.black),),
           ),
         ],
       ),
@@ -72,29 +71,9 @@ class _SocialMedia_MenuState extends State<SocialMedia_Menu> {
               thickness: 2.0,
             ),
             ListTile(
-              leading: Icon(Icons.qr_code_outlined,color: Colors.white,), title: Text("Social Media Form1",style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.w500),),
+              leading: Icon(Icons.qr_code_outlined,color: Colors.white,), title: Text("Pay-Per-Click Form",style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.w500),),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const social_media_form1()),);
-              },
-            ),
-            Divider(
-              color: Colors.white,
-              thickness: 2.0,
-            ),
-            ListTile(
-              leading: Icon(Icons.qr_code_outlined,color: Colors.white,), title: Text("Social Media Form2",style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.w500),),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const social_media_form2()),);
-              },
-            ),
-            Divider(
-              color: Colors.white,
-              thickness: 2.0,
-            ),
-            ListTile(
-              leading: Icon(Icons.qr_code_outlined,color: Colors.white,), title: Text("Social Media Form3",style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.w500),),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const social_media_form3()),);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const Payperclick_form()),);
               },
             ),
             Divider(

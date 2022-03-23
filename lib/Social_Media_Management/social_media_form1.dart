@@ -3,14 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class social_media_form extends StatefulWidget {
-  const social_media_form({Key? key}) : super(key: key);
+class social_media_form1 extends StatefulWidget {
+  const social_media_form1({Key? key}) : super(key: key);
 
   @override
-  State<social_media_form> createState() => _social_media_formState();
+  State<social_media_form1> createState() => _social_media_form1State();
 }
 
-class _social_media_formState extends State<social_media_form> {
+class _social_media_form1State extends State<social_media_form1> {
 
   TextEditingController SocialMediaPurposectlr = TextEditingController();
   TextEditingController BrandObjectivectlr = TextEditingController();
@@ -36,7 +36,7 @@ class _social_media_formState extends State<social_media_form> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
-        title: Text('Social Media Form',style: TextStyle(fontSize: 20),),
+        title: Text('Social Media Form1',style: TextStyle(fontSize: 20),),
         centerTitle: true,
       ),
       body: Form(
@@ -293,7 +293,7 @@ class _social_media_formState extends State<social_media_form> {
                         {
                           try{
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
-                            firestoreInstance.collection("Social Media Management").doc(firebaseUser!.email).set(
+                            firestoreInstance.collection("Social Media Management1").doc(firebaseUser!.email).set(
                                 {
                                   'Social Media Purpose':SocialMediaPurposectlr.text,'Brand Objective':BrandObjectivectlr.text,
                                   'Social Media Achieve':Achievectlr.text,'Barrier Success':Successctlr.text,

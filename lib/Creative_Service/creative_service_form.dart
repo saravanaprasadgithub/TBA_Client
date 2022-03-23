@@ -25,8 +25,8 @@ class _creative_formState extends State<creative_form> {
   TextEditingController Colorctlr = TextEditingController();
   TextEditingController ContentAssistantctlr = TextEditingController();
   late String address,fname,lname,email,mobile;
-  int val = 2;
-  int val1 = 4;
+  int ? val ;
+  int ? val1 ;
   int ? val2;
 var post;
   bool yes = false;
@@ -379,7 +379,6 @@ var post;
                         print(post);
                       });
                     },
-                    toggleable: true,
                     activeColor: Colors.deepPurple,
                   ),
                 ),
@@ -397,7 +396,6 @@ var post;
                         print(post);
                       });
                     },
-                    toggleable: true,
                     activeColor: Colors.deepPurple,
                   ),
                 ),

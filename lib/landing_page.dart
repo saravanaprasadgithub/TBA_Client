@@ -2,6 +2,7 @@ import 'package:first_app/Creative_Service/creative_service_menu.dart';
 import 'package:first_app/Social_Media_Management/social_media_menu.dart';
 import 'package:first_app/app_Development/app_menu.dart';
 import 'package:first_app/login.dart';
+import 'package:first_app/pay_per_click/payperclick_menu.dart';
 import 'package:first_app/search_engine_marketing/search_engine_menu.dart';
 import 'package:first_app/website_Development/web_menu.dart';
 import 'package:flutter/cupertino.dart';
@@ -188,8 +189,10 @@ class _MainMenuState extends State<MainMenu> {
                   children: [
                     Expanded(
                       child: IconButton(
-                        onPressed: (){},
-                        icon: Icon(Icons.paypal_outlined,color: Colors.deepPurple,size: 40,),
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const Payperclick_Menu()),);
+                        },
+                        icon: Icon(Icons.payments_outlined,color: Colors.deepPurple,size: 40,),
                       ),
                     ),
                     SizedBox(height: 5,),
