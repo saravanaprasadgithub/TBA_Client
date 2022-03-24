@@ -1,17 +1,17 @@
 import 'package:first_app/Creative_Service/creative_service_menu.dart';
 import 'package:first_app/Social_Media_Management/social_media_menu.dart';
 import 'package:first_app/app_Development/app_menu.dart';
+import 'package:first_app/content_marketing/content_marketing_menu.dart';
+import 'package:first_app/email_marketing/email_marketing_menu.dart';
 import 'package:first_app/login.dart';
 import 'package:first_app/mobile_marketing/mobile_marketing_menu.dart';
 import 'package:first_app/pay_per_click/payperclick_menu.dart';
 import 'package:first_app/search_engine_marketing/search_engine_menu.dart';
 import 'package:first_app/seo/seo_menu.dart';
 import 'package:first_app/website_Development/web_menu.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 class MainMenu extends StatefulWidget {
   const MainMenu({Key? key}) : super(key: key);
@@ -229,7 +229,9 @@ class _MainMenuState extends State<MainMenu> {
                   children: [
                     Expanded(
                       child: IconButton(
-                        onPressed: (){},
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const ContentMarketing_Menu()),);
+                        },
                         icon: Icon(Icons.book_outlined,color: Colors.deepPurple,size: 40,),
                       ),
                     ),
@@ -265,7 +267,9 @@ class _MainMenuState extends State<MainMenu> {
                   children: [
                     Expanded(
                       child: IconButton(
-                        onPressed: (){},
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const EmailMarketing_Menu()),);
+                        },
                         icon: Icon(Icons.mail_outline_rounded,color: Colors.deepPurple,size: 40,),
                       ),
                     ),
