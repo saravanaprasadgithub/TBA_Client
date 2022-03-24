@@ -2,8 +2,10 @@ import 'package:first_app/Creative_Service/creative_service_menu.dart';
 import 'package:first_app/Social_Media_Management/social_media_menu.dart';
 import 'package:first_app/app_Development/app_menu.dart';
 import 'package:first_app/login.dart';
+import 'package:first_app/mobile_marketing/mobile_marketing_menu.dart';
 import 'package:first_app/pay_per_click/payperclick_menu.dart';
 import 'package:first_app/search_engine_marketing/search_engine_menu.dart';
+import 'package:first_app/seo/seo_menu.dart';
 import 'package:first_app/website_Development/web_menu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -208,7 +210,9 @@ class _MainMenuState extends State<MainMenu> {
                   children: [
                     Expanded(
                       child: IconButton(
-                        onPressed: (){},
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const SEO_Menu()),);
+                        },
                         icon: Icon(Icons.vpn_lock_rounded,color: Colors.deepPurple,size: 40,),
                       ),
                     ),
@@ -242,7 +246,9 @@ class _MainMenuState extends State<MainMenu> {
                   children: [
                     Expanded(
                       child: IconButton(
-                        onPressed: (){},
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const MobileMarketing_Menu()),);
+                        },
                         icon: Icon(Icons.phone_android_outlined,color: Colors.deepPurple,size: 40,),
                       ),
                     ),

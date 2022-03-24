@@ -69,7 +69,7 @@ class _Payperclick_formState extends State<Payperclick_form> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
-        title: Text('Pay-Per-Click Form1',style: TextStyle(fontSize: 20),),
+        title: Text('Pay-Per-Click Form',style: TextStyle(fontSize: 20),),
         centerTitle: true,
       ),
 body: Form(
@@ -399,7 +399,7 @@ body: Form(
                   try{
                     uploadFile();
                     var firebaseUser =  FirebaseAuth.instance.currentUser;
-                    firestoreInstance.collection("Website Content Form").doc(firebaseUser!.email).set(
+                    firestoreInstance.collection("Pay-Per-Click Form").doc(firebaseUser!.email).set(
                         {
                          'UserID':UserIdcntlr.text,'Password':Passwordctlr.text,'GST No':GSTcntlr.text,'TAX No':Taxcntlr.text,
                          'PAN No':Pancntlr.text,'Upload FileName':fileName,'Website Link':WebURLctlr.text,'Campaign Promote':ProductServicectlr.text,
