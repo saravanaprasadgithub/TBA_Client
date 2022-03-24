@@ -3,17 +3,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class mobile_Form4 extends StatefulWidget {
-  const mobile_Form4({Key? key}) : super(key: key);
+class Email_Form4 extends StatefulWidget {
+  const Email_Form4({Key? key}) : super(key: key);
 
   @override
-  State<mobile_Form4> createState() => _mobile_Form4State();
+  State<Email_Form4> createState() => _Email_Form4State();
 }
 
-class _mobile_Form4State extends State<mobile_Form4> {
+class _Email_Form4State extends State<Email_Form4> {
 
   TextEditingController CurrentWorkctlr = TextEditingController();
-  TextEditingController MobileAdFitctlr = TextEditingController();
+  TextEditingController EmailMarketingFitctlr = TextEditingController();
   TextEditingController PastTryctlr = TextEditingController();
   TextEditingController TrackingCodesctlr = TextEditingController();
   TextEditingController Expectctlr = TextEditingController();
@@ -23,14 +23,14 @@ class _mobile_Form4State extends State<mobile_Form4> {
   TextEditingController InputCampaignCntrlr = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final firestoreInstance = FirebaseFirestore.instance;
-  late String details;
+  late String applang;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
-        title: Text('Mobile Marketing Form4',style: TextStyle(fontSize: 20),),
+        title: Text('Email Marketing Form4',style: TextStyle(fontSize: 20),),
         centerTitle: true,
       ),
       body: Form(
@@ -60,18 +60,18 @@ class _mobile_Form4State extends State<mobile_Form4> {
                       }
                     },
                     onSaved: (String? value){
-                      details = value!;
+                      applang = value!;
                     },
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('2.How does mobile advertising fit into your sales funnel or buyer’s journey?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                  child: Text('2.How does Email Marketing fit into your sales funnel or buyer’s journey?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
                 ),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
-                      controller: MobileAdFitctlr,
+                      controller: EmailMarketingFitctlr,
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
                       decoration: InputDecoration(
@@ -197,16 +197,16 @@ class _mobile_Form4State extends State<mobile_Form4> {
                         {
                           try{
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
-                            firestoreInstance.collection("Mobile Marketing Form4").doc(firebaseUser!.email).set(
+                            firestoreInstance.collection("Email Marketing Form4").doc(firebaseUser!.email).set(
                                 {
-                                  'Current Work':CurrentWorkctlr.text,'Mobile Ad Fit':MobileAdFitctlr.text,
+                                  'Current Work':CurrentWorkctlr.text,'Email Marketing Fit':EmailMarketingFitctlr.text,
                                   'Past Tried':PastTryctlr.text,'Tracking Codes':TrackingCodesctlr.text,
                                   'Account Manager Expect':Expectctlr.text,'Report View':Reportsctlr.text,
                                   'Contact Person':ContactPersonctlr.text,'Oversight & Control':OversightCntrlr.text,
                                   'Input Campaign':InputCampaignCntrlr.text,
                                 }
                             ).then((value) => {
-                              CurrentWorkctlr.clear(),MobileAdFitctlr.clear(),PastTryctlr.clear(),TrackingCodesctlr.clear(),Expectctlr.clear(),
+                              CurrentWorkctlr.clear(),EmailMarketingFitctlr.clear(),PastTryctlr.clear(),TrackingCodesctlr.clear(),Expectctlr.clear(),
                               Reportsctlr.clear(),ContactPersonctlr.clear(),OversightCntrlr.clear(),InputCampaignCntrlr.clear(),
                             });
                             Fluttertoast.showToast(

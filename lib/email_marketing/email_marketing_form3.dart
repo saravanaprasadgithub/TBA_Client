@@ -3,24 +3,25 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class mobile_Form4 extends StatefulWidget {
-  const mobile_Form4({Key? key}) : super(key: key);
+class Email_Form3 extends StatefulWidget {
+  const Email_Form3({Key? key}) : super(key: key);
 
   @override
-  State<mobile_Form4> createState() => _mobile_Form4State();
+  State<Email_Form3> createState() => _Email_Form3State();
 }
 
-class _mobile_Form4State extends State<mobile_Form4> {
+class _Email_Form3State extends State<Email_Form3> {
 
-  TextEditingController CurrentWorkctlr = TextEditingController();
-  TextEditingController MobileAdFitctlr = TextEditingController();
-  TextEditingController PastTryctlr = TextEditingController();
-  TextEditingController TrackingCodesctlr = TextEditingController();
-  TextEditingController Expectctlr = TextEditingController();
-  TextEditingController Reportsctlr = TextEditingController();
-  TextEditingController ContactPersonctlr = TextEditingController();
-  TextEditingController OversightCntrlr = TextEditingController();
-  TextEditingController InputCampaignCntrlr = TextEditingController();
+  TextEditingController OfflineCampaignsctlr = TextEditingController();
+  TextEditingController ContentResponsectlr = TextEditingController();
+  TextEditingController ContentTypectlr = TextEditingController();
+  TextEditingController ContentMsgctlr = TextEditingController();
+  TextEditingController UserContentctlr = TextEditingController();
+  TextEditingController ClientHolidaysctlr = TextEditingController();
+  TextEditingController NetworkProfilectlr = TextEditingController();
+  TextEditingController ExpandNetworkCntrlr = TextEditingController();
+  TextEditingController NetworkFocusCntrlr = TextEditingController();
+  TextEditingController MeasureInvestmentCtrlr = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final firestoreInstance = FirebaseFirestore.instance;
   late String details;
@@ -30,7 +31,7 @@ class _mobile_Form4State extends State<mobile_Form4> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
-        title: Text('Mobile Marketing Form4',style: TextStyle(fontSize: 20),),
+        title: Text('Email Marketing Form3',style: TextStyle(fontSize: 20),),
         centerTitle: true,
       ),
       body: Form(
@@ -43,12 +44,12 @@ class _mobile_Form4State extends State<mobile_Form4> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('1.What is working for you (and not working) right now?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                  child: Text('1.How does Email Marketing tie in with your offline campaigns?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
-                    controller: CurrentWorkctlr,
+                    controller: OfflineCampaignsctlr,
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
                     decoration: InputDecoration(
@@ -66,12 +67,12 @@ class _mobile_Form4State extends State<mobile_Form4> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('2.How does mobile advertising fit into your sales funnel or buyer’s journey?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                  child: Text('2.What type of content does your audience respond to best (if known)?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
                 ),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
-                      controller: MobileAdFitctlr,
+                      controller: ContentResponsectlr,
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
                       decoration: InputDecoration(
@@ -81,12 +82,12 @@ class _mobile_Form4State extends State<mobile_Form4> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('3.What have you tried in the past?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                  child: Text('3.What type of content do you want to create for your audience (images, video, quotes, blog posts, etc.)?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
                 ),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
-                      controller: PastTryctlr,
+                      controller: ContentTypectlr,
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
                       decoration: InputDecoration(
@@ -96,12 +97,12 @@ class _mobile_Form4State extends State<mobile_Form4> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('4.Have you got any tracking codes installed on your site?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                  child: Text('4.What message are you trying to send with your content?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
                 ),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
-                      controller: TrackingCodesctlr,
+                      controller: ContentMsgctlr,
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
                       decoration: InputDecoration(
@@ -111,12 +112,12 @@ class _mobile_Form4State extends State<mobile_Form4> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('5.What do you expect from us as your account manager?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                  child: Text('5.How do you use user-generated content in your campaigns?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
                 ),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
-                      controller: Expectctlr,
+                      controller: UserContentctlr,
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
                       decoration: InputDecoration(
@@ -126,12 +127,12 @@ class _mobile_Form4State extends State<mobile_Form4> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('6.What reports do you want to see and how often?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                  child: Text('6.What holidays does your client want to observe?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
                 ),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
-                      controller: Reportsctlr,
+                      controller: ClientHolidaysctlr,
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
                       decoration: InputDecoration(
@@ -141,12 +142,12 @@ class _mobile_Form4State extends State<mobile_Form4> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('7.Who is the person we should contact?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                  child: Text('7.What profiles do you have and on which networks?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
                 ),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
-                      controller: ContactPersonctlr,
+                      controller: NetworkProfilectlr,
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
                       decoration: InputDecoration(
@@ -156,12 +157,12 @@ class _mobile_Form4State extends State<mobile_Form4> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('8.How much oversight and control do you want to have?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                  child: Text('8.Are you looking to expand onto new networks?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
                 ),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
-                      controller: OversightCntrlr,
+                      controller: ExpandNetworkCntrlr,
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
                       decoration: InputDecoration(
@@ -171,12 +172,12 @@ class _mobile_Form4State extends State<mobile_Form4> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('9.How much input do you want to have into campaigns?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                  child: Text('9.Are you looking to narrow your focus to fewer networks?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
                 ),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
-                      controller: InputCampaignCntrlr,
+                      controller: NetworkFocusCntrlr,
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
                       decoration: InputDecoration(
@@ -184,6 +185,22 @@ class _mobile_Form4State extends State<mobile_Form4> {
                       ),
                     )
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('10. How do you intend to measure return on investment?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                ),
+                Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      controller: MeasureInvestmentCtrlr,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                    )
+                ),
+
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(70,30,70,10),
@@ -197,17 +214,17 @@ class _mobile_Form4State extends State<mobile_Form4> {
                         {
                           try{
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
-                            firestoreInstance.collection("Mobile Marketing Form4").doc(firebaseUser!.email).set(
+                            firestoreInstance.collection("Email Marketing Form3").doc(firebaseUser!.email).set(
                                 {
-                                  'Current Work':CurrentWorkctlr.text,'Mobile Ad Fit':MobileAdFitctlr.text,
-                                  'Past Tried':PastTryctlr.text,'Tracking Codes':TrackingCodesctlr.text,
-                                  'Account Manager Expect':Expectctlr.text,'Report View':Reportsctlr.text,
-                                  'Contact Person':ContactPersonctlr.text,'Oversight & Control':OversightCntrlr.text,
-                                  'Input Campaign':InputCampaignCntrlr.text,
+                                  'Email Marketing Campaign':OfflineCampaignsctlr.text,'Best Content':ContentResponsectlr.text,
+                                  'Content Type':ContentTypectlr.text,'Message Content':ContentMsgctlr.text,
+                                  'User Generated Content':UserContentctlr.text,'Client Holidays Observe':ClientHolidaysctlr.text,
+                                  'Network Profiles':NetworkProfilectlr.text,'Expand New Network':ExpandNetworkCntrlr.text,
+                                  'Focus Networks':NetworkFocusCntrlr.text,'Measure Investment':MeasureInvestmentCtrlr.text,
                                 }
                             ).then((value) => {
-                              CurrentWorkctlr.clear(),MobileAdFitctlr.clear(),PastTryctlr.clear(),TrackingCodesctlr.clear(),Expectctlr.clear(),
-                              Reportsctlr.clear(),ContactPersonctlr.clear(),OversightCntrlr.clear(),InputCampaignCntrlr.clear(),
+                              OfflineCampaignsctlr.clear(),ContentResponsectlr.clear(),ContentTypectlr.clear(),ContentMsgctlr.clear(),UserContentctlr.clear(),
+                              ClientHolidaysctlr.clear(),NetworkProfilectlr.clear(),ExpandNetworkCntrlr.clear(),NetworkFocusCntrlr.clear(),MeasureInvestmentCtrlr.clear(),
                             });
                             Fluttertoast.showToast(
                                 timeInSecForIosWeb: 1,

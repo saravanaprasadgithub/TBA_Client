@@ -3,24 +3,25 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class mobile_Form4 extends StatefulWidget {
-  const mobile_Form4({Key? key}) : super(key: key);
+class email_Form1 extends StatefulWidget {
+  const email_Form1({Key? key}) : super(key: key);
 
   @override
-  State<mobile_Form4> createState() => _mobile_Form4State();
+  State<email_Form1> createState() => _email_Form1State();
 }
 
-class _mobile_Form4State extends State<mobile_Form4> {
+class _email_Form1State extends State<email_Form1> {
 
-  TextEditingController CurrentWorkctlr = TextEditingController();
-  TextEditingController MobileAdFitctlr = TextEditingController();
-  TextEditingController PastTryctlr = TextEditingController();
-  TextEditingController TrackingCodesctlr = TextEditingController();
-  TextEditingController Expectctlr = TextEditingController();
-  TextEditingController Reportsctlr = TextEditingController();
-  TextEditingController ContactPersonctlr = TextEditingController();
-  TextEditingController OversightCntrlr = TextEditingController();
-  TextEditingController InputCampaignCntrlr = TextEditingController();
+  TextEditingController Purposectlr = TextEditingController();
+  TextEditingController BrandObjectivectlr = TextEditingController();
+  TextEditingController EmailAchievectlr = TextEditingController();
+  TextEditingController Growthctlr = TextEditingController();
+  TextEditingController TargetedAudiencectlr = TextEditingController();
+  TextEditingController Platformctlr = TextEditingController();
+  TextEditingController Issuesctlr = TextEditingController();
+  TextEditingController BrandEngageCntrlr = TextEditingController();
+  TextEditingController SocialListeningCntrlr = TextEditingController();
+  TextEditingController AudienceEngagectlr = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final firestoreInstance = FirebaseFirestore.instance;
   late String details;
@@ -30,7 +31,7 @@ class _mobile_Form4State extends State<mobile_Form4> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
-        title: Text('Mobile Marketing Form4',style: TextStyle(fontSize: 20),),
+        title: Text('Email Marketing Form1',style: TextStyle(fontSize: 20),),
         centerTitle: true,
       ),
       body: Form(
@@ -43,12 +44,12 @@ class _mobile_Form4State extends State<mobile_Form4> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('1.What is working for you (and not working) right now?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                  child: Text('1.What is your purpose for email marketing ?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
-                    controller: CurrentWorkctlr,
+                    controller: Purposectlr,
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
                     decoration: InputDecoration(
@@ -66,12 +67,12 @@ class _mobile_Form4State extends State<mobile_Form4> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('2.How does mobile advertising fit into your sales funnel or buyer’s journey?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                  child: Text('2.What is your brand’s objective?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
                 ),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
-                      controller: MobileAdFitctlr,
+                      controller: BrandObjectivectlr,
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
                       decoration: InputDecoration(
@@ -81,12 +82,12 @@ class _mobile_Form4State extends State<mobile_Form4> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('3.What have you tried in the past?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                  child: Text('3.What do you hope to achieve using email marketing? How will you know you’ve achieved it?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
                 ),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
-                      controller: PastTryctlr,
+                      controller: EmailAchievectlr,
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
                       decoration: InputDecoration(
@@ -96,12 +97,12 @@ class _mobile_Form4State extends State<mobile_Form4> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('4.Have you got any tracking codes installed on your site?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                  child: Text('4.How does email marketing fit into your growth plan?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
                 ),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
-                      controller: TrackingCodesctlr,
+                      controller: Growthctlr,
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
                       decoration: InputDecoration(
@@ -111,12 +112,12 @@ class _mobile_Form4State extends State<mobile_Form4> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('5.What do you expect from us as your account manager?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                  child: Text('5.Describe your target audience. Who are they?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
                 ),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
-                      controller: Expectctlr,
+                      controller: TargetedAudiencectlr,
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
                       decoration: InputDecoration(
@@ -126,12 +127,12 @@ class _mobile_Form4State extends State<mobile_Form4> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('6.What reports do you want to see and how often?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                  child: Text('6.What mobile platforms do they use?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
                 ),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
-                      controller: Reportsctlr,
+                      controller: Platformctlr,
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
                       decoration: InputDecoration(
@@ -141,12 +142,12 @@ class _mobile_Form4State extends State<mobile_Form4> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('7.Who is the person we should contact?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                  child: Text('7.What issues matter to them?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
                 ),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
-                      controller: ContactPersonctlr,
+                      controller: Issuesctlr,
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
                       decoration: InputDecoration(
@@ -156,12 +157,12 @@ class _mobile_Form4State extends State<mobile_Form4> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('8.How much oversight and control do you want to have?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                  child: Text('8.How does your brand engage them?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
                 ),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
-                      controller: OversightCntrlr,
+                      controller: BrandEngageCntrlr,
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
                       decoration: InputDecoration(
@@ -171,12 +172,12 @@ class _mobile_Form4State extends State<mobile_Form4> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('9.How much input do you want to have into campaigns?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                  child: Text('9.What social listening have you done? What does your audience say about you?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
                 ),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
-                      controller: InputCampaignCntrlr,
+                      controller: SocialListeningCntrlr,
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
                       decoration: InputDecoration(
@@ -184,6 +185,22 @@ class _mobile_Form4State extends State<mobile_Form4> {
                       ),
                     )
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('10.Who else (brands/celebrities/people) does your audience engage with?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                ),
+                Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      controller: AudienceEngagectlr,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                    )
+                ),
+
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(70,30,70,10),
@@ -197,17 +214,17 @@ class _mobile_Form4State extends State<mobile_Form4> {
                         {
                           try{
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
-                            firestoreInstance.collection("Mobile Marketing Form4").doc(firebaseUser!.email).set(
+                            firestoreInstance.collection("Email Marketing Form1").doc(firebaseUser!.email).set(
                                 {
-                                  'Current Work':CurrentWorkctlr.text,'Mobile Ad Fit':MobileAdFitctlr.text,
-                                  'Past Tried':PastTryctlr.text,'Tracking Codes':TrackingCodesctlr.text,
-                                  'Account Manager Expect':Expectctlr.text,'Report View':Reportsctlr.text,
-                                  'Contact Person':ContactPersonctlr.text,'Oversight & Control':OversightCntrlr.text,
-                                  'Input Campaign':InputCampaignCntrlr.text,
+                                  'Email Marketing Purpose':Purposectlr.text,'Brand Objective':BrandObjectivectlr.text,
+                                  'Email Marketing Achieve':EmailAchievectlr.text,'Email Marketing Growth':Growthctlr.text,
+                                  'Targeted Audience':TargetedAudiencectlr.text,'Mobile Platform':Platformctlr.text,
+                                  'Issue Details':Issuesctlr.text,'Brand Engage':BrandEngageCntrlr.text,
+                                  'Social Listening Info':SocialListeningCntrlr.text,'Audience Engage':AudienceEngagectlr.text,
                                 }
                             ).then((value) => {
-                              CurrentWorkctlr.clear(),MobileAdFitctlr.clear(),PastTryctlr.clear(),TrackingCodesctlr.clear(),Expectctlr.clear(),
-                              Reportsctlr.clear(),ContactPersonctlr.clear(),OversightCntrlr.clear(),InputCampaignCntrlr.clear(),
+                              Purposectlr.clear(),BrandObjectivectlr.clear(),EmailAchievectlr.clear(),Growthctlr.clear(),TargetedAudiencectlr.clear(),
+                              Platformctlr.clear(),Issuesctlr.clear(),BrandEngageCntrlr.clear(),SocialListeningCntrlr.clear(),AudienceEngagectlr.clear(),
                             });
                             Fluttertoast.showToast(
                                 timeInSecForIosWeb: 1,
