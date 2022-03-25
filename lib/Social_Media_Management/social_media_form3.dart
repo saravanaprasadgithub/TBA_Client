@@ -255,7 +255,6 @@ class _social_media_form3State extends State<social_media_form3> {
                                   'Tracking Pixels':TrackingPixlesctlr.text,'Account Manager Expect':ExpectCntrlr.text,
                                   'Report Details':ReportsCntrlr.text,'Contact Person':ContactPersonctlr.text,
                                   'Oversight & Control':Sightctlr.text,'Input Campaigns':InputCampaignsctlr.text,
-
                                 }
                             ).then((value) => {
                               CustomerServicectlr.clear(),ToolsManagectlr.clear(),Investmentctlr.clear(),Workingctlr.clear(),Mediafitctlr.clear(),

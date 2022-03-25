@@ -2,7 +2,7 @@
     package="com.example.first_app">
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
    <application
-        android:label="first_app"
+        android:label="TBA Client"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
