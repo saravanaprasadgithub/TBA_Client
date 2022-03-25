@@ -6,6 +6,7 @@ import 'package:first_app/email_marketing/email_marketing_menu.dart';
 import 'package:first_app/login.dart';
 import 'package:first_app/mobile_marketing/mobile_marketing_menu.dart';
 import 'package:first_app/pay_per_click/payperclick_menu.dart';
+import 'package:first_app/reputation_management/reputation_menu.dart';
 import 'package:first_app/search_engine_marketing/search_engine_menu.dart';
 import 'package:first_app/seo/seo_menu.dart';
 import 'package:first_app/website_Development/web_menu.dart';
@@ -155,7 +156,9 @@ class _MainMenuState extends State<MainMenu> {
                   children: [
                     Expanded(
                       child: IconButton(
-                        onPressed: (){},
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const ReputationManagement_Menu()),);
+                        },
                         icon: Icon(Icons.business,color: Colors.deepPurple,size: 40,),
                       ),
                     ),
