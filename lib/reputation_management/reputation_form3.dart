@@ -15,6 +15,8 @@ class _ReputaionManagement_form3State extends State<ReputaionManagement_form3> {
   TextEditingController WebsiteLoginctlr = TextEditingController();
   TextEditingController Feedbackctlr= TextEditingController();
   TextEditingController ReviewDirectoryctlr = TextEditingController();
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  final firestoreInstance = FirebaseFirestore.instance;
   late String details;
   Map<String, bool> values = {
     'Twice a week': false,
@@ -62,8 +64,6 @@ class _ReputaionManagement_form3State extends State<ReputaionManagement_form3> {
   }
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-    final firestoreInstance = FirebaseFirestore.instance;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,

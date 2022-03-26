@@ -422,7 +422,7 @@ class _ContentMarketing_form1State extends State<ContentMarketing_form1> {
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
                             firestoreInstance.collection("Content Marketing Form1").doc(firebaseUser!.email).set(
                                 {
-                              'Company Name':Companyctlr.text,'Store Front':StoreFrontctlr.text,'Company Founded':DateCntrlr.text,'Product Description':Descriptionctlr.text,
+                              'Company Name':CompanyNamectlr.text,'Store Front':StoreFrontctlr.text,'Company Founded':DateCntrlr.text,'Product Description':Descriptionctlr.text,
                               'Company Restriction':Restrictionctlr.text,'Company History':Specialhistoryctlr.text,'Company Competitors':Competitorsctlr.text,'Apart Competitors':ApartCompetitorsctlr.text,
                               'Company Charateristics':BestCharatceristicsctlr.text,'Person Type':PersonTypectlr.text,'Client Portray':PortrayCntrlr.text,'Business Strength':StrengthCntrlr.text,
                               'Goal Tactics':GoalTacticsctlr.text,'Company Type':Companyctlr.text,'Local Company Details':LocalCompanySplctlr.text,'Company Area':GeographicsAreasctlr.text

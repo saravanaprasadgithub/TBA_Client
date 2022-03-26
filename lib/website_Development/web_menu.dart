@@ -45,7 +45,7 @@ class _Web_MenuState extends State<Web_Menu> {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text("TBA appreciates your onboarding with us. We need some requirements to create an effective app for your business.",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.black),),
+            child: Text("TBA appreciates your onboarding with us. We need some requirements to create an effective website for your business.",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.black),),
           ),
 
         ],

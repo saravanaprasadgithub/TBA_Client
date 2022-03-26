@@ -42,10 +42,10 @@ class _ContentMarketing_MenuState extends State<ContentMarketing_Menu> {
             padding: const EdgeInsets.all(8.0),
             child: Center(child: Text('Content Marketing Service Requirements',style: TextStyle(fontSize: 22,fontWeight: FontWeight.w500,color: Colors.deepPurple),)),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text("TBA appreciates your onboarding with us. We need some requirements to create an effective app for your business.",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.black),),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: Text("TBA appreciates your onboarding with us. We need some requirements to create an effective app for your business.",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.black),),
+          // ),
         ],
       ),
       drawer: Drawer(
