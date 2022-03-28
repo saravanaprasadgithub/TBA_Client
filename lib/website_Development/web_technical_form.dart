@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:first_app/website_Development/web_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -504,6 +505,7 @@ class _technicalformState extends State<technicalform> {
                           backgroundColor: Colors.deepPurple,
                           textColor: Colors.white
                       );
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const Web_Menu()),);
                     }
                     catch(e){
                       Fluttertoast.showToast(

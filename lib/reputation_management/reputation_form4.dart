@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:first_app/reputation_management/reputation_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:file_picker/file_picker.dart';
@@ -298,28 +299,76 @@ class _ReputaionManagement_form4State extends State<ReputaionManagement_form4> {
                         {
                           try{
                             uploadFile();
-                            var firebaseUser =  FirebaseAuth.instance.currentUser;
-                            firestoreInstance.collection("Reputation Management Form4").doc(firebaseUser!.email).set(
-                                {
-                                  "Upload FileName":fileName,'Business Hours':BusinessHoursctlr.text,'Business Started Year':StartedYearctlr.text,
-                                  'Business Area':Areactlr.text,'Product Categories':Categoriesctlr.text,'Short Description':Descriptionctlr.text,
-                                  'Birth Year':Birthyearctlr.text,'Verification Code':GetCallCodectlr.text,'Payment Types':PaymentTypeCntrlr.text,
-                                  'Service Priority':ServicePriorityCntrlr.text,'Main Keywords':KeyWordsPriorityctlr.text,'Buying Reason':Buyreasonsctlr.text,
-                                  'Biggest Competitor':BigCompetitorsctlr.text,'Special Offers':Offersctlr.text,
-                                }
-                            ).then((value) => {
-                              BusinessHoursctlr.clear(),StartedYearctlr.clear(),Areactlr.clear(),Categoriesctlr.clear(),Descriptionctlr.clear(),Birthyearctlr.clear(),
-                              GetCallCodectlr.clear(),PaymentTypeCntrlr.clear(),ServicePriorityCntrlr.clear(),KeyWordsPriorityctlr.clear(),
-                              Buyreasonsctlr.clear(),BigCompetitorsctlr.clear(),Offersctlr.clear()
-                            });
-                            Fluttertoast.showToast(
-                                timeInSecForIosWeb: 1,
-                                msg: "Your Details Submitted Successfully..!!!",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.BOTTOM,
-                                backgroundColor: Colors.deepPurple,
-                                textColor: Colors.white
-                            );
+                            if(task!=null){
+                              Fluttertoast.showToast(
+                                  timeInSecForIosWeb: 1,
+                                  msg: "Wait for Complete Upload..!!!",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  backgroundColor: Colors.deepOrange,
+                                  textColor: Colors.white
+                              );
+                              var firebaseUser =  FirebaseAuth.instance.currentUser;
+                              firestoreInstance.collection("Reputation Management Form4").doc(firebaseUser!.email).set(
+                                  {
+                                    "Upload FileName":fileName,'Business Hours':BusinessHoursctlr.text,'Business Started Year':StartedYearctlr.text,
+                                    'Business Area':Areactlr.text,'Product Categories':Categoriesctlr.text,'Short Description':Descriptionctlr.text,
+                                    'Birth Year':Birthyearctlr.text,'Verification Code':GetCallCodectlr.text,'Payment Types':PaymentTypeCntrlr.text,
+                                    'Service Priority':ServicePriorityCntrlr.text,'Main Keywords':KeyWordsPriorityctlr.text,'Buying Reason':Buyreasonsctlr.text,
+                                    'Biggest Competitor':BigCompetitorsctlr.text,'Special Offers':Offersctlr.text,
+                                  }
+                              ).then((value) => {
+                                BusinessHoursctlr.clear(),StartedYearctlr.clear(),Areactlr.clear(),Categoriesctlr.clear(),Descriptionctlr.clear(),Birthyearctlr.clear(),
+                                GetCallCodectlr.clear(),PaymentTypeCntrlr.clear(),ServicePriorityCntrlr.clear(),KeyWordsPriorityctlr.clear(),
+                                Buyreasonsctlr.clear(),BigCompetitorsctlr.clear(),Offersctlr.clear()
+                              });
+                              task!.whenComplete(() {
+                                Fluttertoast.showToast(
+                                    timeInSecForIosWeb: 1,
+                                    msg: "Your files & Details Uploaded Successfully..!!!",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    backgroundColor: Colors.green,
+                                    textColor: Colors.white
+                                );
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const ReputationManagement_Menu()),);
+                              }
+                              );
+                            }
+                            else{
+                              Fluttertoast.showToast(
+                                  timeInSecForIosWeb: 1,
+                                  msg: "No Files to Upload..!!!",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  backgroundColor: Colors.deepOrange,
+                                  textColor: Colors.white
+                              );
+                              var firebaseUser =  FirebaseAuth.instance.currentUser;
+                              firestoreInstance.collection("Reputation Management Form4").doc(firebaseUser!.email).set(
+                                  {
+                                    "Upload FileName":fileName,'Business Hours':BusinessHoursctlr.text,'Business Started Year':StartedYearctlr.text,
+                                    'Business Area':Areactlr.text,'Product Categories':Categoriesctlr.text,'Short Description':Descriptionctlr.text,
+                                    'Birth Year':Birthyearctlr.text,'Verification Code':GetCallCodectlr.text,'Payment Types':PaymentTypeCntrlr.text,
+                                    'Service Priority':ServicePriorityCntrlr.text,'Main Keywords':KeyWordsPriorityctlr.text,'Buying Reason':Buyreasonsctlr.text,
+                                    'Biggest Competitor':BigCompetitorsctlr.text,'Special Offers':Offersctlr.text,
+                                  }
+                              ).then((value) => {
+                                BusinessHoursctlr.clear(),StartedYearctlr.clear(),Areactlr.clear(),Categoriesctlr.clear(),Descriptionctlr.clear(),Birthyearctlr.clear(),
+                                GetCallCodectlr.clear(),PaymentTypeCntrlr.clear(),ServicePriorityCntrlr.clear(),KeyWordsPriorityctlr.clear(),
+                                Buyreasonsctlr.clear(),BigCompetitorsctlr.clear(),Offersctlr.clear()
+                              });
+                              Fluttertoast.showToast(
+                                  timeInSecForIosWeb: 1,
+                                  msg: "Your Details Submitted Successfully..!!!",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  backgroundColor: Colors.deepPurple,
+                                  textColor: Colors.white
+                              );
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const ReputationManagement_Menu()),);
+                            }
+
                           }
                           catch(e){
                             Fluttertoast.showToast(

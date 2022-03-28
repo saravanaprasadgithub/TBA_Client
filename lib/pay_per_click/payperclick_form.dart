@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:first_app/pay_per_click/payperclick_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
@@ -63,6 +64,7 @@ class _Payperclick_formState extends State<Payperclick_form> {
       no = true ;
     });
   }
+  late String details;
   @override
   Widget build(BuildContext context) {
     final fileName = file != null ? basename(file!.path) : 'No File Selected';
@@ -133,7 +135,6 @@ body: Form(
                     hintText: "Enter Your UserId",
                     border: OutlineInputBorder(),
                   ),
-
                 ),
               ),
               Padding(
@@ -250,6 +251,14 @@ body: Form(
               hintText: "Enter Website URL",
               border: OutlineInputBorder(),
             ),
+            validator: (String? value){
+              if(value!.isEmpty){
+                return 'Please Enter Details';
+              }
+            },
+            onSaved: (String? value){
+              details = value!;
+            },
           ),
         ),
         Padding(
@@ -398,26 +407,71 @@ body: Form(
                 {
                   try{
                     uploadFile();
-                    var firebaseUser =  FirebaseAuth.instance.currentUser;
-                    firestoreInstance.collection("Pay-Per-Click Form").doc(firebaseUser!.email).set(
-                        {
-                         'UserID':UserIdcntlr.text,'Password':Passwordctlr.text,'GST No':GSTcntlr.text,'TAX No':Taxcntlr.text,
-                         'PAN No':Pancntlr.text,'Upload FileName':fileName,'Website Link':WebURLctlr.text,'Campaign Promote':ProductServicectlr.text,
-                          'Unique Service':UniqueServicectlr.text,'Campaign Budget':Budgetctlr.text,'Campaign Goal':CampaignGoalctlr.text,
-                          'Ad Campaign': AdCampaignCntrlr.text,'Campaign Location':TargetLocationctlr.text,'Targeted Audience':TargetedAudiencectlr.text
-                        }
-                    ).then((value) => {
-                      UserIdcntlr.clear(),Passwordctlr.clear(),GSTcntlr.clear(),Taxcntlr.clear(),Pancntlr.clear(),WebURLctlr.clear(),ProductServicectlr.clear(),
-                      UniqueServicectlr.clear(),Budgetctlr.clear(),CampaignGoalctlr.clear(),AdCampaignCntrlr.clear(),TargetLocationctlr.clear(),TargetedAudiencectlr.clear()
-                    });
-                    Fluttertoast.showToast(
-                        timeInSecForIosWeb: 1,
-                        msg: "Your Details Submitted Successfully..!!!",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                        backgroundColor: Colors.deepPurple,
-                        textColor: Colors.white
-                    );
+                    if(task!=null){
+                      Fluttertoast.showToast(
+                          timeInSecForIosWeb: 1,
+                          msg: "Wait for Complete Upload..!!!",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          backgroundColor: Colors.deepOrange,
+                          textColor: Colors.white
+                      );
+                      var firebaseUser =  FirebaseAuth.instance.currentUser;
+                      firestoreInstance.collection("Pay-Per-Click Form").doc(firebaseUser!.email).set(
+                          {
+                            'UserID':UserIdcntlr.text,'Password':Passwordctlr.text,'GST No':GSTcntlr.text,'TAX No':Taxcntlr.text,
+                            'PAN No':Pancntlr.text,'Upload FileName':fileName,'Website Link':WebURLctlr.text,'Campaign Promote':ProductServicectlr.text,
+                            'Unique Service':UniqueServicectlr.text,'Campaign Budget':Budgetctlr.text,'Campaign Goal':CampaignGoalctlr.text,
+                            'Ad Campaign': AdCampaignCntrlr.text,'Campaign Location':TargetLocationctlr.text,'Targeted Audience':TargetedAudiencectlr.text
+                          }
+                      ).then((value) => {
+                        UserIdcntlr.clear(),Passwordctlr.clear(),GSTcntlr.clear(),Taxcntlr.clear(),Pancntlr.clear(),WebURLctlr.clear(),ProductServicectlr.clear(),
+                        UniqueServicectlr.clear(),Budgetctlr.clear(),CampaignGoalctlr.clear(),AdCampaignCntrlr.clear(),TargetLocationctlr.clear(),TargetedAudiencectlr.clear()
+                      });
+                      task!.whenComplete(() {
+                        Fluttertoast.showToast(
+                            timeInSecForIosWeb: 1,
+                            msg: "Your files & Details Uploaded Successfully..!!!",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            backgroundColor: Colors.green,
+                            textColor: Colors.white
+                        );
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const Payperclick_Menu()),);
+                      }
+                      );
+                    }
+                   else{
+                      Fluttertoast.showToast(
+                          timeInSecForIosWeb: 1,
+                          msg: "No Files to Upload..!!!",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          backgroundColor: Colors.deepOrange,
+                          textColor: Colors.white
+                      );
+                      var firebaseUser =  FirebaseAuth.instance.currentUser;
+                      firestoreInstance.collection("Pay-Per-Click Form").doc(firebaseUser!.email).set(
+                          {
+                            'UserID':UserIdcntlr.text,'Password':Passwordctlr.text,'GST No':GSTcntlr.text,'TAX No':Taxcntlr.text,
+                            'PAN No':Pancntlr.text,'Upload FileName':fileName,'Website Link':WebURLctlr.text,'Campaign Promote':ProductServicectlr.text,
+                            'Unique Service':UniqueServicectlr.text,'Campaign Budget':Budgetctlr.text,'Campaign Goal':CampaignGoalctlr.text,
+                            'Ad Campaign': AdCampaignCntrlr.text,'Campaign Location':TargetLocationctlr.text,'Targeted Audience':TargetedAudiencectlr.text
+                          }
+                      ).then((value) => {
+                        UserIdcntlr.clear(),Passwordctlr.clear(),GSTcntlr.clear(),Taxcntlr.clear(),Pancntlr.clear(),WebURLctlr.clear(),ProductServicectlr.clear(),
+                        UniqueServicectlr.clear(),Budgetctlr.clear(),CampaignGoalctlr.clear(),AdCampaignCntrlr.clear(),TargetLocationctlr.clear(),TargetedAudiencectlr.clear()
+                      });
+                      Fluttertoast.showToast(
+                          timeInSecForIosWeb: 1,
+                          msg: "Your Details Submitted Successfully..!!!",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          backgroundColor: Colors.deepPurple,
+                          textColor: Colors.white
+                      );
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const Payperclick_Menu()),);
+                    }
                   }
                   catch(e){
                     Fluttertoast.showToast(

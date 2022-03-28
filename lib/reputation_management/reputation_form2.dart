@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:first_app/reputation_management/reputation_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:file_picker/file_picker.dart';
@@ -376,26 +377,71 @@ class _ReputaionManagement_form2State extends State<ReputaionManagement_form2> {
                           try{
                             uploadFile();
                             uploadFile1();
-                            var firebaseUser =  FirebaseAuth.instance.currentUser;
-                            firestoreInstance.collection("Reputation Management Form2").doc(firebaseUser!.email).set(
-                                {
-                                  'First Name':FirstnameCntrlr.text,'Last Name':LastnameCntrlr.text,'Address1':Addressctlr.text,'Address2':Address1ctlr.text,
-                                  'City':Citycntrlr.text,'State':Statecntrlr.text,'PostalCode':PostalCodeCntrlr.text,'Company Email':EmailCtrlr.text,
-                                  'Company Mobile':MobileCntrlr.text,'Good Receive Email':GoodEmailctlr.text,'Bad Receive Email':BadEmailctlr.text,
-                                  'Preferred Font':fontctlr.text, "Upload FileName":fileName,"Upload FileName1":fileName1,
-                                }
-                            ).then((value) => {
-                              FirstnameCntrlr.clear(),Addressctlr.clear(),Address1ctlr.clear(),Citycntrlr.clear(),Statecntrlr.clear(),PostalCodeCntrlr.clear(),
-                              EmailCtrlr.clear(),MobileCntrlr.clear(),LastnameCntrlr.clear(),GoodEmailctlr.clear(),BadEmailctlr.clear(),fontctlr.clear()
-                            });
-                            Fluttertoast.showToast(
-                                timeInSecForIosWeb: 1,
-                                msg: "Your Details Submitted Successfully..!!!",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.BOTTOM,
-                                backgroundColor: Colors.deepPurple,
-                                textColor: Colors.white
-                            );
+                            if(task!=null){
+                              Fluttertoast.showToast(
+                                  timeInSecForIosWeb: 1,
+                                  msg: "Wait for Complete Upload..!!!",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  backgroundColor: Colors.deepOrange,
+                                  textColor: Colors.white
+                              );
+                              var firebaseUser =  FirebaseAuth.instance.currentUser;
+                              firestoreInstance.collection("Reputation Management Form2").doc(firebaseUser!.email).set(
+                                  {
+                                    'First Name':FirstnameCntrlr.text,'Last Name':LastnameCntrlr.text,'Address1':Addressctlr.text,'Address2':Address1ctlr.text,
+                                    'City':Citycntrlr.text,'State':Statecntrlr.text,'PostalCode':PostalCodeCntrlr.text,'Company Email':EmailCtrlr.text,
+                                    'Company Mobile':MobileCntrlr.text,'Good Receive Email':GoodEmailctlr.text,'Bad Receive Email':BadEmailctlr.text,
+                                    'Preferred Font':fontctlr.text, "Upload FileName":fileName,"Upload FileName1":fileName1,
+                                  }
+                              ).then((value) => {
+                                FirstnameCntrlr.clear(),Addressctlr.clear(),Address1ctlr.clear(),Citycntrlr.clear(),Statecntrlr.clear(),PostalCodeCntrlr.clear(),
+                                EmailCtrlr.clear(),MobileCntrlr.clear(),LastnameCntrlr.clear(),GoodEmailctlr.clear(),BadEmailctlr.clear(),fontctlr.clear()
+                              });
+                              task!.whenComplete(() {
+                                Fluttertoast.showToast(
+                                    timeInSecForIosWeb: 1,
+                                    msg: "Your files & Details Uploaded Successfully..!!!",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    backgroundColor: Colors.green,
+                                    textColor: Colors.white
+                                );
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const ReputationManagement_Menu()),);
+                              }
+                              );
+                            }
+                            else{
+                              Fluttertoast.showToast(
+                                  timeInSecForIosWeb: 1,
+                                  msg: "No Files to Upload..!!!",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  backgroundColor: Colors.deepOrange,
+                                  textColor: Colors.white
+                              );
+                              var firebaseUser =  FirebaseAuth.instance.currentUser;
+                              firestoreInstance.collection("Reputation Management Form2").doc(firebaseUser!.email).set(
+                                  {
+                                    'First Name':FirstnameCntrlr.text,'Last Name':LastnameCntrlr.text,'Address1':Addressctlr.text,'Address2':Address1ctlr.text,
+                                    'City':Citycntrlr.text,'State':Statecntrlr.text,'PostalCode':PostalCodeCntrlr.text,'Company Email':EmailCtrlr.text,
+                                    'Company Mobile':MobileCntrlr.text,'Good Receive Email':GoodEmailctlr.text,'Bad Receive Email':BadEmailctlr.text,
+                                    'Preferred Font':fontctlr.text, "Upload FileName":fileName,"Upload FileName1":fileName1,
+                                  }
+                              ).then((value) => {
+                                FirstnameCntrlr.clear(),Addressctlr.clear(),Address1ctlr.clear(),Citycntrlr.clear(),Statecntrlr.clear(),PostalCodeCntrlr.clear(),
+                                EmailCtrlr.clear(),MobileCntrlr.clear(),LastnameCntrlr.clear(),GoodEmailctlr.clear(),BadEmailctlr.clear(),fontctlr.clear()
+                              });
+                              Fluttertoast.showToast(
+                                  timeInSecForIosWeb: 1,
+                                  msg: "Your Details Submitted Successfully..!!!",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  backgroundColor: Colors.deepPurple,
+                                  textColor: Colors.white
+                              );
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const ReputationManagement_Menu()),);
+                            }
                           }
                           catch(e){
                             Fluttertoast.showToast(

@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:first_app/landing_page.dart';
-import 'package:first_app/website_Development/content_form.dart';
-import 'package:first_app/website_Development/graphics_form.dart';
-import 'package:first_app/website_Development/technical_form.dart';
+import 'package:first_app/website_Development/web_content_form.dart';
+import 'package:first_app/website_Development/web_graphics_form.dart';
+import 'package:first_app/website_Development/web_technical_form.dart';
 import 'package:flutter/material.dart';
 
 class Web_Menu extends StatefulWidget {

@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:first_app/api/uploadapi.dart';
+import 'package:first_app/website_Development/web_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -236,6 +237,51 @@ class _contentformState extends State<contentform> {
                         {
                           try{
                             uploadFile();
+                          if(task!=null){
+                            Fluttertoast.showToast(
+                                timeInSecForIosWeb: 1,
+                                msg: "Wait for Complete Upload..!!!",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                backgroundColor: Colors.deepOrange,
+                                textColor: Colors.white
+                            );
+                            var firebaseUser =  FirebaseAuth.instance.currentUser;
+                            firestoreInstance.collection("Website Content Form").doc(firebaseUser!.email).set(
+                                {
+                                  'Business Type':busstypectlr.text,'Products ':Productsctlr.text,
+                                  'Unique Service':UniqueServctlr.text,'Misson & Vission':Missionctlr.text,
+                                  'Customer Description':Descctlr.text,'Location':Locationctlr.text,
+                                  'Testimonials':Testctlr.text,'SEC Focus':SeoCntrlr.text,
+                                  'Website Update':WebupdCntrlr.text,'Additional Files':AddfileCtrlr.text,
+                                  'Upload FileName':fileName,
+                                }
+                            ).then((value) => {
+                              busstypectlr.clear(),Productsctlr.clear(),UniqueServctlr.clear(),Missionctlr.clear(),Descctlr.clear(),
+                              Locationctlr.clear(),Testctlr.clear(),SeoCntrlr.clear(),WebupdCntrlr.clear(),AddfileCtrlr.clear(),
+                            });
+                            task!.whenComplete(() {
+                              Fluttertoast.showToast(
+                                  timeInSecForIosWeb: 1,
+                                  msg: "Your files & Details Uploaded Successfully..!!!",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  backgroundColor: Colors.green,
+                                  textColor: Colors.white
+                              );
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const Web_Menu()),);
+                            }
+                            );
+                          }
+                          else{
+                            Fluttertoast.showToast(
+                                timeInSecForIosWeb: 1,
+                                msg: "No Files to Upload..!!!",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                backgroundColor: Colors.deepOrange,
+                                textColor: Colors.white
+                            );
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
                             firestoreInstance.collection("Website Content Form").doc(firebaseUser!.email).set(
                                 {
@@ -258,6 +304,8 @@ class _contentformState extends State<contentform> {
                                 backgroundColor: Colors.deepPurple,
                                 textColor: Colors.white
                             );
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const Web_Menu()),);
+                          }
                           }
                           catch(e){
                             Fluttertoast.showToast(
@@ -292,9 +340,7 @@ class _contentformState extends State<contentform> {
     );
   }
   Future selectFile() async {
-
     final result = await FilePicker.platform.pickFiles(allowMultiple: true);
-
     if (result == null) return;
     final path = result.files.single.path!;
     setState(() => file = File(path));

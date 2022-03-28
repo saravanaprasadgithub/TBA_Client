@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:first_app/Creative_Service/creative_service_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -475,6 +476,7 @@ var post;
                                 backgroundColor: Colors.deepPurple,
                                 textColor: Colors.white
                             );
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const CreativeService_Menu()),);
                           }
                           catch(e){
                             Fluttertoast.showToast(

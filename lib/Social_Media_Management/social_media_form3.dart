@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:first_app/Social_Media_Management/social_media_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -269,6 +270,7 @@ class _social_media_form3State extends State<social_media_form3> {
                                 backgroundColor: Colors.deepPurple,
                                 textColor: Colors.white
                             );
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const SocialMedia_Menu()),);
                           }
                           catch(e){
                             Fluttertoast.showToast(

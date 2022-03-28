@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:first_app/email_marketing/email_marketing_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -234,6 +235,7 @@ class _email_Form1State extends State<email_Form1> {
                                 backgroundColor: Colors.deepPurple,
                                 textColor: Colors.white
                             );
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const EmailMarketing_Menu()),);
                           }
                           catch(e){
                             Fluttertoast.showToast(

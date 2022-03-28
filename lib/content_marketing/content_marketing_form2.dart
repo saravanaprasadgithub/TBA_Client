@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:first_app/content_marketing/content_marketing_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -644,6 +645,7 @@ class _ContentMarketing_form2State extends State<ContentMarketing_form2> {
                               backgroundColor: Colors.deepPurple,
                               textColor: Colors.white
                           );
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const ContentMarketing_Menu()),);
                         }
                         catch(e){
                           Fluttertoast.showToast(

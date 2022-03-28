@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:first_app/search_engine_marketing/search_engine_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -25,9 +26,51 @@ class _seach_engine_formState extends State<seach_engine_form> {
   TextEditingController BestSellingctlr = TextEditingController();
   TextEditingController PromotionDiscountctlr = TextEditingController();
   TextEditingController SpecificKeywordsctlr = TextEditingController();
+  TextEditingController MailIdcntlr = TextEditingController();
+  TextEditingController PasswordCntlr = TextEditingController();
+  TextEditingController MailIdcntlr1 = TextEditingController();
+  TextEditingController PasswordCntlr1 = TextEditingController();
+  TextEditingController detailscntlr = TextEditingController();
+  TextEditingController detailscntlr1 = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final firestoreInstance = FirebaseFirestore.instance;
   late String goals;
+  bool _obscureText = true;
+  int ? val ;
+  int ? val1 ;
+  int ? val2;
+  int ? val3;
+  var Rtext;
+  bool yes2 = false;
+  bool yes1 = false;
+  bool yes = false;
+  bool no = true;
+  bool no1 = false;
+  bool no2 =false;
+  void showWidget1(){
+    setState(() {
+      yes1 = true ;
+      no1 = false ;
+    });
+  }
+  void showWidget2(){
+    setState(() {
+      yes2 = true ;
+      no2 = false ;
+    });
+  }
+  void hideWidget1(){
+    setState(() {
+      yes1 = false ;
+      no1 = true ;
+    });
+  }
+  void hideWidget2(){
+    setState(() {
+      yes2 = false ;
+      no2 = true ;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -248,6 +291,224 @@ class _seach_engine_formState extends State<seach_engine_form> {
                       ),
                     )
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('14.Do You Have Google Analytics Account?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                ),
+                ListTile(
+                  //onTap: showWidget,
+                  title: Text("Yes",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
+                  leading: Radio(
+                    value: 1,
+                    groupValue: val1,
+                    onChanged: (value) {
+                      setState(() {
+                        showWidget1();
+                        val1 = value as int;
+                      });
+                    },
+                    activeColor: Colors.deepPurple,
+                  ),
+                ),
+                ListTile(
+                  // onTap: showTextWidget,
+                  title: Text("No",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
+                  leading: Radio(
+                    value: 2,
+                    groupValue: val1,
+                    onChanged: (value) {
+                      setState(() {
+                        hideWidget1();
+                        val1 = value as int;
+                      });
+                    },
+                    activeColor: Colors.deepPurple,
+                  ),
+                ),
+                Visibility(
+                  visible: yes1,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: MailIdcntlr,
+                          decoration: InputDecoration(
+                            suffixIcon: Icon(Icons.link_rounded),
+                            hintText: "Enter Your MailId",
+                            border: OutlineInputBorder(),
+                          ),
+
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          obscureText: _obscureText,
+                          controller: PasswordCntlr,
+                          decoration: InputDecoration(
+                              suffixIcon: IconButton(icon: Icon( _obscureText ? Icons.visibility_outlined : Icons.visibility_off_outlined),onPressed: (){
+                                setState(() {
+                                  _obscureText = !_obscureText;
+                                });
+                              },),
+                              hintText: 'Password',
+                              border: OutlineInputBorder()
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible: no1,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('Do you prefer us to create one?',style: TextStyle(fontSize: 20,color: Colors.blue,fontWeight: FontWeight.w500),),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: detailscntlr,
+                          decoration: InputDecoration(
+                            suffixIcon: Icon(Icons.link_rounded),
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("15.Do You Have Google Map's Account?",style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                ),
+                ListTile(
+                  //onTap: showWidget,
+                  title: Text("Yes",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
+                  leading: Radio(
+                    value: 3,
+                    groupValue: val2,
+                    onChanged: (value) {
+                      setState(() {
+                        showWidget2();
+                        val2 = value as int;
+                      });
+                    },
+                    activeColor: Colors.deepPurple,
+                  ),
+                ),
+                ListTile(
+                  // onTap: showTextWidget,
+                  title: Text("No",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
+                  leading: Radio(
+                    value: 4,
+                    groupValue: val2,
+                    onChanged: (value) {
+                      setState(() {
+                        hideWidget2();
+                        val2 = value as int;
+                      });
+                    },
+                    activeColor: Colors.deepPurple,
+                  ),
+                ),
+                Visibility(
+                  visible: yes2,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: MailIdcntlr1,
+                          decoration: InputDecoration(
+                            suffixIcon: Icon(Icons.link_rounded),
+                            hintText: "Enter Your MailId",
+                            border: OutlineInputBorder(),
+                          ),
+
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          obscureText: _obscureText,
+                          controller: PasswordCntlr1,
+                          decoration: InputDecoration(
+                              suffixIcon: IconButton(icon: Icon( _obscureText ? Icons.visibility_outlined : Icons.visibility_off_outlined),onPressed: (){
+                                setState(() {
+                                  _obscureText = !_obscureText;
+                                });
+                              },),
+                              hintText: 'Password',
+                              border: OutlineInputBorder()
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible: no2,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('Do you prefer us to create one?',style: TextStyle(fontSize: 20,color: Colors.blue,fontWeight: FontWeight.w500),),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: detailscntlr1,
+                          decoration: InputDecoration(
+                            suffixIcon: Icon(Icons.link_rounded),
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("16.Do You Prefer TBA to Edit or Add a new page on your website?",style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                ),
+                ListTile(
+                  //onTap: showWidget,
+                  title: Text("Yes",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
+                  leading: Radio(
+                    value: 19,
+                    groupValue: val3,
+                    onChanged: (value) {
+                      setState(() {
+                        //showWidget1();
+                        Rtext="Yes";
+                        val3 = value as int?  ;
+                        print(Rtext);
+                      });
+                    },
+                    activeColor: Colors.deepPurple,
+                  ),
+                ),
+                ListTile(
+                  // onTap: showTextWidget,
+                  title: Text("No",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
+                  leading: Radio(
+                    value: 20,
+                    groupValue: val3,
+                    onChanged: (value) {
+                      setState(() {
+                        // hideWidget1();
+                        Rtext = "No";
+                        val3 = value as int?;
+                        print(Rtext);
+                      });
+                    },
+                    activeColor: Colors.deepPurple,
+                  ),
+                ),
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(70,30,70,10),
@@ -269,14 +530,15 @@ class _seach_engine_formState extends State<seach_engine_form> {
                                   'Targeted Audience Demographics':Demographicsctlr.text,'Targeted Area':GeopgraphicalAreaCntrlr.text,
                                   'Seasonal Products or Services':SeasonalProductsCntrlr.text,'Business Description':BusinessDescriptionctlr.text,
                                   'Best Selling':BestSellingctlr.text,'Promotion Discount':PromotionDiscountctlr.text,
-                                  'Specific-Keywords':SpecificKeywordsctlr.text,
-
-
+                                  'Specific-Keywords':SpecificKeywordsctlr.text,'Google Analytics Mail-Id':MailIdcntlr.text,
+                                  'Google Analytics Password':PasswordCntlr.text,'Edit Website':Rtext,'Gmap Id':MailIdcntlr1.text,
+                                  'Gmap Password':PasswordCntlr1.text
                                 }
                             ).then((value) => {
                               Advertisingctlr.clear(),GoogleAdwordsctlr.clear(),MarketingGoalsctlr.clear(),Competitorsctlr.clear(),UniqueSellingctlr.clear(),
                               TargetedAudiencectlr.clear(),Demographicsctlr.clear(),GeopgraphicalAreaCntrlr.clear(),SeasonalProductsCntrlr.clear(),BusinessDescriptionctlr.clear(),
-                              BestSellingctlr.clear(),PromotionDiscountctlr.clear(),SpecificKeywordsctlr.clear(),
+                              BestSellingctlr.clear(),PromotionDiscountctlr.clear(),SpecificKeywordsctlr.clear(),MailIdcntlr.clear(),PasswordCntlr.clear(),
+                              MailIdcntlr1.clear(),PasswordCntlr1.clear()
                             });
                             Fluttertoast.showToast(
                                 timeInSecForIosWeb: 1,
@@ -286,6 +548,7 @@ class _seach_engine_formState extends State<seach_engine_form> {
                                 backgroundColor: Colors.deepPurple,
                                 textColor: Colors.white
                             );
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const SearchEngine_Menu()),);
                           }
                           catch(e){
                             Fluttertoast.showToast(

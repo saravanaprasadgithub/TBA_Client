@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:first_app/seo/seo_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
@@ -33,6 +34,7 @@ class _SEO_formState extends State<SEO_form> {
   TextEditingController LongGoalctlr = TextEditingController();
   TextEditingController DomainCntrlr = TextEditingController();
   UploadTask? task;
+  late String details;
   File? file;
   int ? val ;
   int ? val1 ;
@@ -96,6 +98,14 @@ class _SEO_formState extends State<SEO_form> {
                     hintText: "Enter Website URL",
                     border: OutlineInputBorder(),
                   ),
+                  validator: (String? value){
+                    if(value!.isEmpty){
+                      return 'Please Enter Details';
+                    }
+                  },
+                  onSaved: (String? value){
+                    details = value!;
+                  },
                 ),
               ),
               Padding(
@@ -422,28 +432,75 @@ class _SEO_formState extends State<SEO_form> {
                       {
                         try{
                           uploadFile();
-                          var firebaseUser =  FirebaseAuth.instance.currentUser;
-                          firestoreInstance.collection("SEO Form").doc(firebaseUser!.email).set(
-                              {
-                                'Analytics UserID':UserIdcntlr.text,'Analytics Password':Passwordctlr.text,'Search Console UserId':Usercntlr.text,
-                                'Upload FileName':fileName,'Website Link':WebURLctlr.text,'Business Type':BusinessTypectlr.text,'Short-Term-Goal':ShortGoalctlr.text,
-                                'Unique Service':UniqueServicectlr.text,'Competitors Websites':CompetitorsWebsitesctlr.text,'Search Console UserId':PasswordCntlr.text,
-                                'WebAnalyze': WebAnalyzeCntrlr.text,'Targeted Location':TargetLocationctlr.text,'Targeted Audience':TargetedAudiencectlr.text,
-                                'Long Term Goal':LongGoalctlr.text,'Web Domain':DomainCntrlr.text
-                              }
-                          ).then((value) => {
-                            UserIdcntlr.clear(),Passwordctlr.clear(),Usercntlr.clear(),PasswordCntlr.clear(),WebURLctlr.clear(),BusinessTypectlr.clear(),
-                            UniqueServicectlr.clear(),CompetitorsWebsitesctlr.clear(),WebAnalyzeCntrlr.clear(),TargetLocationctlr.clear(),TargetedAudiencectlr.clear(),
-                            DomainCntrlr.clear(),LongGoalctlr.clear(),ShortGoalctlr.clear()
-                          });
-                          Fluttertoast.showToast(
-                              timeInSecForIosWeb: 1,
-                              msg: "Your Details Submitted Successfully..!!!",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              backgroundColor: Colors.deepPurple,
-                              textColor: Colors.white
-                          );
+                          if(task!=null){
+                            Fluttertoast.showToast(
+                                timeInSecForIosWeb: 1,
+                                msg: "Wait for Complete Upload..!!!",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                backgroundColor: Colors.deepOrange,
+                                textColor: Colors.white
+                            );
+                            var firebaseUser =  FirebaseAuth.instance.currentUser;
+                            firestoreInstance.collection("SEO Form").doc(firebaseUser!.email).set(
+                                {
+                                  'Analytics UserID':UserIdcntlr.text,'Analytics Password':Passwordctlr.text,'Search Console UserId':Usercntlr.text,
+                                  'Upload FileName':fileName,'Website Link':WebURLctlr.text,'Business Type':BusinessTypectlr.text,'Short-Term-Goal':ShortGoalctlr.text,
+                                  'Unique Service':UniqueServicectlr.text,'Competitors Websites':CompetitorsWebsitesctlr.text,'Search Console UserId':PasswordCntlr.text,
+                                  'WebAnalyze': WebAnalyzeCntrlr.text,'Targeted Location':TargetLocationctlr.text,'Targeted Audience':TargetedAudiencectlr.text,
+                                  'Long Term Goal':LongGoalctlr.text,'Web Domain':DomainCntrlr.text
+                                }
+                            ).then((value) => {
+                              UserIdcntlr.clear(),Passwordctlr.clear(),Usercntlr.clear(),PasswordCntlr.clear(),WebURLctlr.clear(),BusinessTypectlr.clear(),
+                              UniqueServicectlr.clear(),CompetitorsWebsitesctlr.clear(),WebAnalyzeCntrlr.clear(),TargetLocationctlr.clear(),TargetedAudiencectlr.clear(),
+                              DomainCntrlr.clear(),LongGoalctlr.clear(),ShortGoalctlr.clear()
+                            });
+                            task!.whenComplete(() {
+                              Fluttertoast.showToast(
+                                  timeInSecForIosWeb: 1,
+                                  msg: "Your files & Details Uploaded Successfully..!!!",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  backgroundColor: Colors.green,
+                                  textColor: Colors.white
+                              );
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const SEO_Menu()),);
+                            }
+                            );
+                          }
+                          else{
+                            Fluttertoast.showToast(
+                                timeInSecForIosWeb: 1,
+                                msg: "No Files to Upload..!!!",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                backgroundColor: Colors.deepOrange,
+                                textColor: Colors.white
+                            );
+                            var firebaseUser =  FirebaseAuth.instance.currentUser;
+                            firestoreInstance.collection("SEO Form").doc(firebaseUser!.email).set(
+                                {
+                                  'Analytics UserID':UserIdcntlr.text,'Analytics Password':Passwordctlr.text,'Search Console UserId':Usercntlr.text,
+                                  'Upload FileName':fileName,'Website Link':WebURLctlr.text,'Business Type':BusinessTypectlr.text,'Short-Term-Goal':ShortGoalctlr.text,
+                                  'Unique Service':UniqueServicectlr.text,'Competitors Websites':CompetitorsWebsitesctlr.text,'Search Console UserId':PasswordCntlr.text,
+                                  'WebAnalyze': WebAnalyzeCntrlr.text,'Targeted Location':TargetLocationctlr.text,'Targeted Audience':TargetedAudiencectlr.text,
+                                  'Long Term Goal':LongGoalctlr.text,'Web Domain':DomainCntrlr.text
+                                }
+                            ).then((value) => {
+                              UserIdcntlr.clear(),Passwordctlr.clear(),Usercntlr.clear(),PasswordCntlr.clear(),WebURLctlr.clear(),BusinessTypectlr.clear(),
+                              UniqueServicectlr.clear(),CompetitorsWebsitesctlr.clear(),WebAnalyzeCntrlr.clear(),TargetLocationctlr.clear(),TargetedAudiencectlr.clear(),
+                              DomainCntrlr.clear(),LongGoalctlr.clear(),ShortGoalctlr.clear()
+                            });
+                            Fluttertoast.showToast(
+                                timeInSecForIosWeb: 1,
+                                msg: "Your Details Submitted Successfully..!!!",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                backgroundColor: Colors.deepPurple,
+                                textColor: Colors.white
+                            );
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const SEO_Menu()),);
+                          }
                         }
                         catch(e){
                           Fluttertoast.showToast(
