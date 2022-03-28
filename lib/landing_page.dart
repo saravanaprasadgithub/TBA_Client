@@ -44,8 +44,6 @@ class _MainMenuState extends State<MainMenu> {
         return false;
       },
       child: Scaffold(
-        //height: MediaQuery.of(context).size.height,
-        //width: MediaQuery.of(context).size.width,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Colors.deepPurple,
@@ -55,7 +53,6 @@ class _MainMenuState extends State<MainMenu> {
             IconButton(
               icon:Icon(Icons.logout),
               onPressed: (){
-                // showExitPopup();
                 logindata!.setBool('login', true);//maintain login data
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const login()),);
               },
@@ -66,236 +63,188 @@ class _MainMenuState extends State<MainMenu> {
           padding: const EdgeInsets.all(8.0),
           child: GridView(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
-            crossAxisSpacing: 5.0,
-            mainAxisSpacing: 5.0
+            crossAxisSpacing: 8.0,
+            mainAxisSpacing: 8.0
           ),
-            shrinkWrap: true,
             scrollDirection: Axis.vertical,
             children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(
-                      child: IconButton(
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const Web_Menu()),);
-                        },
-                        icon: Icon(Icons.web_rounded,color: Colors.deepPurple,size: 40,),
-                      ),
-                    ),
-                    SizedBox(height: 5,),
-                    FittedBox(child: Text('Website',style: TextStyle(fontSize: 16,),))
-                  ],
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Web_Menu()),);
+                },
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(Icons.web_rounded,color: Colors.deepPurple,size: 40,),
+                      SizedBox(height: 5,),
+                      Text('Website',style: TextStyle(fontSize: 16,),textAlign: TextAlign.center,)
+                    ],
+                  ),
                 ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(
-                      child: IconButton(
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const App_Menu()),);
-                        },
-                        icon: Icon(Icons.mobile_friendly_outlined,color: Colors.deepPurple,size: 40,),
-                      ),
-                    ),
-                    SizedBox(height: 5,),
-                    FittedBox(child: Text('Mobile App',style: TextStyle(fontSize: 16,),))
-                  ],
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const App_Menu()),);
+                },
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(Icons.mobile_friendly_outlined,color: Colors.deepPurple,size: 40,),
+                      SizedBox(height: 5,),
+                      Text('Mobile App',style: TextStyle(fontSize: 16,),textAlign: TextAlign.center)
+                    ],
+                  ),
                 ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(
-                      child: IconButton(
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const SearchEngine_Menu()),);
-                        },
-                        icon: Icon(Icons.search_rounded,color: Colors.deepPurple,size: 40,),
-                      ),
-                    ),
-                    SizedBox(height: 5,),
-                    FittedBox(child: Text('Search Engine',style: TextStyle(fontSize: 16,),))
-                  ],
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const SearchEngine_Menu()),);
+                },
+                child: Container(
+                  child: Column(
+                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(Icons.search_rounded,color: Colors.deepPurple,size: 40,),
+                      SizedBox(height: 5,),
+                      Text('Search Engine',style: TextStyle(fontSize: 16,),textAlign: TextAlign.center)
+                    ],
+                  ),
                 ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(
-                      child: IconButton(
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const SocialMedia_Menu()),);
-                        },
-                        icon: Icon(Icons.facebook,color: Colors.deepPurple,size: 40,),
-                      ),
-                    ),
-                    SizedBox(height: 5,),
-                    FittedBox(child: Text('Social Media',style: TextStyle(fontSize: 16,),))
-                  ],
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const SocialMedia_Menu()),);
+                },
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(Icons.facebook,color: Colors.deepPurple,size: 40,),
+                      SizedBox(height: 5,),
+                      Text('Social Media',style: TextStyle(fontSize: 16,),textAlign: TextAlign.center)
+                    ],
+                  ),
                 ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(
-                      child: IconButton(
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const ReputationManagement_Menu()),);
-                        },
-                        icon: Icon(Icons.business,color: Colors.deepPurple,size: 40,),
-                      ),
-                    ),
-                    SizedBox(height: 5,),
-                    FittedBox(child: Text('Reputation',style: TextStyle(fontSize: 16,),))
-                  ],
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ReputationManagement_Menu()),);
+                },
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(Icons.business,color: Colors.deepPurple,size: 40,),
+                      SizedBox(height: 5,),
+                      Text('Reputation',style: TextStyle(fontSize: 16,),textAlign: TextAlign.center,)
+                    ],
+                  ),
                 ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(
-                      child: IconButton(
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const CreativeService_Menu()),);
-                        },
-                        icon: Icon(Icons.add_business_outlined,color: Colors.deepPurple,size: 40,),
-                      ),
-                    ),
-                    SizedBox(height: 5,),
-                    FittedBox(child: Text('Creative Services',style: TextStyle(fontSize: 16,),))
-                  ],
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const CreativeService_Menu()),);
+                },
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(Icons.add_business_outlined,color: Colors.deepPurple,size: 40,),
+                      SizedBox(height: 5,),
+                      Text('Creative Services',style: TextStyle(fontSize: 16,),textAlign: TextAlign.center,)
+                    ],
+                  ),
                 ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(
-                      child: IconButton(
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const Payperclick_Menu()),);
-                        },
-                        icon: Icon(Icons.payments_outlined,color: Colors.deepPurple,size: 40,),
-                      ),
-                    ),
-                    SizedBox(height: 5,),
-                    FittedBox(child: Text('Pay-Per-Click',style: TextStyle(fontSize: 16,),))
-                  ],
+              GestureDetector(onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const Payperclick_Menu()),);
+              },
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(Icons.payments_outlined,color: Colors.deepPurple,size: 40,),
+                      SizedBox(height: 5,),
+                      Text('Pay-Per-Click',style: TextStyle(fontSize: 16,),textAlign: TextAlign.center,)
+                    ],
+                  ),
                 ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(
-                      child: IconButton(
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const SEO_Menu()),);
-                        },
-                        icon: Icon(Icons.vpn_lock_rounded,color: Colors.deepPurple,size: 40,),
-                      ),
-                    ),
-                    SizedBox(height: 5,),
-                    FittedBox(child: Text('SEO',style: TextStyle(fontSize: 16,),))
-                  ],
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const SEO_Menu()),);
+                },
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(Icons.vpn_lock_rounded,color: Colors.deepPurple,size: 40,),
+                      SizedBox(height: 5,),
+                      Text('SEO',style: TextStyle(fontSize: 16,),textAlign: TextAlign.center,)
+                    ],
+                  ),
                 ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(
-                      child: IconButton(
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const ContentMarketing_Menu()),);
-                        },
-                        icon: Icon(Icons.book_outlined,color: Colors.deepPurple,size: 40,),
-                      ),
-                    ),
-                    SizedBox(height: 5,),
-                    FittedBox(child: Text('Content Marketing',style: TextStyle(fontSize: 16,),))
-                  ],
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ContentMarketing_Menu()),);
+                },
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(Icons.book_outlined,color: Colors.deepPurple,size: 40,),
+                      SizedBox(height: 5,),
+                      Text('Content Marketing',style: TextStyle(fontSize: 16,),textAlign: TextAlign.center,)
+                    ],
+                  ),
                 ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(
-                      child: IconButton(
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const MobileMarketing_Menu()),);
-                        },
-                        icon: Icon(Icons.phone_android_outlined,color: Colors.deepPurple,size: 40,),
-                      ),
-                    ),
-                    SizedBox(height: 5,),
-                    FittedBox(child: Text('Mobile Marketing',style: TextStyle(fontSize: 16,),))
-                  ],
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const MobileMarketing_Menu()),);
+                },
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(Icons.phone_android_outlined,color: Colors.deepPurple,size: 40,),
+                      SizedBox(height: 5,),
+                      Text('Mobile Marketing',style: TextStyle(fontSize: 16,),textAlign: TextAlign.center,)
+                    ],
+                  ),
                 ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(
-                      child: IconButton(
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const EmailMarketing_Menu()),);
-                        },
-                        icon: Icon(Icons.mail_outline_rounded,color: Colors.deepPurple,size: 40,),
-                      ),
-                    ),
-                    SizedBox(height: 5,),
-                    FittedBox(child: Text('Email Marketing',style: TextStyle(fontSize: 16,),))
-                  ],
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const EmailMarketing_Menu()),);
+                },
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(Icons.mail_outline_rounded,color: Colors.deepPurple,size: 40,),
+                      SizedBox(height: 5,),
+                      Text('Email Marketing',style: TextStyle(fontSize: 16,),textAlign: TextAlign.center)
+                    ],
+                  ),
                 ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(
-                      child: IconButton(
-                        onPressed: (){},
-                        icon: Icon(Icons.token_outlined,color: Colors.deepPurple,size: 40,),
-                      ),
-                    ),
-                    SizedBox(height: 5,),
-                    FittedBox(child: Text('Digital 360°',style: TextStyle(fontSize: 16,),))
-                  ],
+              GestureDetector(
+                onTap: (){
+
+                },
+                child: Container(
+                  child: Column(
+                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(Icons.token_outlined,color: Colors.deepPurple,size: 40,),
+                      SizedBox(height: 5,),
+                      Text('Digital 360°',style: TextStyle(fontSize: 16,),textAlign: TextAlign.center,)
+                    ],
+                  ),
                 ),
               ),
             ],
