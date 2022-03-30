@@ -171,7 +171,7 @@ class _loginState extends State<login> {
                             if (user != null && FirebaseAuth.instance.currentUser!.emailVerified==true ){
                               Fluttertoast.showToast(
                                   timeInSecForIosWeb: 1,
-                                  msg: "TBA Welcomes You! You're just one step away from a website_Development.!!!",
+                                  msg: "TBA Welcomes You! You're just one step away from a Development.!!!",
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.BOTTOM,
                                   backgroundColor: Colors.deepPurple,

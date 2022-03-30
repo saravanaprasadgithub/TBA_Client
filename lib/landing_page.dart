@@ -1,4 +1,7 @@
 import 'package:first_app/Creative_Service/creative_service_menu.dart';
+import 'package:first_app/OffPage_Seo/seoOff_menu.dart';
+import 'package:first_app/OnPage_Seo/seoOn_menu.dart';
+import 'package:first_app/Seo_99/seo99_menu.dart';
 import 'package:first_app/Social_Media_Management/social_media_menu.dart';
 import 'package:first_app/app_Development/app_menu.dart';
 import 'package:first_app/content_marketing/content_marketing_menu.dart';
@@ -8,8 +11,10 @@ import 'package:first_app/mobile_marketing/mobile_marketing_menu.dart';
 import 'package:first_app/pay_per_click/payperclick_menu.dart';
 import 'package:first_app/reputation_management/reputation_menu.dart';
 import 'package:first_app/search_engine_marketing/search_engine_menu.dart';
-import 'package:first_app/seo/seo_menu.dart';
-import 'package:first_app/website_Development/web_menu.dart';
+import 'package:first_app/seo199/seo_menu.dart';
+import 'package:first_app/website199_Development/web_menu.dart';
+import 'package:first_app/website_Design/webdesign_menu.dart';
+import 'package:first_app/website_Redesign/web_redesign_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -78,7 +83,7 @@ class _MainMenuState extends State<MainMenu> {
                     children: [
                       Icon(Icons.web_rounded,color: Colors.deepPurple,size: 40,),
                       SizedBox(height: 5,),
-                      Text('Website',style: TextStyle(fontSize: 16,),textAlign: TextAlign.center,)
+                      Text('Website 199',style: TextStyle(fontSize: 16,),textAlign: TextAlign.center,)
                     ],
                   ),
                 ),
@@ -182,7 +187,7 @@ class _MainMenuState extends State<MainMenu> {
                     children: [
                       Icon(Icons.vpn_lock_rounded,color: Colors.deepPurple,size: 40,),
                       SizedBox(height: 5,),
-                      Text('SEO',style: TextStyle(fontSize: 16,),textAlign: TextAlign.center,)
+                      Text('SEO 199',style: TextStyle(fontSize: 16,),textAlign: TextAlign.center,)
                     ],
                   ),
                 ),
@@ -243,6 +248,81 @@ class _MainMenuState extends State<MainMenu> {
                       Icon(Icons.token_outlined,color: Colors.deepPurple,size: 40,),
                       SizedBox(height: 5,),
                       Text('Digital 360°',style: TextStyle(fontSize: 16,),textAlign: TextAlign.center,)
+                    ],
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Web_Design()),);
+                },
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(Icons.web_rounded,color: Colors.deepPurple,size: 40,),
+                      SizedBox(height: 5,),
+                      Text('Website Design',style: TextStyle(fontSize: 16,),textAlign: TextAlign.center,)
+                    ],
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Web_ReDesign()),);
+                },
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(Icons.web_rounded,color: Colors.deepPurple,size: 40,),
+                      SizedBox(height: 5,),
+                      Text('Website Re-Design',style: TextStyle(fontSize: 16,),textAlign: TextAlign.center,)
+                    ],
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const SEOon_Menu()),);
+                },
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(Icons.vpn_lock_rounded,color: Colors.deepPurple,size: 40,),
+                      SizedBox(height: 5,),
+                      Text('On Page SEO',style: TextStyle(fontSize: 16,),textAlign: TextAlign.center,)
+                    ],
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const SEOoff_Menu()),);
+                },
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(Icons.vpn_lock_rounded,color: Colors.deepPurple,size: 40,),
+                      SizedBox(height: 5,),
+                      Text('Off Page SEO',style: TextStyle(fontSize: 16,),textAlign: TextAlign.center,)
+                    ],
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const SEO99_Menu()),);
+                },
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(Icons.vpn_lock_rounded,color: Colors.deepPurple,size: 40,),
+                      SizedBox(height: 5,),
+                      Text('SEO 99',style: TextStyle(fontSize: 16,),textAlign: TextAlign.center,)
                     ],
                   ),
                 ),

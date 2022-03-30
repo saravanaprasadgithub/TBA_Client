@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:first_app/seo/seo_menu.dart';
+import 'package:first_app/OffPage_Seo/seoOff_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
@@ -9,14 +9,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:first_app/api/uploadapi.dart';
 
-class SEO_form extends StatefulWidget {
-  const SEO_form({Key? key}) : super(key: key);
+class SEOoff_form extends StatefulWidget {
+  const SEOoff_form({Key? key}) : super(key: key);
 
   @override
-  State<SEO_form> createState() => _SEO_formState();
+  State<SEOoff_form> createState() => _SEOoff_formState();
 }
 
-class _SEO_formState extends State<SEO_form> {
+class _SEOoff_formState extends State<SEOoff_form> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final firestoreInstance = FirebaseFirestore.instance;
   TextEditingController UserIdcntlr = TextEditingController();
@@ -65,6 +65,11 @@ class _SEO_formState extends State<SEO_form> {
       yes1 = false ;
       no = true ;
     });
+  }
+  @override
+  void initState() {
+    super.initState();
+    getdata();
   }
   @override
   Widget build(BuildContext context) {
@@ -442,13 +447,13 @@ class _SEO_formState extends State<SEO_form> {
                                 textColor: Colors.white
                             );
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
-                            firestoreInstance.collection("SEO Form").doc(firebaseUser!.email).set(
+                            firestoreInstance.collection("SEOoff Form").doc(firebaseUser!.email).set(
                                 {
-                                  'Analytics UserID':UserIdcntlr.text,'Analytics Password':Passwordctlr.text,'Search Console UserId':Usercntlr.text,
-                                  'Upload FileName':fileName,'Website Link':WebURLctlr.text,'Business Type':BusinessTypectlr.text,'Short-Term-Goal':ShortGoalctlr.text,
-                                  'Unique Service':UniqueServicectlr.text,'Competitors Websites':CompetitorsWebsitesctlr.text,'Search Console UserId':PasswordCntlr.text,
-                                  'WebAnalyze': WebAnalyzeCntrlr.text,'Targeted Location':TargetLocationctlr.text,'Targeted Audience':TargetedAudiencectlr.text,
-                                  'Long Term Goal':LongGoalctlr.text,'Web Domain':DomainCntrlr.text
+                                  'Analytics_UserID':UserIdcntlr.text,'Analytics_Password':Passwordctlr.text,'Search_Console_UserId':Usercntlr.text,
+                                  'Upload_FileName':fileName,'Website_Link':WebURLctlr.text,'Business_Type':BusinessTypectlr.text,'Short_Term_Goal':ShortGoalctlr.text,
+                                  'Unique_Service':UniqueServicectlr.text,'Competitors_Websites':CompetitorsWebsitesctlr.text,'Search_Console_Password':PasswordCntlr.text,
+                                  'WebAnalyze': WebAnalyzeCntrlr.text,'Targeted_Location':TargetLocationctlr.text,'Targeted_Audience':TargetedAudiencectlr.text,
+                                  'Long_Term_Goal':LongGoalctlr.text,'Web_Domain':DomainCntrlr.text
                                 }
                             ).then((value) => {
                               UserIdcntlr.clear(),Passwordctlr.clear(),Usercntlr.clear(),PasswordCntlr.clear(),WebURLctlr.clear(),BusinessTypectlr.clear(),
@@ -464,7 +469,7 @@ class _SEO_formState extends State<SEO_form> {
                                   backgroundColor: Colors.green,
                                   textColor: Colors.white
                               );
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const SEO_Menu()),);
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const SEOoff_Menu()),);
                             }
                             );
                           }
@@ -478,13 +483,13 @@ class _SEO_formState extends State<SEO_form> {
                                 textColor: Colors.white
                             );
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
-                            firestoreInstance.collection("SEO Form").doc(firebaseUser!.email).set(
+                            firestoreInstance.collection("SEOoff Form").doc(firebaseUser!.email).set(
                                 {
-                                  'Analytics UserID':UserIdcntlr.text,'Analytics Password':Passwordctlr.text,'Search Console UserId':Usercntlr.text,
-                                  'Upload FileName':fileName,'Website Link':WebURLctlr.text,'Business Type':BusinessTypectlr.text,'Short-Term-Goal':ShortGoalctlr.text,
-                                  'Unique Service':UniqueServicectlr.text,'Competitors Websites':CompetitorsWebsitesctlr.text,'Search Console UserId':PasswordCntlr.text,
-                                  'WebAnalyze': WebAnalyzeCntrlr.text,'Targeted Location':TargetLocationctlr.text,'Targeted Audience':TargetedAudiencectlr.text,
-                                  'Long Term Goal':LongGoalctlr.text,'Web Domain':DomainCntrlr.text
+                                  'Analytics_UserID':UserIdcntlr.text,'Analytics_Password':Passwordctlr.text,'Search_Console_UserId':Usercntlr.text,
+                                  'Upload_FileName':fileName,'Website_Link':WebURLctlr.text,'Business_Type':BusinessTypectlr.text,'Short_Term_Goal':ShortGoalctlr.text,
+                                  'Unique_Service':UniqueServicectlr.text,'Competitors_Websites':CompetitorsWebsitesctlr.text,'Search_Console_Password':PasswordCntlr.text,
+                                  'WebAnalyze': WebAnalyzeCntrlr.text,'Targeted_Location':TargetLocationctlr.text,'Targeted_Audience':TargetedAudiencectlr.text,
+                                  'Long_Term_Goal':LongGoalctlr.text,'Web_Domain':DomainCntrlr.text
                                 }
                             ).then((value) => {
                               UserIdcntlr.clear(),Passwordctlr.clear(),Usercntlr.clear(),PasswordCntlr.clear(),WebURLctlr.clear(),BusinessTypectlr.clear(),
@@ -499,7 +504,7 @@ class _SEO_formState extends State<SEO_form> {
                                 backgroundColor: Colors.deepPurple,
                                 textColor: Colors.white
                             );
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const SEO_Menu()),);
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const SEOoff_Menu()),);
                           }
                         }
                         catch(e){
@@ -532,6 +537,27 @@ class _SEO_formState extends State<SEO_form> {
         ),
       ),
     );
+  }
+  getdata()async{
+    var firebaseUser =  FirebaseAuth.instance.currentUser;
+    final data =firestoreInstance.collection("SEOoff Form").doc(firebaseUser!.email);
+    final snapshot = await data.get();
+    if(snapshot.exists){
+      UserIdcntlr.text = snapshot['Analytics_UserID'];
+      Passwordctlr.text =snapshot['Analytics_Password'];
+      Usercntlr.text = snapshot['Search_Console_UserId'];
+      WebURLctlr.text = snapshot['Website_Link'];
+      BusinessTypectlr.text = snapshot['BusinessTypectlr'];
+      ShortGoalctlr.text=snapshot['Short_Term_Goal'];
+      UniqueServicectlr.text=snapshot['Unique_Service'];
+      CompetitorsWebsitesctlr.text = snapshot['Competitors_Websites'];
+      PasswordCntlr.text = snapshot['Search_Console_Password'];
+      WebAnalyzeCntrlr.text=snapshot['WebAnalyze'];
+      TargetLocationctlr.text=snapshot['Targeted_Location'];
+      TargetedAudiencectlr.text =snapshot['Targeted_Audience'];
+      LongGoalctlr.text=snapshot['Long_Term_Goal'];
+      DomainCntrlr.text=snapshot['Web_Domain'];
+    }
   }
   Future selectFile() async {
 

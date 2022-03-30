@@ -1,18 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:first_app/website_Development/web_menu.dart';
+import 'package:first_app/website_Redesign/web_redesign_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class technicalform extends StatefulWidget {
-  const technicalform({Key? key}) : super(key: key);
+class Redesign_technicalform extends StatefulWidget {
+  const Redesign_technicalform({Key? key}) : super(key: key);
 
   @override
-  State<technicalform> createState() => _technicalformState();
+  State<Redesign_technicalform> createState() => _Redesign_technicalformState();
 }
 
-class _technicalformState extends State<technicalform> {
+class _Redesign_technicalformState extends State<Redesign_technicalform> {
 
   TextEditingController Suggtxtctlr = TextEditingController();
   TextEditingController Urlctlr = TextEditingController();
@@ -72,6 +72,45 @@ class _technicalformState extends State<technicalform> {
     });
   }
   final firestoreInstance = FirebaseFirestore.instance;
+
+  getdata()async{
+    var firebaseUser =  FirebaseAuth.instance.currentUser;
+    final data =firestoreInstance.collection("Website Re-Design Technical").doc(firebaseUser!.email);
+    final snapshot = await data.get();
+    if(snapshot.exists){
+      Suggtxtctlr.text = snapshot['Suggestion'];
+      MobileCntrlr.text= snapshot['Mobile_No'];
+      Addressctlr.text = snapshot['Address'];
+      Namectlr.text=snapshot['Username'];
+      Urlctlr.text =snapshot['URL'];
+      Passwordctlr.text = snapshot['Password'];
+      Numctlr.text = snapshot['Pages'];
+      Linkctlr.text = snapshot['MapLink'];
+      FirstnameCntrlr.text =snapshot['FirstName'];
+      LastnameCntrlr.text =snapshot['LastName'];
+      EmailCtrlr.text = snapshot['Email_ID'];
+      Facebookcntrlr.text = snapshot['Facebook_ID'];
+      TwitterCtrlr.text = snapshot['Twitter_ID'];
+      InstagramCntrlr.text =snapshot['Insta_ID'];
+      LinkedinCntrlr.text = snapshot['LinkedIn_ID'];
+      YoutubeCntrlr.text = snapshot['Youtube_ID'];
+      KeyIdCntrlr.text = snapshot['Key_ID'];
+      SecretIdCntrlr.text= snapshot['Secret_KeyID'];
+      AdditionalCntrlr.text=snapshot['Additional_Contact_Information'];
+    }
+  }
+  @override
+  void initState() {
+    super.initState();
+   getdata();
+  }
+  @override
+  void dispose() {
+    Numctlr.dispose();
+    super.dispose();
+  }
+  int min = 0;
+  int max = 10;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,7 +127,7 @@ class _technicalformState extends State<technicalform> {
           child: Column(children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('1.Do you have a domain for your website_Development?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+              child: Text('1.Do you prefer any domain name for the website?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
             ),
             ListTile(
               //onTap: showWidget,
@@ -121,7 +160,7 @@ class _technicalformState extends State<technicalform> {
               ),
             ),
             Visibility(
-              visible: no,
+              visible: yes,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
@@ -135,7 +174,7 @@ class _technicalformState extends State<technicalform> {
               ),
             ),
             Visibility(
-              visible: yes,
+              visible: no,
               child: Column(
                 children: [
                   Padding(
@@ -193,13 +232,22 @@ class _technicalformState extends State<technicalform> {
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              //  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 validator: (String? value){
                   if(value!.isEmpty){
                     return 'Please Enter No.of.Pages';
                   }
                   return null;
                 },
+                onChanged: (String value) {
+                  if(int.parse(value)>=10) {
+                    Numctlr.text = "10";
+                  }
+                  },
+                  inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  LengthLimitingTextInputFormatter(3),
+                  ],
                 onSaved: (String? value){
                   pages = value!;
                 },
@@ -342,7 +390,7 @@ class _technicalformState extends State<technicalform> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('Share your social media links for the website_Development, as mentioned below.',style: TextStyle(fontSize: 20,color: Colors.blue,fontWeight: FontWeight.w500),),
+              child: Text('Share your social media links for the website199_Development, as mentioned below.',style: TextStyle(fontSize: 20,color: Colors.blue,fontWeight: FontWeight.w500),),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -427,7 +475,7 @@ class _technicalformState extends State<technicalform> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('6.Which type of contact form do you need for the website_Development?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+              child: Text('6.Which type of contact form do you need for the website199_Development?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -477,19 +525,19 @@ class _technicalformState extends State<technicalform> {
                   {
                     try{
                       var firebaseUser =  FirebaseAuth.instance.currentUser;
-                      firestoreInstance.collection("Website Technical Form").doc(firebaseUser!.email).set(
+                      firestoreInstance.collection("Website Re-Design Technical").doc(firebaseUser!.email).set(
                           {
                             'Suggestion':Suggtxtctlr.text,'URL':Urlctlr.text,
                             'Username':Namectlr.text,'Password':Passwordctlr.text,
                             'Pages':Numctlr.text,'MapLink':Linkctlr.text,
                             'Address':Addressctlr.text,'FirstName':FirstnameCntrlr.text,
-                            'LastName':LastnameCntrlr.text,'Email-ID':EmailCtrlr.text,
-                            'Mobile No':MobileCntrlr.text,'Facebook-ID':Facebookcntrlr.text,
-                            'Twitter-ID':TwitterCtrlr.text,'Insta-ID':InstagramCntrlr.text,
-                            'LinkedIn-ID':LinkedinCntrlr.text,'Youtube-ID':YoutubeCntrlr.text,
-                            'Key-ID':KeyIdCntrlr.text,'Secret-Key-ID':SecretIdCntrlr.text,
-                            'Additional Contact Information':AdditionalCntrlr.text,
-                            'Contact Form':getCheckboxItems(),
+                            'LastName':LastnameCntrlr.text,'Email_ID':EmailCtrlr.text,
+                            'Mobile_No':MobileCntrlr.text,'Facebook_ID':Facebookcntrlr.text,
+                            'Twitter_ID':TwitterCtrlr.text,'Insta_ID':InstagramCntrlr.text,
+                            'LinkedIn_ID':LinkedinCntrlr.text,'Youtube_ID':YoutubeCntrlr.text,
+                            'Key_ID':KeyIdCntrlr.text,'Secret_KeyID':SecretIdCntrlr.text,
+                            'Additional_Contact_Information':AdditionalCntrlr.text,
+                            'Contact_Form':getCheckboxItems(),
                           }
                       ).then((value) => {
                         Suggtxtctlr.clear(),Urlctlr.clear(),Namectlr.clear(),Passwordctlr.clear(),Numctlr.clear(),
@@ -505,7 +553,7 @@ class _technicalformState extends State<technicalform> {
                           backgroundColor: Colors.deepPurple,
                           textColor: Colors.white
                       );
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const Web_Menu()),);
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const Web_ReDesign()),);
                     }
                     catch(e){
                       Fluttertoast.showToast(
@@ -537,4 +585,5 @@ class _technicalformState extends State<technicalform> {
       ),
     );
   }
+
 }

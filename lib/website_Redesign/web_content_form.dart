@@ -3,20 +3,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:first_app/api/uploadapi.dart';
-import 'package:first_app/website_Development/web_menu.dart';
+import 'package:first_app/website_Redesign/web_redesign_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path/path.dart';
 
-class contentform extends StatefulWidget {
-  const contentform({Key? key}) : super(key: key);
+class Redesign_Contentform extends StatefulWidget {
+  const Redesign_Contentform({Key? key}) : super(key: key);
 
   @override
-  State<contentform> createState() => _contentformState();
+  State<Redesign_Contentform> createState() => _Redesign_ContentformState();
 }
 
-class _contentformState extends State<contentform> {
+class _Redesign_ContentformState extends State<Redesign_Contentform> {
 
   TextEditingController busstypectlr = TextEditingController();
   TextEditingController Productsctlr = TextEditingController();
@@ -33,9 +33,40 @@ class _contentformState extends State<contentform> {
   late String bussinesstype;
   UploadTask? task;
   File? file;
+
+  getdata() async{
+    var firebaseUser =  FirebaseAuth.instance.currentUser;
+    final data =firestoreInstance.collection("Website Re-Design Content").doc(firebaseUser!.email);
+    final snapshot = await data.get();
+    if(snapshot.exists){
+      busstypectlr.text = snapshot['Business_Type'];
+      Productsctlr.text= snapshot['Products'];
+      UniqueServctlr.text = snapshot['Unique_Service'];
+      Missionctlr.text=snapshot['Misson'];
+      Descctlr.text =snapshot['Customer_Description'];
+      Locationctlr.text = snapshot['Location'];
+      Testctlr.text = snapshot['Testimonials'];
+      SeoCntrlr.text = snapshot['SEO_Focus'];
+      WebupdCntrlr.text =snapshot['Website_Update'];
+      AddfileCtrlr.text =snapshot['AdditionalFiles'];
+    }
+  }
+  @override
+  void initState() {
+    super.initState();
+    getdata();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final fileName = file != null ? basename(file!.path) : 'No File Selected';
+    final fileName;
+   // fileName = file != null ? basename(file!.path) : 'No File Selected';
+    if(file!=null){
+      fileName =basename(file!.path);
+    }
+    else{
+      fileName ='No File Selected';
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
@@ -247,14 +278,14 @@ class _contentformState extends State<contentform> {
                                 textColor: Colors.white
                             );
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
-                            firestoreInstance.collection("Website Content Form").doc(firebaseUser!.email).set(
+                            firestoreInstance.collection("Website Re-Design Content").doc(firebaseUser!.email).set(
                                 {
-                                  'Business Type':busstypectlr.text,'Products ':Productsctlr.text,
-                                  'Unique Service':UniqueServctlr.text,'Misson & Vission':Missionctlr.text,
-                                  'Customer Description':Descctlr.text,'Location':Locationctlr.text,
-                                  'Testimonials':Testctlr.text,'SEC Focus':SeoCntrlr.text,
-                                  'Website Update':WebupdCntrlr.text,'Additional Files':AddfileCtrlr.text,
-                                  'Upload FileName':fileName,
+                                  'Business_Type':busstypectlr.text,'Products':Productsctlr.text,
+                                  'Unique_Service':UniqueServctlr.text,'Misson':Missionctlr.text,
+                                  'Customer_Description':Descctlr.text,'Location':Locationctlr.text,
+                                  'Testimonials':Testctlr.text,'SEO_Focus':SeoCntrlr.text,
+                                  'Website_Update':WebupdCntrlr.text,'AdditionalFiles':AddfileCtrlr.text,
+                                  'Upload_FileName':fileName,
                                 }
                             ).then((value) => {
                               busstypectlr.clear(),Productsctlr.clear(),UniqueServctlr.clear(),Missionctlr.clear(),Descctlr.clear(),
@@ -269,7 +300,7 @@ class _contentformState extends State<contentform> {
                                   backgroundColor: Colors.green,
                                   textColor: Colors.white
                               );
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const Web_Menu()),);
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const Web_ReDesign()),);
                             }
                             );
                           }
@@ -283,14 +314,14 @@ class _contentformState extends State<contentform> {
                                 textColor: Colors.white
                             );
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
-                            firestoreInstance.collection("Website Content Form").doc(firebaseUser!.email).set(
+                            firestoreInstance.collection("Website Re-Design Content").doc(firebaseUser!.email).set(
                                 {
-                                  'Business Type':busstypectlr.text,'Products ':Productsctlr.text,
-                                  'Unique Service':UniqueServctlr.text,'Misson & Vission':Missionctlr.text,
-                                  'Customer Description':Descctlr.text,'Location':Locationctlr.text,
-                                  'Testimonials':Testctlr.text,'SEC Focus':SeoCntrlr.text,
-                                  'Website Update':WebupdCntrlr.text,'Additional Files':AddfileCtrlr.text,
-                                  'Upload FileName':fileName,
+                                  'Business_Type':busstypectlr.text,'Products':Productsctlr.text,
+                                  'Unique_Service':UniqueServctlr.text,'Misson':Missionctlr.text,
+                                  'Customer_Description':Descctlr.text,'Location':Locationctlr.text,
+                                  'Testimonials':Testctlr.text,'SEO_Focus':SeoCntrlr.text,
+                                  'Website_Update':WebupdCntrlr.text,'AdditionalFiles':AddfileCtrlr.text,
+                                  'Upload_FileName':fileName,
                                 }
                             ).then((value) => {
                               busstypectlr.clear(),Productsctlr.clear(),UniqueServctlr.clear(),Missionctlr.clear(),Descctlr.clear(),
@@ -304,7 +335,7 @@ class _contentformState extends State<contentform> {
                                 backgroundColor: Colors.deepPurple,
                                 textColor: Colors.white
                             );
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const Web_Menu()),);
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const Web_ReDesign()),);
                           }
                           }
                           catch(e){

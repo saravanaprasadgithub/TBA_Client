@@ -1,15 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:first_app/OffPage_Seo/seoOff_form.dart';
 import 'package:first_app/landing_page.dart';
-import 'package:first_app/seo/seo_form.dart';
 import 'package:flutter/material.dart';
 
-class SEO_Menu extends StatefulWidget {
-  const SEO_Menu({Key? key}) : super(key: key);
+class SEOoff_Menu extends StatefulWidget {
+  const SEOoff_Menu({Key? key}) : super(key: key);
   @override
-  State<SEO_Menu> createState() => _SEO_MenuState();
+  State<SEOoff_Menu> createState() => _SEOoff_MenuState();
 }
 
-class _SEO_MenuState extends State<SEO_Menu> {
+class _SEOoff_MenuState extends State<SEOoff_Menu> {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
@@ -72,7 +72,7 @@ class _SEO_MenuState extends State<SEO_Menu> {
             ListTile(
               leading: Icon(Icons.qr_code_outlined,color: Colors.white,), title: Text("SEO Form",style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.w500),),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const SEO_form()),);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const SEOoff_form()),);
               },
             ),
             Divider(
