@@ -64,6 +64,11 @@ class _ReputaionManagement_form3State extends State<ReputaionManagement_form3> {
     return tmpArray1;
   }
   @override
+  void initState() {
+    super.initState();
+    getdata();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -216,8 +221,8 @@ class _ReputaionManagement_form3State extends State<ReputaionManagement_form3> {
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
                             firestoreInstance.collection("Reputation Management Form3").doc(firebaseUser!.email).set(
                                 {
-                                'Web BroadCasting':WebsiteBroadcastctlr.text,'Web Login Info':WebsiteLoginctlr.text,'Review Posted':Feedbackctlr.text,
-                                'Collect Reviews':ReviewDirectoryctlr.text,'Verified Directories':getCheckboxItems1(),'Review Posting Range':getCheckboxItems()
+                                'Web_BroadCasting':WebsiteBroadcastctlr.text,'WebLogin_Info':WebsiteLoginctlr.text,'Review_Posted':Feedbackctlr.text,
+                                'Collect_Reviews':ReviewDirectoryctlr.text,'Verified_Directories':getCheckboxItems1(),'Review_Posting_Range':getCheckboxItems()
                                 }
                             ).then((value) => {
                               WebsiteBroadcastctlr.clear(),WebsiteLoginctlr.clear(),Feedbackctlr.clear(),ReviewDirectoryctlr.clear()
@@ -263,5 +268,16 @@ class _ReputaionManagement_form3State extends State<ReputaionManagement_form3> {
         ),
       ),
     );
+  }
+  getdata()async{
+    var firebaseUser =  FirebaseAuth.instance.currentUser;
+    final data =firestoreInstance.collection("Reputation Management Form3").doc(firebaseUser!.email);
+    final snapshot = await data.get();
+    if(snapshot.exists){
+      WebsiteBroadcastctlr.text = snapshot['Web_BroadCasting'];
+      WebsiteLoginctlr.text= snapshot['WebLogin_Info'];
+      Feedbackctlr.text = snapshot['Review_Posted'];
+      ReviewDirectoryctlr.text=snapshot['Collect_Reviews'];
+    }
   }
 }

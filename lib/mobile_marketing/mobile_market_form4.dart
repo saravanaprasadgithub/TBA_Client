@@ -25,7 +25,11 @@ class _mobile_Form4State extends State<mobile_Form4> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final firestoreInstance = FirebaseFirestore.instance;
   late String details;
-
+  @override
+  void initState() {
+    super.initState();
+    getdata();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -200,11 +204,11 @@ class _mobile_Form4State extends State<mobile_Form4> {
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
                             firestoreInstance.collection("Mobile Marketing Form4").doc(firebaseUser!.email).set(
                                 {
-                                  'Current Work':CurrentWorkctlr.text,'Mobile Ad Fit':MobileAdFitctlr.text,
-                                  'Past Tried':PastTryctlr.text,'Tracking Codes':TrackingCodesctlr.text,
-                                  'Account Manager Expect':Expectctlr.text,'Report View':Reportsctlr.text,
-                                  'Contact Person':ContactPersonctlr.text,'Oversight & Control':OversightCntrlr.text,
-                                  'Input Campaign':InputCampaignCntrlr.text,
+                                  'Current_Work':CurrentWorkctlr.text,'Mobile_AdFit':MobileAdFitctlr.text,
+                                  'Past_Tried':PastTryctlr.text,'Tracking_Codes':TrackingCodesctlr.text,
+                                  'Account_Manager_Expect':Expectctlr.text,'Report_View':Reportsctlr.text,
+                                  'Contact_Person':ContactPersonctlr.text,'Oversight_Control':OversightCntrlr.text,
+                                  'Input_Campaign':InputCampaignCntrlr.text,
                                 }
                             ).then((value) => {
                               CurrentWorkctlr.clear(),MobileAdFitctlr.clear(),PastTryctlr.clear(),TrackingCodesctlr.clear(),Expectctlr.clear(),
@@ -251,5 +255,21 @@ class _mobile_Form4State extends State<mobile_Form4> {
         ),
       ),
     );
+  }
+  getdata()async{
+    var firebaseUser =  FirebaseAuth.instance.currentUser;
+    final data =firestoreInstance.collection("Mobile Marketing Form4").doc(firebaseUser!.email);
+    final snapshot = await data.get();
+    if(snapshot.exists){
+      CurrentWorkctlr.text = snapshot['Current_Work'];
+      MobileAdFitctlr.text= snapshot['Mobile_AdFit'];
+      PastTryctlr.text = snapshot['Past_Tried'];
+      TrackingCodesctlr.text=snapshot['Tracking_Codes'];
+      Expectctlr.text =snapshot['Account_Manager_Expect'];
+      Reportsctlr.text = snapshot['Report_View'];
+      ContactPersonctlr.text = snapshot['Contact_Person'];
+      OversightCntrlr.text = snapshot['Oversight_Control'];
+      InputCampaignCntrlr.text =snapshot['Input_Campaign'];
+    }
   }
 }

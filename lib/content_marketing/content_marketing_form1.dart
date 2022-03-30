@@ -33,6 +33,11 @@ class _ContentMarketing_form1State extends State<ContentMarketing_form1> {
   TextEditingController GeographicsAreasctlr = TextEditingController();
   late String companyname,storefront,date,description,restriction,special,competitors,company,goal,apart,strength,portray,person,characteristics;
   @override
+  void initState() {
+    super.initState();
+    getdata();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -423,10 +428,10 @@ class _ContentMarketing_form1State extends State<ContentMarketing_form1> {
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
                             firestoreInstance.collection("Content Marketing Form1").doc(firebaseUser!.email).set(
                                 {
-                              'Company Name':CompanyNamectlr.text,'Store Front':StoreFrontctlr.text,'Company Founded':DateCntrlr.text,'Product Description':Descriptionctlr.text,
-                              'Company Restriction':Restrictionctlr.text,'Company History':Specialhistoryctlr.text,'Company Competitors':Competitorsctlr.text,'Apart Competitors':ApartCompetitorsctlr.text,
-                              'Company Charateristics':BestCharatceristicsctlr.text,'Person Type':PersonTypectlr.text,'Client Portray':PortrayCntrlr.text,'Business Strength':StrengthCntrlr.text,
-                              'Goal Tactics':GoalTacticsctlr.text,'Company Type':Companyctlr.text,'Local Company Details':LocalCompanySplctlr.text,'Company Area':GeographicsAreasctlr.text
+                              'Company_Name':CompanyNamectlr.text,'Store_Front':StoreFrontctlr.text,'Company_Founded':DateCntrlr.text,'Product_Description':Descriptionctlr.text,
+                              'Company_Restriction':Restrictionctlr.text,'Company_History':Specialhistoryctlr.text,'Company_Competitors':Competitorsctlr.text,'Apart_Competitors':ApartCompetitorsctlr.text,
+                              'Company_Charateristics':BestCharatceristicsctlr.text,'Person_Type':PersonTypectlr.text,'Client_Portray':PortrayCntrlr.text,'Business_Strength':StrengthCntrlr.text,
+                              'Goal_Tactics':GoalTacticsctlr.text,'Company_Type':Companyctlr.text,'Local_CompanyDetails':LocalCompanySplctlr.text,'Company_Area':GeographicsAreasctlr.text
                                 }
                             ).then((value) => {
                               CompanyNamectlr.clear(),StoreFrontctlr.clear(),DateCntrlr.clear(),Descriptionctlr.clear(),Restrictionctlr.clear(),Specialhistoryctlr.clear(),
@@ -474,5 +479,28 @@ class _ContentMarketing_form1State extends State<ContentMarketing_form1> {
         )
       ),
     );
+  }
+  getdata()async{
+    var firebaseUser =  FirebaseAuth.instance.currentUser;
+    final data =firestoreInstance.collection("Content Marketing Form1").doc(firebaseUser!.email);
+    final snapshot = await data.get();
+    if(snapshot.exists){
+      CompanyNamectlr.text=snapshot['Company_Name'];
+      StoreFrontctlr.text=snapshot['Store_Front'];
+      DateCntrlr.text=snapshot['Company_Founded'];
+      Descriptionctlr.text=snapshot['Product_Description'];
+      Restrictionctlr.text=snapshot['Company_Restriction'];
+      Specialhistoryctlr.text=snapshot['Company_History'];
+      Competitorsctlr.text=snapshot['Company_Competitors'];
+      ApartCompetitorsctlr.text=snapshot['Apart_Competitors'];
+      BestCharatceristicsctlr.text=snapshot['Company_Charateristics'];
+      PersonTypectlr.text=snapshot['Person_Type'];
+      PortrayCntrlr.text=snapshot['Client_Portray'];
+      StrengthCntrlr.text=snapshot['Business_Strength'];
+      GoalTacticsctlr.text=snapshot['Goal_Tactics'];
+      Companyctlr.text=snapshot['Company_Type'];
+      LocalCompanySplctlr.text=snapshot['Local_CompanyDetails'];
+      GeographicsAreasctlr.text=snapshot['Company_Area'];
+    }
   }
 }

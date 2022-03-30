@@ -66,6 +66,11 @@ class _Payperclick_formState extends State<Payperclick_form> {
   }
   late String details;
   @override
+  void initState() {
+    super.initState();
+    getdata();
+  }
+  @override
   Widget build(BuildContext context) {
     final fileName = file != null ? basename(file!.path) : 'No File Selected';
     return Scaffold(
@@ -419,10 +424,10 @@ body: Form(
                       var firebaseUser =  FirebaseAuth.instance.currentUser;
                       firestoreInstance.collection("Pay-Per-Click Form").doc(firebaseUser!.email).set(
                           {
-                            'UserID':UserIdcntlr.text,'Password':Passwordctlr.text,'GST No':GSTcntlr.text,'TAX No':Taxcntlr.text,
-                            'PAN No':Pancntlr.text,'Upload FileName':fileName,'Website Link':WebURLctlr.text,'Campaign Promote':ProductServicectlr.text,
-                            'Unique Service':UniqueServicectlr.text,'Campaign Budget':Budgetctlr.text,'Campaign Goal':CampaignGoalctlr.text,
-                            'Ad Campaign': AdCampaignCntrlr.text,'Campaign Location':TargetLocationctlr.text,'Targeted Audience':TargetedAudiencectlr.text
+                            'UserID':UserIdcntlr.text,'Password':Passwordctlr.text,'GST_No':GSTcntlr.text,'TAX_No':Taxcntlr.text,
+                            'PAN_No':Pancntlr.text,'Upload_FileName':fileName,'Website_Link':WebURLctlr.text,'Campaign_Promote':ProductServicectlr.text,
+                            'Unique_Service':UniqueServicectlr.text,'Campaign_Budget':Budgetctlr.text,'Campaign_Goal':CampaignGoalctlr.text,
+                            'Ad_Campaign': AdCampaignCntrlr.text,'Campaign_Location':TargetLocationctlr.text,'Targeted_Audience':TargetedAudiencectlr.text
                           }
                       ).then((value) => {
                         UserIdcntlr.clear(),Passwordctlr.clear(),GSTcntlr.clear(),Taxcntlr.clear(),Pancntlr.clear(),WebURLctlr.clear(),ProductServicectlr.clear(),
@@ -453,10 +458,10 @@ body: Form(
                       var firebaseUser =  FirebaseAuth.instance.currentUser;
                       firestoreInstance.collection("Pay-Per-Click Form").doc(firebaseUser!.email).set(
                           {
-                            'UserID':UserIdcntlr.text,'Password':Passwordctlr.text,'GST No':GSTcntlr.text,'TAX No':Taxcntlr.text,
-                            'PAN No':Pancntlr.text,'Upload FileName':fileName,'Website Link':WebURLctlr.text,'Campaign Promote':ProductServicectlr.text,
-                            'Unique Service':UniqueServicectlr.text,'Campaign Budget':Budgetctlr.text,'Campaign Goal':CampaignGoalctlr.text,
-                            'Ad Campaign': AdCampaignCntrlr.text,'Campaign Location':TargetLocationctlr.text,'Targeted Audience':TargetedAudiencectlr.text
+                            'UserID':UserIdcntlr.text,'Password':Passwordctlr.text,'GST_No':GSTcntlr.text,'TAX_No':Taxcntlr.text,
+                            'PAN_No':Pancntlr.text,'Upload_FileName':fileName,'Website_Link':WebURLctlr.text,'Campaign_Promote':ProductServicectlr.text,
+                            'Unique_Service':UniqueServicectlr.text,'Campaign_Budget':Budgetctlr.text,'Campaign_Goal':CampaignGoalctlr.text,
+                            'Ad_Campaign': AdCampaignCntrlr.text,'Campaign_Location':TargetLocationctlr.text,'Targeted_Audience':TargetedAudiencectlr.text
                           }
                       ).then((value) => {
                         UserIdcntlr.clear(),Passwordctlr.clear(),GSTcntlr.clear(),Taxcntlr.clear(),Pancntlr.clear(),WebURLctlr.clear(),ProductServicectlr.clear(),
@@ -503,6 +508,26 @@ body: Form(
   ),
 ),
     );
+  }
+  getdata()async{
+    var firebaseUser =  FirebaseAuth.instance.currentUser;
+    final data =firestoreInstance.collection("Pay-Per-Click Form").doc(firebaseUser!.email);
+    final snapshot = await data.get();
+    if(snapshot.exists){
+      UserIdcntlr.text=snapshot['UserID'];
+      Passwordctlr.text=snapshot['Password'];
+      GSTcntlr.text=snapshot['GST_No'];
+      Taxcntlr.text=snapshot['TAX_No'];
+      Pancntlr.text=snapshot['PAN_No'];
+      WebURLctlr.text=snapshot['Website_Link'];
+      ProductServicectlr.text=snapshot['Campaign_Promote'];
+      UniqueServicectlr.text=snapshot['Unique_Service'];
+      Budgetctlr.text=snapshot['Campaign_Budget'];
+      CampaignGoalctlr.text=snapshot['Campaign_Goal'];
+      AdCampaignCntrlr.text=snapshot['Ad_Campaign'];
+      TargetLocationctlr.text=snapshot['Campaign_Location'];
+      TargetedAudiencectlr.text=snapshot['Targeted_Audience'];
+    }
   }
   Future selectFile() async {
 

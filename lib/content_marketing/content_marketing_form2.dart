@@ -23,6 +23,11 @@ class _ContentMarketing_form2State extends State<ContentMarketing_form2> {
   int ? Val=-1,Val1=-2,Val2=-3,Val3=-4,Val4=-5,Val5=-6,Val6=-7,Val7=-8,Val8=-9,Val9=-10,Val10 = -11;
   var Rtext,Rtext1,Rtext2,Rtext3,Rtext4,Rtext5,Rtext6,Rtext7,Rtext8,Rtext9,Rtext10;
   @override
+  void initState() {
+    super.initState();
+    getdata();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -629,10 +634,10 @@ class _ContentMarketing_form2State extends State<ContentMarketing_form2> {
                           var firebaseUser =  FirebaseAuth.instance.currentUser;
                           firestoreInstance.collection("Content Marketing Form2").doc(firebaseUser!.email).set(
                               {
-                            'Company Rewards':CompanyRewardsctlr.text,'Security Information':Informationctlr.text,'Experience Details':Experiencectlr.text,
-                            'Company Information':Importantinfoctlr.text,'Extra Feautres':Practicesctlr.text,'Site Goal':Rtext10,'Industry Quiz':Rtext9,
-                            'Facts or Stories':Rtext8,'buzzworthy topics':Rtext7,'step-by-step/DIY posts':Rtext6,'Tips/Articles':Rtext5,'Enargy Level Communication':Rtext4,
-                            'Emotion Communication':Rtext3,'Complexity Level Communication':Rtext2,'Voice Communication':Rtext1,'Tone Communication':Rtext
+                            'Company_Rewards':CompanyRewardsctlr.text,'Security_Information':Informationctlr.text,'Experience_Details':Experiencectlr.text,
+                            'Company_Information':Importantinfoctlr.text,'Extra_Feautres':Practicesctlr.text,'Site_Goal':Rtext10,'Industry_Quiz':Rtext9,
+                            'FactsorStories':Rtext8,'buzzworthy_topics':Rtext7,'step_by_step/DIY posts':Rtext6,'Tips/Articles':Rtext5,'Enargy_Level_Communication':Rtext4,
+                            'Emotion_Communication':Rtext3,'Complexity_Level_Communication':Rtext2,'Voice_Communication':Rtext1,'Tone_Communication':Rtext
                               }
                           ).then((value) => {
                             CompanyRewardsctlr.clear(),Informationctlr.clear(),Experiencectlr.clear(),Importantinfoctlr.clear(),Practicesctlr.clear(),
@@ -677,5 +682,17 @@ class _ContentMarketing_form2State extends State<ContentMarketing_form2> {
         ),
       ),
     );
+  }
+  getdata()async{
+    var firebaseUser =  FirebaseAuth.instance.currentUser;
+    final data =firestoreInstance.collection("Content Marketing Form2").doc(firebaseUser!.email);
+    final snapshot = await data.get();
+    if(snapshot.exists){
+      CompanyRewardsctlr.text=snapshot['Company_Rewards'];
+      Informationctlr.text=snapshot['Security_Information'];
+      Experiencectlr.text=snapshot['Experience_Details'];
+      Importantinfoctlr.text=snapshot['Company_Information'];
+      Practicesctlr.text=snapshot['Extra_Feautres'];
+    }
   }
 }

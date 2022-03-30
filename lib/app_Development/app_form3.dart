@@ -26,7 +26,11 @@ class _appForm3State extends State<appForm3> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final firestoreInstance = FirebaseFirestore.instance;
   late String launchdate;
-
+  @override
+  void initState() {
+    super.initState();
+    getdata();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -217,11 +221,11 @@ class _appForm3State extends State<appForm3> {
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
                             firestoreInstance.collection("App Requirements3").doc(firebaseUser!.email).set(
                                 {
-                                  'Launch Date':LaunchDatectlr.text,'Content Restriction':ContentRestrictionctlr.text,
-                                  'Domain or Region Specific':Domainctlr.text,'Required Solutions':RequiredSolutionctlr.text,
-                                  'Mobile Analytics Integration':MobileAnalyticsctlr.text,'MobileApp Advertising':MobileAdvertismentctlr.text,
-                                  'App Type':Apptypectlr.text,'App Platform':AppPlatformCntrlr.text,
-                                  'App OS':AppOSCntrlr.text,'App Orientation':AppOrientationCtrlr.text,
+                                  'Launch_Date':LaunchDatectlr.text,'Content_Restriction':ContentRestrictionctlr.text,
+                                  'DomainorRegion_Specific':Domainctlr.text,'Required_Solutions':RequiredSolutionctlr.text,
+                                  'MobileAnalytics_Integration':MobileAnalyticsctlr.text,'MobileApp_Advertising':MobileAdvertismentctlr.text,
+                                  'App_Type':Apptypectlr.text,'App_Platform':AppPlatformCntrlr.text,
+                                  'App_OS':AppOSCntrlr.text,'App_Orientation':AppOrientationCtrlr.text,
                                 }
                             ).then((value) => {
                               LaunchDatectlr.clear(),ContentRestrictionctlr.clear(),Domainctlr.clear(),RequiredSolutionctlr.clear(),MobileAnalyticsctlr.clear(),
@@ -268,5 +272,22 @@ class _appForm3State extends State<appForm3> {
         ),
       ),
     );
+  }
+  getdata()async{
+    var firebaseUser =  FirebaseAuth.instance.currentUser;
+    final data =firestoreInstance.collection("App Requirements3").doc(firebaseUser!.email);
+    final snapshot = await data.get();
+    if(snapshot.exists){
+      LaunchDatectlr.text = snapshot['Launch_Date'];
+      ContentRestrictionctlr.text= snapshot['Content_Restriction'];
+      Domainctlr.text = snapshot['DomainorRegion_Specific'];
+      RequiredSolutionctlr.text=snapshot['Required_Solutions'];
+      MobileAnalyticsctlr.text =snapshot['MobileAnalytics_Integration'];
+      Apptypectlr.text = snapshot['App_Type'];
+      AppPlatformCntrlr.text = snapshot['App_Platform'];
+      AppOSCntrlr.text = snapshot['App_OS'];
+      AppOrientationCtrlr.text =snapshot['App_Orientation'];
+      MobileAdvertismentctlr.text =snapshot['MobileApp_Advertising'];
+    }
   }
 }

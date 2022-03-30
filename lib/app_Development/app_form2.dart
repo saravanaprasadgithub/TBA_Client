@@ -26,7 +26,11 @@ class _appForm2State extends State<appForm2> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final firestoreInstance = FirebaseFirestore.instance;
   late String Googleplay;
-
+  @override
+  void initState() {
+    super.initState();
+    getdata();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -217,11 +221,11 @@ class _appForm2State extends State<appForm2> {
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
                             firestoreInstance.collection("App Requirements2").doc(firebaseUser!.email).set(
                                 {
-                                  'Avail Assistance':Googleplayctlr.text,'Feautres & Functionalities':Feautresctlr.text,
-                                  'Exist Application Details':ExistAppDetailsctlr.text,'Future Release':FutureReleasectlr.text,
-                                  'CMS Details':CMSctlr.text,'Audience':Audienecectlr.text,
-                                  'Target Customers':TargetCustomersctlr.text,'Many User Types':ManyUserCntrlr.text,
-                                  'Multi Language':MultilingualCntrlr.text,'Companion Website':WebsiteDevelopCtrlr.text,
+                                  'Avail_Assistance':Googleplayctlr.text,'Feautres_Functionalities':Feautresctlr.text,
+                                  'Exist_Application_Details':ExistAppDetailsctlr.text,'Future_Release':FutureReleasectlr.text,
+                                  'CMS_Details':CMSctlr.text,'Audience':Audienecectlr.text,
+                                  'Target_Customers':TargetCustomersctlr.text,'Many_UserTypes':ManyUserCntrlr.text,
+                                  'Multi_Language':MultilingualCntrlr.text,'Companion_Website':WebsiteDevelopCtrlr.text,
                                 }
                             ).then((value) => {
                               Googleplayctlr.clear(),Feautresctlr.clear(),ExistAppDetailsctlr.clear(),FutureReleasectlr.clear(),CMSctlr.clear(),
@@ -268,5 +272,22 @@ class _appForm2State extends State<appForm2> {
         ),
       ),
     );
+  }
+  getdata()async{
+    var firebaseUser =  FirebaseAuth.instance.currentUser;
+    final data =firestoreInstance.collection("App Requirements2").doc(firebaseUser!.email);
+    final snapshot = await data.get();
+    if(snapshot.exists){
+      Googleplayctlr.text = snapshot['Avail_Assistance'];
+      Feautresctlr.text= snapshot['Feautres_Functionalities'];
+      ExistAppDetailsctlr.text = snapshot['Exist_Application_Details'];
+      FutureReleasectlr.text=snapshot['Future_Release'];
+      CMSctlr.text =snapshot['CMS_Details'];
+      Audienecectlr.text = snapshot['Audience'];
+      TargetCustomersctlr.text = snapshot['Target_Customers'];
+      ManyUserCntrlr.text = snapshot['Many_UserTypes'];
+      MultilingualCntrlr.text =snapshot['Multi_Language'];
+      WebsiteDevelopCtrlr.text =snapshot['Companion_Website'];
+    }
   }
 }

@@ -26,7 +26,11 @@ class _mobile_Form1State extends State<mobile_Form1> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final firestoreInstance = FirebaseFirestore.instance;
   late String purpose;
-
+  @override
+  void initState() {
+    super.initState();
+    getdata();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -217,11 +221,11 @@ class _mobile_Form1State extends State<mobile_Form1> {
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
                             firestoreInstance.collection("Mobile Marketing Form1").doc(firebaseUser!.email).set(
                                 {
-                                  'Mobile Ad Purpose':MobileAdvertisingctlr.text,'Brand Objective':BrandObjectivectlr.text,
-                                  'Mobile Ad Achieve':MobileAdAchievectlr.text,'Mobile Ad Growth':Growthctlr.text,
-                                  'Targeted Audience':TargetedAudiencectlr.text,'Mobile Platform':Platformctlr.text,
-                                  'Issue Details':Issuesctlr.text,'Brand Engage':BrandEngageCntrlr.text,
-                                  'Social Listening Info':SocialListeningCntrlr.text,'Audience Engage':AudienceEngagectlr.text,
+                                  'Mobile_AdPurpose':MobileAdvertisingctlr.text,'Brand_Objective':BrandObjectivectlr.text,
+                                  'Mobile_AdAchieve':MobileAdAchievectlr.text,'Mobile_AdGrowth':Growthctlr.text,
+                                  'Targeted_Audience':TargetedAudiencectlr.text,'Mobile_Platform':Platformctlr.text,
+                                  'Issue_Details':Issuesctlr.text,'Brand_Engage':BrandEngageCntrlr.text,
+                                  'Social_Listening_Info':SocialListeningCntrlr.text,'Audience_Engage':AudienceEngagectlr.text,
                                 }
                             ).then((value) => {
                               MobileAdvertisingctlr.clear(),BrandObjectivectlr.clear(),MobileAdAchievectlr.clear(),Growthctlr.clear(),TargetedAudiencectlr.clear(),
@@ -268,5 +272,22 @@ class _mobile_Form1State extends State<mobile_Form1> {
         ),
       ),
     );
+  }
+  getdata()async{
+    var firebaseUser =  FirebaseAuth.instance.currentUser;
+    final data =firestoreInstance.collection("Mobile Marketing Form1").doc(firebaseUser!.email);
+    final snapshot = await data.get();
+    if(snapshot.exists){
+      BrandObjectivectlr.text = snapshot['Brand_Objective'];
+      MobileAdvertisingctlr.text= snapshot['Mobile_AdPurpose'];
+      MobileAdAchievectlr.text = snapshot['Mobile_AdAchieve'];
+      Growthctlr.text=snapshot['Mobile_AdGrowth'];
+      TargetedAudiencectlr.text =snapshot['Targeted_Audience'];
+      Platformctlr.text = snapshot['Mobile_Platform'];
+      Issuesctlr.text = snapshot['Issue_Details'];
+      BrandEngageCntrlr.text = snapshot['Brand_Engage'];
+      SocialListeningCntrlr.text =snapshot['Social_Listening_Info'];
+      AudienceEngagectlr.text =snapshot['Audience_Engage'];
+    }
   }
 }

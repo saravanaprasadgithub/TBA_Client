@@ -26,7 +26,11 @@ class _email_Form1State extends State<email_Form1> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final firestoreInstance = FirebaseFirestore.instance;
   late String details;
-
+  @override
+  void initState() {
+    super.initState();
+    getdata();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -217,11 +221,11 @@ class _email_Form1State extends State<email_Form1> {
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
                             firestoreInstance.collection("Email Marketing Form1").doc(firebaseUser!.email).set(
                                 {
-                                  'Email Marketing Purpose':Purposectlr.text,'Brand Objective':BrandObjectivectlr.text,
-                                  'Email Marketing Achieve':EmailAchievectlr.text,'Email Marketing Growth':Growthctlr.text,
-                                  'Targeted Audience':TargetedAudiencectlr.text,'Mobile Platform':Platformctlr.text,
-                                  'Issue Details':Issuesctlr.text,'Brand Engage':BrandEngageCntrlr.text,
-                                  'Social Listening Info':SocialListeningCntrlr.text,'Audience Engage':AudienceEngagectlr.text,
+                                  'Email_Marketing_Purpose':Purposectlr.text,'Brand_Objective':BrandObjectivectlr.text,
+                                  'Email_Marketing_Achieve':EmailAchievectlr.text,'Email_Marketing_Growth':Growthctlr.text,
+                                  'Targeted_Audience':TargetedAudiencectlr.text,'Mobile_Platform':Platformctlr.text,
+                                  'Issue_Details':Issuesctlr.text,'Brand_Engage':BrandEngageCntrlr.text,
+                                  'Social_Listening_Info':SocialListeningCntrlr.text,'Audience_Engage':AudienceEngagectlr.text,
                                 }
                             ).then((value) => {
                               Purposectlr.clear(),BrandObjectivectlr.clear(),EmailAchievectlr.clear(),Growthctlr.clear(),TargetedAudiencectlr.clear(),
@@ -268,5 +272,22 @@ class _email_Form1State extends State<email_Form1> {
         ),
       ),
     );
+  }
+  getdata()async{
+    var firebaseUser =  FirebaseAuth.instance.currentUser;
+    final data =firestoreInstance.collection("Email Marketing Form1").doc(firebaseUser!.email);
+    final snapshot = await data.get();
+    if(snapshot.exists){
+      BrandObjectivectlr.text = snapshot['Brand_Objective'];
+      Purposectlr.text= snapshot['Email_Marketing_Purpose'];
+      EmailAchievectlr.text = snapshot['Email_Marketing_Achieve'];
+      Growthctlr.text=snapshot['Email_Marketing_Growth'];
+      TargetedAudiencectlr.text =snapshot['Targeted_Audience'];
+      Platformctlr.text = snapshot['Mobile_Platform'];
+      Issuesctlr.text = snapshot['Issue_Details'];
+      BrandEngageCntrlr.text = snapshot['Brand_Engage'];
+      SocialListeningCntrlr.text =snapshot['Social_Listening_Info'];
+      AudienceEngagectlr.text =snapshot['Audience_Engage'];
+    }
   }
 }

@@ -26,7 +26,11 @@ class _Email_Form2State extends State<Email_Form2> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final firestoreInstance = FirebaseFirestore.instance;
   late String details;
-
+  @override
+  void initState() {
+    super.initState();
+    getdata();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -218,11 +222,11 @@ class _Email_Form2State extends State<Email_Form2> {
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
                             firestoreInstance.collection("Email Marketing Form2").doc(firebaseUser!.email).set(
                                 {
-                                  'Brand Voice':Brandvoicectlr.text,'MobilwAd Message':MobileAdsctlr.text,
-                                  'Brand Message':Msgctlr.text,'Brand Different':SpecificBrandctlr.text,
-                                  'People Selection':PeopleChoosectlr.text,'Brand Vison':BrandVisionctlr.text,
-                                  'Resource Availble':Resourcectlr.text,'Workflow Process':WorkFlowCntrlr.text,
-                                  'Signoff Require':SignoffCntrlr.text,'Publish NewContent':NewContentCtrlr.text,
+                                  'Brand_Voice':Brandvoicectlr.text,'MobileAd_Message':MobileAdsctlr.text,
+                                  'Brand_Message':Msgctlr.text,'Brand_Different':SpecificBrandctlr.text,
+                                  'People_Selection':PeopleChoosectlr.text,'Brand_Vison':BrandVisionctlr.text,
+                                  'Resource_Availble':Resourcectlr.text,'Workflow_Process':WorkFlowCntrlr.text,
+                                  'Signoff_Require':SignoffCntrlr.text,'Publish_NewContent':NewContentCtrlr.text,
                                 }
                             ).then((value) => {
                               Brandvoicectlr.clear(),MobileAdsctlr.clear(),Msgctlr.clear(),SpecificBrandctlr.clear(),PeopleChoosectlr.clear(),
@@ -269,5 +273,22 @@ class _Email_Form2State extends State<Email_Form2> {
         ),
       ),
     );
+  }
+  getdata()async{
+    var firebaseUser =  FirebaseAuth.instance.currentUser;
+    final data =firestoreInstance.collection("Email Marketing Form2").doc(firebaseUser!.email);
+    final snapshot = await data.get();
+    if(snapshot.exists){
+      Brandvoicectlr.text = snapshot['Brand_Voice'];
+      MobileAdsctlr.text= snapshot['MobileAd_Message'];
+      Msgctlr.text = snapshot['Brand_Message'];
+      SpecificBrandctlr.text=snapshot['Brand_Different'];
+      PeopleChoosectlr.text =snapshot['People_Selection'];
+      BrandVisionctlr.text = snapshot['Brand_Vison'];
+      Resourcectlr.text = snapshot['Resource_Availble'];
+      WorkFlowCntrlr.text = snapshot['Workflow_Process'];
+      SignoffCntrlr.text =snapshot['Signoff_Require'];
+      NewContentCtrlr.text =snapshot['Publish_NewContent'];
+    }
   }
 }

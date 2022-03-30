@@ -35,6 +35,11 @@ class _ReputaionManagement_form2State extends State<ReputaionManagement_form2> {
   UploadTask? task;
   File? file,file1;
   @override
+  void initState() {
+    super.initState();
+    getdata();
+  }
+  @override
   Widget build(BuildContext context) {
     final fileName = file != null ? basename(file!.path) : 'No File Selected';
     final fileName1 = file1 != null ? basename(file1!.path) : 'No File Selected';
@@ -423,10 +428,10 @@ class _ReputaionManagement_form2State extends State<ReputaionManagement_form2> {
                               var firebaseUser =  FirebaseAuth.instance.currentUser;
                               firestoreInstance.collection("Reputation Management Form2").doc(firebaseUser!.email).set(
                                   {
-                                    'First Name':FirstnameCntrlr.text,'Last Name':LastnameCntrlr.text,'Address1':Addressctlr.text,'Address2':Address1ctlr.text,
-                                    'City':Citycntrlr.text,'State':Statecntrlr.text,'PostalCode':PostalCodeCntrlr.text,'Company Email':EmailCtrlr.text,
-                                    'Company Mobile':MobileCntrlr.text,'Good Receive Email':GoodEmailctlr.text,'Bad Receive Email':BadEmailctlr.text,
-                                    'Preferred Font':fontctlr.text, "Upload FileName":fileName,"Upload FileName1":fileName1,
+                                    'First_Name':FirstnameCntrlr.text,'Last_Name':LastnameCntrlr.text,'Address1':Addressctlr.text,'Address2':Address1ctlr.text,
+                                    'City':Citycntrlr.text,'State':Statecntrlr.text,'PostalCode':PostalCodeCntrlr.text,'Company_Email':EmailCtrlr.text,
+                                    'Company_Mobile':MobileCntrlr.text,'Good_Receive_Email':GoodEmailctlr.text,'Bad_Receive_Email':BadEmailctlr.text,
+                                    'Preferred_Font':fontctlr.text, "Upload_FileName":fileName,"Upload_FileName1":fileName1,
                                   }
                               ).then((value) => {
                                 FirstnameCntrlr.clear(),Addressctlr.clear(),Address1ctlr.clear(),Citycntrlr.clear(),Statecntrlr.clear(),PostalCodeCntrlr.clear(),
@@ -474,6 +479,25 @@ class _ReputaionManagement_form2State extends State<ReputaionManagement_form2> {
         ),
       ),
     );
+  }
+  getdata()async{
+    var firebaseUser =  FirebaseAuth.instance.currentUser;
+    final data =firestoreInstance.collection("Reputation Management Form2").doc(firebaseUser!.email);
+    final snapshot = await data.get();
+    if(snapshot.exists){
+      Address1ctlr.text = snapshot['Address2'];
+      MobileCntrlr.text= snapshot['Company_Mobile'];
+      Addressctlr.text = snapshot['Address1'];
+      Citycntrlr.text=snapshot['City'];
+      Statecntrlr.text =snapshot['State'];
+      PostalCodeCntrlr.text = snapshot['PostalCode'];
+      GoodEmailctlr.text = snapshot['Good_Receive_Email'];
+      BadEmailctlr.text = snapshot['Bad_Receive_Email'];
+      FirstnameCntrlr.text =snapshot['First_Name'];
+      LastnameCntrlr.text =snapshot['Last_Name'];
+      EmailCtrlr.text = snapshot['Company_Email'];
+      fontctlr.text = snapshot['Preferred_Font'];
+    }
   }
   Future selectFile() async {
 

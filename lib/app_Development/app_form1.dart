@@ -26,7 +26,11 @@ class _appForm1State extends State<appForm1> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final firestoreInstance = FirebaseFirestore.instance;
   late String goals;
-
+  @override
+  void initState() {
+    super.initState();
+    getdata();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -217,11 +221,11 @@ class _appForm1State extends State<appForm1> {
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
                             firestoreInstance.collection("App Requirements1").doc(firebaseUser!.email).set(
                                 {
-                                  'Goals':Goalsctlr.text,'App Purpose':Purposectlr.text,
-                                  'Exist App':ExistAppctlr.text,'Wireframes':Wireframesctlr.text,
-                                  'App Usage Type':Apptypectlr.text,'App Reference':Appreferencectlr.text,
-                                  'Competitor List':Competitorlistctlr.text,'Functional Specifications':FunctionalspecCntrlr.text,
-                                  'Internal Development Team':InternalDevelopCntrlr.text,'Test Engineer':TestEngctlr.text,
+                                  'Goals':Goalsctlr.text,'App_Purpose':Purposectlr.text,
+                                  'Exist_App':ExistAppctlr.text,'Wireframes':Wireframesctlr.text,
+                                  'AppUsage_type':Apptypectlr.text,'App_Reference':Appreferencectlr.text,
+                                  'Competitor_List':Competitorlistctlr.text,'Functional_Specifications':FunctionalspecCntrlr.text,
+                                  'Internal_Development_Team':InternalDevelopCntrlr.text,'Test_Engineer':TestEngctlr.text,
                                 }
                             ).then((value) => {
                               Goalsctlr.clear(),Purposectlr.clear(),ExistAppctlr.clear(),Wireframesctlr.clear(),Apptypectlr.clear(),
@@ -268,5 +272,22 @@ class _appForm1State extends State<appForm1> {
         ),
       ),
     );
+  }
+  getdata()async{
+    var firebaseUser =  FirebaseAuth.instance.currentUser;
+    final data =firestoreInstance.collection("App Requirements1").doc(firebaseUser!.email);
+    final snapshot = await data.get();
+    if(snapshot.exists){
+      Goalsctlr.text = snapshot['Goals'];
+      Purposectlr.text= snapshot['App_Purpose'];
+      ExistAppctlr.text = snapshot['Exist_App'];
+      Wireframesctlr.text=snapshot['Wireframes'];
+      Apptypectlr.text =snapshot['AppUsage_type'];
+      Appreferencectlr.text = snapshot['App_Reference'];
+      Competitorlistctlr.text = snapshot['Competitor_List'];
+      FunctionalspecCntrlr.text = snapshot['Functional_Specifications'];
+      InternalDevelopCntrlr.text =snapshot['Internal_Development_Team'];
+      TestEngctlr.text =snapshot['Test_Engineer'];
+    }
   }
 }

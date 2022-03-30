@@ -26,7 +26,11 @@ class _mobile_Form3State extends State<mobile_Form3> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final firestoreInstance = FirebaseFirestore.instance;
   late String details;
-
+  @override
+  void initState() {
+    super.initState();
+    getdata();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -217,11 +221,11 @@ class _mobile_Form3State extends State<mobile_Form3> {
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
                             firestoreInstance.collection("Mobile Marketing Form3").doc(firebaseUser!.email).set(
                                 {
-                                  'MobileAd Offline Campaign':OfflineCampaignsctlr.text,'Best Content':ContentResponsectlr.text,
-                                  'Content Type':ContentTypectlr.text,'Message Content':ContentMsgctlr.text,
-                                  'User Generated Content':UserContentctlr.text,'Client Holidays Observe':ClientHolidaysctlr.text,
-                                  'Network Profiles':NetworkProfilectlr.text,'Expand New Network':ExpandNetworkCntrlr.text,
-                                  'Focus Networks':NetworkFocusCntrlr.text,'Measure Investment':MeasureInvestmentCtrlr.text,
+                                  'MobileAd_Offline_Campaign':OfflineCampaignsctlr.text,'Best_Content':ContentResponsectlr.text,
+                                  'Content_Type':ContentTypectlr.text,'Message_Content':ContentMsgctlr.text,
+                                  'User_Generated Content':UserContentctlr.text,'Client_Holidays_Observe':ClientHolidaysctlr.text,
+                                  'Network_Profiles':NetworkProfilectlr.text,'Expand_New_Network':ExpandNetworkCntrlr.text,
+                                  'Focus_Networks':NetworkFocusCntrlr.text,'Measure_Investment':MeasureInvestmentCtrlr.text,
                                 }
                             ).then((value) => {
                               OfflineCampaignsctlr.clear(),ContentResponsectlr.clear(),ContentTypectlr.clear(),ContentMsgctlr.clear(),UserContentctlr.clear(),
@@ -268,5 +272,22 @@ class _mobile_Form3State extends State<mobile_Form3> {
         ),
       ),
     );
+  }
+  getdata()async{
+    var firebaseUser =  FirebaseAuth.instance.currentUser;
+    final data =firestoreInstance.collection("Mobile Marketing Form3").doc(firebaseUser!.email);
+    final snapshot = await data.get();
+    if(snapshot.exists){
+      OfflineCampaignsctlr.text = snapshot['MobileAd_Offline_Campaign'];
+      ContentResponsectlr.text= snapshot['Best_Content'];
+      ContentTypectlr.text = snapshot['Content_Type'];
+      ContentMsgctlr.text=snapshot['Message_Content'];
+      UserContentctlr.text =snapshot['User_Generated_Content'];
+      ClientHolidaysctlr.text = snapshot['Client_Holidays_Observe'];
+      NetworkProfilectlr.text = snapshot['Network_Profiles'];
+      ExpandNetworkCntrlr.text = snapshot['Expand_New_Network'];
+      NetworkFocusCntrlr.text =snapshot['Focus_Networks'];
+      MeasureInvestmentCtrlr.text =snapshot['Measure_Investment'];
+    }
   }
 }

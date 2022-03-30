@@ -31,7 +31,10 @@ class _social_media_form1State extends State<social_media_form1> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final firestoreInstance = FirebaseFirestore.instance;
   late String purpose;
-
+  void initState() {
+    super.initState();
+    getdata();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -296,14 +299,14 @@ class _social_media_form1State extends State<social_media_form1> {
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
                             firestoreInstance.collection("Social Media Management1").doc(firebaseUser!.email).set(
                                 {
-                                  'Social Media Purpose':SocialMediaPurposectlr.text,'Brand Objective':BrandObjectivectlr.text,
-                                  'Social Media Achieve':Achievectlr.text,'Barrier Success':Successctlr.text,
-                                  'GrowhPlan':Growthplanctlr.text,'Targeted Audience':TargetedAudiencectlr.text,
-                                  'Social Platform':SocialPlatformctlr.text,'Issues':IssuesCntrlr.text,
-                                  'Brand Engage':BrandEngageCntrlr.text,'Social Listening':SocailListeningctlr.text,
-                                  'Audience Engage':AudienceEngagectlr.text,'Brand Voice':BrandVoicectlr.text,
-                                  'Social Media Updates':SMUpdatesctlr.text,'Brand Message':BrandMessagectlr.text,
-                                  'Brand Different':BrandDifferentctlr.text,
+                                  'Social_Media_Purpose':SocialMediaPurposectlr.text,'Brand_Objective':BrandObjectivectlr.text,
+                                  'Social_Media_Achieve':Achievectlr.text,'Barrier_Success':Successctlr.text,
+                                  'GrowhPlan':Growthplanctlr.text,'Targeted_Audience':TargetedAudiencectlr.text,
+                                  'Social_Platform':SocialPlatformctlr.text,'Issues':IssuesCntrlr.text,
+                                  'Brand_Engage':BrandEngageCntrlr.text,'Social_Listening':SocailListeningctlr.text,
+                                  'Audience_Engage':AudienceEngagectlr.text,'Brand_Voice':BrandVoicectlr.text,
+                                  'Social_Media_Updates':SMUpdatesctlr.text,'Brand_Message':BrandMessagectlr.text,
+                                  'Brand_Different':BrandDifferentctlr.text,
                                 }
                             ).then((value) => {
                               SocialMediaPurposectlr.clear(),BrandObjectivectlr.clear(),Achievectlr.clear(),Successctlr.clear(),Growthplanctlr.clear(),
@@ -351,5 +354,27 @@ class _social_media_form1State extends State<social_media_form1> {
         ),
       ),
     );
+  }
+  getdata()async{
+    var firebaseUser =  FirebaseAuth.instance.currentUser;
+    final data =firestoreInstance.collection("Social Media Management1").doc(firebaseUser!.email);
+    final snapshot = await data.get();
+    if(snapshot.exists){
+      SocialMediaPurposectlr.text=snapshot['Social_Media_Purpose'];
+      BrandObjectivectlr.text=snapshot['Brand_Objective'];
+      Achievectlr.text=snapshot['Social_Media_Achieve'];
+      Successctlr.text=snapshot['Barrier_Success'];
+      Growthplanctlr.text=snapshot['GrowhPlan'];
+      TargetedAudiencectlr.text=snapshot['Targeted_Audience'];
+      SocialPlatformctlr.text=snapshot['Social_Platform'];
+      IssuesCntrlr.text=snapshot['Issues'];
+      BrandEngageCntrlr.text=snapshot['Brand_Engage'];
+      SocailListeningctlr.text=snapshot['Social_Listening'];
+      AudienceEngagectlr.text=snapshot['Audience_Engage'];
+      BrandVoicectlr.text=snapshot['Brand_Voice'];
+      SMUpdatesctlr.text=snapshot['Social_Media_Updates'];
+      BrandMessagectlr.text=snapshot['Brand_Message'];
+      BrandDifferentctlr.text=snapshot['Brand_Different'];
+    }
   }
 }

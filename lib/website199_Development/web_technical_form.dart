@@ -105,13 +105,6 @@ class _technicalformState extends State<technicalform> {
    getdata();
   }
   @override
-  void dispose() {
-    Numctlr.dispose();
-    super.dispose();
-  }
-  int min = 0;
-  int max = 10;
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

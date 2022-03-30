@@ -15,7 +15,6 @@ class _ReputaionManagement_form1State extends State<ReputaionManagement_form1> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final firestoreInstance = FirebaseFirestore.instance;
   TextEditingController CompanynameCntrlr = TextEditingController();
-  TextEditingController FirstnameCntrlr = TextEditingController();
   TextEditingController Citycntrlr = TextEditingController();
   TextEditingController EmailCtrlr = TextEditingController();
   TextEditingController PostalCodeCntrlr = TextEditingController();
@@ -26,6 +25,10 @@ class _ReputaionManagement_form1State extends State<ReputaionManagement_form1> {
   TextEditingController Urlctlr = TextEditingController();
   late String address,cname,fname,state,email,postal,city,mobile;
   @override
+  void initState() {
+    super.initState();
+    getdata();
+  }  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -260,9 +263,9 @@ class _ReputaionManagement_form1State extends State<ReputaionManagement_form1> {
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
                             firestoreInstance.collection("Reputation Management Form1").doc(firebaseUser!.email).set(
                                 {
-                                 'Company Name':CompanynameCntrlr.text,'Company Address1':Addressctlr.text,'Company Address2':Address1ctlr.text,
-                                  'City':Citycntrlr.text,'State':Statecntrlr.text,'PostalCode':PostalCodeCntrlr.text,'Company Email':EmailCtrlr.text,
-                                  'Company Mobile':MobileCntrlr.text,'Company Website':Urlctlr.text
+                                 'Company_Name':CompanynameCntrlr.text,'Company_Address1':Addressctlr.text,'Company_Address2':Address1ctlr.text,
+                                  'City':Citycntrlr.text,'State':Statecntrlr.text,'PostalCode':PostalCodeCntrlr.text,'Company_Email':EmailCtrlr.text,
+                                  'Company_Mobile':MobileCntrlr.text,'Company_Website':Urlctlr.text
                                 }
                             ).then((value) => {
                               CompanynameCntrlr.clear(),Addressctlr.clear(),Address1ctlr.clear(),Citycntrlr.clear(),Statecntrlr.clear(),PostalCodeCntrlr.clear(),
@@ -309,5 +312,21 @@ class _ReputaionManagement_form1State extends State<ReputaionManagement_form1> {
         ),
       ),
     );
+  }
+  getdata()async{
+    var firebaseUser =  FirebaseAuth.instance.currentUser;
+    final data =firestoreInstance.collection("Reputation Management Form1").doc(firebaseUser!.email);
+    final snapshot = await data.get();
+    if(snapshot.exists){
+      CompanynameCntrlr.text = snapshot['Company_Name'];
+      MobileCntrlr.text= snapshot['Company_Mobile'];
+      Addressctlr.text = snapshot['Company_Address1'];
+      Address1ctlr.text=snapshot['Company_Address2'];
+      Urlctlr.text =snapshot['Company_Website'];
+      Citycntrlr.text = snapshot['City'];
+      Statecntrlr.text = snapshot['State'];
+      PostalCodeCntrlr.text = snapshot['PostalCode'];
+      EmailCtrlr.text = snapshot['Company_Email'];
+    }
   }
 }

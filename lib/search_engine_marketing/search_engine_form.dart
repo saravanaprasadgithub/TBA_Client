@@ -71,7 +71,11 @@ class _seach_engine_formState extends State<seach_engine_form> {
       no2 = true ;
     });
   }
-
+  @override
+  void initState() {
+    super.initState();
+    getdata();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -524,15 +528,15 @@ class _seach_engine_formState extends State<seach_engine_form> {
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
                             firestoreInstance.collection("Search Engine Marketing").doc(firebaseUser!.email).set(
                                 {
-                                  'Advertising Details':Advertisingctlr.text,'Google Adwords':GoogleAdwordsctlr.text,
-                                  'Marketing Goals':MarketingGoalsctlr.text,'Competitors':Competitorsctlr.text,
-                                  'Unique Selling':UniqueSellingctlr.text,'Targeted Audience':TargetedAudiencectlr.text,
-                                  'Targeted Audience Demographics':Demographicsctlr.text,'Targeted Area':GeopgraphicalAreaCntrlr.text,
-                                  'Seasonal Products or Services':SeasonalProductsCntrlr.text,'Business Description':BusinessDescriptionctlr.text,
-                                  'Best Selling':BestSellingctlr.text,'Promotion Discount':PromotionDiscountctlr.text,
-                                  'Specific-Keywords':SpecificKeywordsctlr.text,'Google Analytics Mail-Id':MailIdcntlr.text,
-                                  'Google Analytics Password':PasswordCntlr.text,'Edit Website':Rtext,'Gmap Id':MailIdcntlr1.text,
-                                  'Gmap Password':PasswordCntlr1.text
+                                  'Advertising_Details':Advertisingctlr.text,'Google_Adwords':GoogleAdwordsctlr.text,
+                                  'Marketing_Goals':MarketingGoalsctlr.text,'Competitors':Competitorsctlr.text,
+                                  'Unique_Selling':UniqueSellingctlr.text,'Targeted_Audience':TargetedAudiencectlr.text,
+                                  'Targeted_Audience_Demographics':Demographicsctlr.text,'Targeted_Area':GeopgraphicalAreaCntrlr.text,
+                                  'Seasonal_ProductsorServices':SeasonalProductsCntrlr.text,'Business_Description':BusinessDescriptionctlr.text,
+                                  'Best_Selling':BestSellingctlr.text,'Promotion_Discount':PromotionDiscountctlr.text,
+                                  'Specific_Keywords':SpecificKeywordsctlr.text,'Google_Analytics_MailId':MailIdcntlr.text,
+                                  'Google_Analytics_Password':PasswordCntlr.text,'Edit_Website':Rtext,'Gmap_Id':MailIdcntlr1.text,
+                                  'Gmap_Password':PasswordCntlr1.text,'NewGmap_Account':detailscntlr1.text,'NewAnalytics_Account':detailscntlr.text
                                 }
                             ).then((value) => {
                               Advertisingctlr.clear(),GoogleAdwordsctlr.clear(),MarketingGoalsctlr.clear(),Competitorsctlr.clear(),UniqueSellingctlr.clear(),
@@ -581,5 +585,31 @@ class _seach_engine_formState extends State<seach_engine_form> {
         ),
       ),
     );
+  }
+  getdata()async{
+    var firebaseUser =  FirebaseAuth.instance.currentUser;
+    final data =firestoreInstance.collection("Search Engine Marketing").doc(firebaseUser!.email);
+    final snapshot = await data.get();
+    if(snapshot.exists){
+      Advertisingctlr.text =snapshot['Advertising_Details'];
+      GoogleAdwordsctlr.text =snapshot['Google_Adwords'];
+      MarketingGoalsctlr.text =snapshot['Marketing_Goals'];
+      Competitorsctlr.text =snapshot['Competitors'];
+      UniqueSellingctlr.text =snapshot['Unique_Selling'];
+      TargetedAudiencectlr.text=snapshot['Targeted_Audience'];
+      Demographicsctlr.text=snapshot['Targeted_Audience_Demographics'];
+      GeopgraphicalAreaCntrlr.text=snapshot['Targeted_Area'];
+      SeasonalProductsCntrlr.text=snapshot['Seasonal_ProductsorServices'];
+      BusinessDescriptionctlr.text=snapshot['Business_Description'];
+      BestSellingctlr.text=snapshot['Best_Selling'];
+      PromotionDiscountctlr.text=snapshot['Promotion_Discount'];
+      SpecificKeywordsctlr.text=snapshot['Specific_Keywords'];
+      MailIdcntlr.text=snapshot['Google_Analytics_MailId'];
+      PasswordCntlr.text=snapshot['Google_Analytics_Password'];
+      MailIdcntlr1.text=snapshot['Gmap_Id'];
+      PasswordCntlr1.text=snapshot['Gmap_Password'];
+      detailscntlr1.text=snapshot['NewGmap_Account'];
+      detailscntlr.text=snapshot['NewAnalytics_Account'];
+    }
   }
 }

@@ -25,7 +25,11 @@ class _appForm4State extends State<appForm4> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final firestoreInstance = FirebaseFirestore.instance;
   late String applang;
-
+  @override
+  void initState() {
+    super.initState();
+    getdata();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -200,11 +204,11 @@ class _appForm4State extends State<appForm4> {
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
                             firestoreInstance.collection("App Requirements4").doc(firebaseUser!.email).set(
                                 {
-                                  'App Language':AppLanguagectlr.text,'App Payment Type':AppPaymentctlr.text,
-                                  'App Online or Offline':AppOnlinectlr.text,'Backend Solution':Webbasedbackendctlr.text,
-                                  'Push Notification':Pushnotifictlr.text,'API-WebServices':WebServicesctlr.text,
-                                  'Third-Party-API':ThirdPartyAPIctlr.text,'Approximate App Users':ApproxUsersCntrlr.text,
-                                  'File Storage Size':FileStorageCntrlr.text,
+                                  'App_Language':AppLanguagectlr.text,'App_Payment_Type':AppPaymentctlr.text,
+                                  'App_Online':AppOnlinectlr.text,'Backend_Solution':Webbasedbackendctlr.text,
+                                  'Push_Notification':Pushnotifictlr.text,'API_WebServices':WebServicesctlr.text,
+                                  'Third_Party_API':ThirdPartyAPIctlr.text,'Approximate_AppUsers':ApproxUsersCntrlr.text,
+                                  'File_StorageSize':FileStorageCntrlr.text,
                                 }
                             ).then((value) => {
                               AppLanguagectlr.clear(),AppPaymentctlr.clear(),AppOnlinectlr.clear(),Webbasedbackendctlr.clear(),Pushnotifictlr.clear(),
@@ -251,5 +255,21 @@ class _appForm4State extends State<appForm4> {
         ),
       ),
     );
+  }
+  getdata()async{
+    var firebaseUser =  FirebaseAuth.instance.currentUser;
+    final data =firestoreInstance.collection("App Requirements4").doc(firebaseUser!.email);
+    final snapshot = await data.get();
+    if(snapshot.exists){
+      AppLanguagectlr.text = snapshot['App_Language'];
+      AppPaymentctlr.text= snapshot['App_Payment_Type'];
+      AppOnlinectlr.text = snapshot['App_Online'];
+      Webbasedbackendctlr.text=snapshot['Backend_Solution'];
+      Pushnotifictlr.text =snapshot['Push_Notification'];
+      WebServicesctlr.text = snapshot['API_WebServices'];
+      ThirdPartyAPIctlr.text = snapshot['Third_Party_API'];
+      ApproxUsersCntrlr.text = snapshot['Approximate_AppUsers'];
+      FileStorageCntrlr.text =snapshot['File_StorageSize'];
+    }
   }
 }

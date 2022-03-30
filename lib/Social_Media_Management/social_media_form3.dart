@@ -29,7 +29,10 @@ class _social_media_form3State extends State<social_media_form3> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final firestoreInstance = FirebaseFirestore.instance;
   late String Service;
-
+  void initState() {
+    super.initState();
+    getdata();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -250,12 +253,12 @@ class _social_media_form3State extends State<social_media_form3> {
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
                             firestoreInstance.collection("Social Media Management3").doc(firebaseUser!.email).set(
                                 {
-                                  'Customer Service Provider':CustomerServicectlr.text,'Manage Social Media':ToolsManagectlr.text,
-                                  'Measure Investment':Investmentctlr.text,'Working Status':Workingctlr.text,
-                                  'Social Media Fit':Mediafitctlr.text,'Past Try':Tryctlr.text,
-                                  'Tracking Pixels':TrackingPixlesctlr.text,'Account Manager Expect':ExpectCntrlr.text,
-                                  'Report Details':ReportsCntrlr.text,'Contact Person':ContactPersonctlr.text,
-                                  'Oversight & Control':Sightctlr.text,'Input Campaigns':InputCampaignsctlr.text,
+                                  'Customer_Service_Provider':CustomerServicectlr.text,'Manage_Socia_Media':ToolsManagectlr.text,
+                                  'Measure_Investment':Investmentctlr.text,'Working_Status':Workingctlr.text,
+                                  'Social_MediaFit':Mediafitctlr.text,'Past_Try':Tryctlr.text,
+                                  'Tracking_Pixels':TrackingPixlesctlr.text,'Account_Manager_Expect':ExpectCntrlr.text,
+                                  'Report_Details':ReportsCntrlr.text,'Contact_Person':ContactPersonctlr.text,
+                                  'Oversight_Control':Sightctlr.text,'Input_Campaigns':InputCampaignsctlr.text,
                                 }
                             ).then((value) => {
                               CustomerServicectlr.clear(),ToolsManagectlr.clear(),Investmentctlr.clear(),Workingctlr.clear(),Mediafitctlr.clear(),
@@ -303,5 +306,24 @@ class _social_media_form3State extends State<social_media_form3> {
         ),
       ),
     );
+  }
+  getdata()async{
+    var firebaseUser =  FirebaseAuth.instance.currentUser;
+    final data =firestoreInstance.collection("Social Media Management3").doc(firebaseUser!.email);
+    final snapshot = await data.get();
+    if(snapshot.exists){
+      CustomerServicectlr.text=snapshot['Customer_Service_Provider'];
+      ToolsManagectlr.text=snapshot['Manage_Socia_Media'];
+      Investmentctlr.text=snapshot['Measure_Investment'];
+      Workingctlr.text=snapshot['Working_Status'];
+      Mediafitctlr.text=snapshot['Social_MediaFit'];
+      Tryctlr.text=snapshot['Past_Try'];
+      TrackingPixlesctlr.text=snapshot['Tracking_Pixels'];
+      ExpectCntrlr.text=snapshot['Account_Manager_Expect'];
+      ReportsCntrlr.text=snapshot['Report_Details'];
+      ContactPersonctlr.text=snapshot['Contact_Person'];
+      Sightctlr.text=snapshot['Oversight_Control'];
+      InputCampaignsctlr.text=snapshot['Input_Campaigns'];
+    }
   }
 }

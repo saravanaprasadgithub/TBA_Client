@@ -36,6 +36,11 @@ class _ReputaionManagement_form4State extends State<ReputaionManagement_form4> {
   UploadTask? task;
   File? file;
   @override
+  void initState() {
+    super.initState();
+    getdata();
+  }
+  @override
   Widget build(BuildContext context) {
     final fileName = file != null ? basename(file!.path) : 'No File Selected';
     return Scaffold(
@@ -347,11 +352,11 @@ class _ReputaionManagement_form4State extends State<ReputaionManagement_form4> {
                               var firebaseUser =  FirebaseAuth.instance.currentUser;
                               firestoreInstance.collection("Reputation Management Form4").doc(firebaseUser!.email).set(
                                   {
-                                    "Upload FileName":fileName,'Business Hours':BusinessHoursctlr.text,'Business Started Year':StartedYearctlr.text,
-                                    'Business Area':Areactlr.text,'Product Categories':Categoriesctlr.text,'Short Description':Descriptionctlr.text,
-                                    'Birth Year':Birthyearctlr.text,'Verification Code':GetCallCodectlr.text,'Payment Types':PaymentTypeCntrlr.text,
-                                    'Service Priority':ServicePriorityCntrlr.text,'Main Keywords':KeyWordsPriorityctlr.text,'Buying Reason':Buyreasonsctlr.text,
-                                    'Biggest Competitor':BigCompetitorsctlr.text,'Special Offers':Offersctlr.text,
+                                    "Upload_FileName":fileName,'Business_Hours':BusinessHoursctlr.text,'Business_Started_Year':StartedYearctlr.text,
+                                    'Business_Area':Areactlr.text,'Product_Categories':Categoriesctlr.text,'Short_Description':Descriptionctlr.text,
+                                    'Birth_Year':Birthyearctlr.text,'Verification_Code':GetCallCodectlr.text,'Payment_Types':PaymentTypeCntrlr.text,
+                                    'Service_Priority':ServicePriorityCntrlr.text,'Main_Keywords':KeyWordsPriorityctlr.text,'Buying_Reason':Buyreasonsctlr.text,
+                                    'Biggest_Competitor':BigCompetitorsctlr.text,'Special_Offers':Offersctlr.text,
                                   }
                               ).then((value) => {
                                 BusinessHoursctlr.clear(),StartedYearctlr.clear(),Areactlr.clear(),Categoriesctlr.clear(),Descriptionctlr.clear(),Birthyearctlr.clear(),
@@ -401,6 +406,26 @@ class _ReputaionManagement_form4State extends State<ReputaionManagement_form4> {
         ),
       ),
     );
+  }
+  getdata()async{
+    var firebaseUser =  FirebaseAuth.instance.currentUser;
+    final data =firestoreInstance.collection("Reputation Management Form4").doc(firebaseUser!.email);
+    final snapshot = await data.get();
+    if(snapshot.exists){
+      BusinessHoursctlr.text = snapshot['Business_Hours'];
+      StartedYearctlr.text= snapshot['Business_Started_Year'];
+      Areactlr.text = snapshot['Business_Area'];
+      Categoriesctlr.text=snapshot['Product_Categories'];
+      Descriptionctlr.text =snapshot['Short_Description'];
+      Birthyearctlr.text = snapshot['Birth_Year'];
+      GetCallCodectlr.text = snapshot['Verification_Code'];
+      PaymentTypeCntrlr.text = snapshot['Payment_Types'];
+      ServicePriorityCntrlr.text =snapshot['Service_Priority'];
+      KeyWordsPriorityctlr.text =snapshot['Main_Keywords'];
+      Buyreasonsctlr.text = snapshot['Buying_Reason'];
+      BigCompetitorsctlr.text = snapshot['Biggest_Competitor'];
+      Offersctlr.text = snapshot['Special_Offers'];
+    }
   }
   Future selectFile() async {
     final result = await FilePicker.platform.pickFiles(allowMultiple: true,type: FileType.custom,

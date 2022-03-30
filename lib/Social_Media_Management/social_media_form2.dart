@@ -31,7 +31,10 @@ class _social_media_form2State extends State<social_media_form2> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final firestoreInstance = FirebaseFirestore.instance;
   late String select;
-
+  void initState() {
+    super.initState();
+    getdata();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -296,14 +299,14 @@ class _social_media_form2State extends State<social_media_form2> {
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
                             firestoreInstance.collection("Social Media Management2").doc(firebaseUser!.email).set(
                                 {
-                                  'Selecting Yours':SelectCompetitorsctlr.text,'Brand Vison':BrandVisionctlr.text,
-                                  'Resource Available':Resourcectlr.text,'Workflow Process':Workflowctlr.text,
-                                  'Signoffs Requirement':Signoffctlr.text,'Publish Content':Publishctlr.text,
-                                  'Offline Campaign':OfflineCampaignctlr.text,'Audience Responds':RespondCntrlr.text,
-                                  'Content Type':ContentTypeCntrlr.text,'Content Msg Type':MessageTypectlr.text,
-                                  'User Generated Content':UserrGeneratedctlr.text,'Holidays Observe':HolidaysObservectlr.text,
-                                  'Network Profile List':ProfileListctlr.text,'Expand New Network':NewNetworkctlr.text,
-                                  'Focus Fewer Networks':Focusctlr.text,
+                                  'Selecting_Yours':SelectCompetitorsctlr.text,'Brand_Vison':BrandVisionctlr.text,
+                                  'Resource_Available':Resourcectlr.text,'Workflow_Process':Workflowctlr.text,
+                                  'Signoffs_Requirement':Signoffctlr.text,'Publish_Content':Publishctlr.text,
+                                  'Offline_Campaign':OfflineCampaignctlr.text,'Audience_Responds':RespondCntrlr.text,
+                                  'Content_Type':ContentTypeCntrlr.text,'Content_Msg_Type':MessageTypectlr.text,
+                                  'User_Generated_Content':UserrGeneratedctlr.text,'Holidays_Observe':HolidaysObservectlr.text,
+                                  'Network_Profile_List':ProfileListctlr.text,'Expand_New_Network':NewNetworkctlr.text,
+                                  'Focus_Fewer_Networks':Focusctlr.text,
                                 }
                             ).then((value) => {
                               SelectCompetitorsctlr.clear(),BrandVisionctlr.clear(),Resourcectlr.clear(),Workflowctlr.clear(),Signoffctlr.clear(),
@@ -351,5 +354,27 @@ class _social_media_form2State extends State<social_media_form2> {
         ),
       ),
     );
+  }
+  getdata()async{
+    var firebaseUser =  FirebaseAuth.instance.currentUser;
+    final data =firestoreInstance.collection("Social Media Management2").doc(firebaseUser!.email);
+    final snapshot = await data.get();
+    if(snapshot.exists){
+      SelectCompetitorsctlr.text=snapshot['Selecting_Yours'];
+      BrandVisionctlr.text=snapshot['Brand_Vison'];
+      Resourcectlr.text=snapshot['Resource_Available'];
+      Workflowctlr.text=snapshot['Workflow_Process'];
+      Signoffctlr.text=snapshot['Signoffs_Requirement'];
+      Publishctlr.text=snapshot['Publish_Content'];
+      OfflineCampaignctlr.text=snapshot['Offline_Campaign'];
+      RespondCntrlr.text=snapshot['Audience_Responds'];
+      ContentTypeCntrlr.text=snapshot['Content_Type'];
+      MessageTypectlr.text=snapshot['Content_Msg_Type'];
+      UserrGeneratedctlr.text=snapshot['User_Generated_Content'];
+      HolidaysObservectlr.text=snapshot['Holidays_Observe'];
+      ProfileListctlr.text=snapshot['Network_Profile_List'];
+      NewNetworkctlr.text=snapshot['Expand_New_Network'];
+      Focusctlr.text=snapshot['Focus_Fewer_Networks'];
+    }
   }
 }

@@ -72,11 +72,15 @@ var post;
       if(value == true)
       {
         tmpArray.add(key);
-
       }
     });
     print(tmpArray);
     return tmpArray;
+  }
+  @override
+  void initState() {
+    super.initState();
+    getdata();
   }
   @override
   Widget build(BuildContext context) {
@@ -457,12 +461,12 @@ var post;
                             firestoreInstance.collection("Creative Services Form").doc(firebaseUser!.email).set(
                                 {
                                   'Product/Services':ProductServicectlr.text,'WebURL':Urlctlr.text,
-                                  'Bussiness Location':Linkctlr.text,'Mobile No':MobileCntrlr.text,
+                                  'Bussiness_Location':Linkctlr.text,'Mobile_No':MobileCntrlr.text,
                                   'Address':Addressctlr.text,'FirstName':FirstnameCntrlr.text,
-                                  'LastName':LastnameCntrlr.text,'Email-ID':EmailCtrlr.text,
-                                  'Brochure Type':getCheckboxItems(),'Logo Ideas':Ideactlr.text,
-                                  'Specific Color':Colorctlr.text,'Content Assistent':ContentAssistantctlr.text,
-                                  'Create Social Media Post':post,
+                                  'LastName':LastnameCntrlr.text,'Email_ID':EmailCtrlr.text,
+                                  'Brochure_Type':getCheckboxItems(),'Logo_Ideas':Ideactlr.text,
+                                  'Specific_Color':Colorctlr.text,'Content_Assistent':ContentAssistantctlr.text,
+                                  'Create_Social_MediaPost':post,
                                 }
                             ).then((value) => {
                               Urlctlr.clear(),Linkctlr.clear(),Addressctlr.clear(),FirstnameCntrlr.clear(),LastnameCntrlr.clear(),EmailCtrlr.clear(),
@@ -509,5 +513,23 @@ var post;
         ),
       ),
     );
+  }
+  getdata()async{
+    var firebaseUser =  FirebaseAuth.instance.currentUser;
+    final data =firestoreInstance.collection("Creative Services Form").doc(firebaseUser!.email);
+    final snapshot = await data.get();
+    if(snapshot.exists){
+      MobileCntrlr.text= snapshot['Mobile_No'];
+      Addressctlr.text = snapshot['Address'];
+      Urlctlr.text =snapshot['WebURL'];
+      Linkctlr.text = snapshot['Bussiness_Location'];
+      FirstnameCntrlr.text =snapshot['FirstName'];
+      LastnameCntrlr.text =snapshot['LastName'];
+      EmailCtrlr.text = snapshot['Email_ID'];
+      ProductServicectlr.text=snapshot['Product/Services'];
+      Ideactlr.text=snapshot['Logo_Ideas'];
+      Colorctlr.text=snapshot['Specific_Color'];
+      ContentAssistantctlr.text=snapshot['Content_Assistent'];
+    }
   }
 }
