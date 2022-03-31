@@ -547,7 +547,7 @@ class _SEOon_formState extends State<SEOon_form> {
       Passwordctlr.text =snapshot['Analytics_Password'];
       Usercntlr.text = snapshot['Search_Console_UserId'];
       WebURLctlr.text = snapshot['Website_Link'];
-      BusinessTypectlr.text = snapshot['BusinessTypectlr'];
+      BusinessTypectlr.text = snapshot['Business_Type'];
       ShortGoalctlr.text=snapshot['Short_Term_Goal'];
       UniqueServicectlr.text=snapshot['Unique_Service'];
       CompetitorsWebsitesctlr.text = snapshot['Competitors_Websites'];

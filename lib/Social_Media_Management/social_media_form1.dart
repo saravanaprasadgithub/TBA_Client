@@ -151,7 +151,7 @@ class _social_media_form1State extends State<social_media_form1> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('7.What social platforms do they use? (Ex. Age, Gender, Marital Status, etc.)',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
+                  child: Text('7.What social platforms do they use?',style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500),),
                 ),
                 Padding(
                     padding: const EdgeInsets.all(8.0),

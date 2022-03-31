@@ -460,7 +460,7 @@ var post;
                             var firebaseUser =  FirebaseAuth.instance.currentUser;
                             firestoreInstance.collection("Creative Services Form").doc(firebaseUser!.email).set(
                                 {
-                                  'Product/Services':ProductServicectlr.text,'WebURL':Urlctlr.text,
+                                  'ProductorServices':ProductServicectlr.text,'WebURL':Urlctlr.text,
                                   'Bussiness_Location':Linkctlr.text,'Mobile_No':MobileCntrlr.text,
                                   'Address':Addressctlr.text,'FirstName':FirstnameCntrlr.text,
                                   'LastName':LastnameCntrlr.text,'Email_ID':EmailCtrlr.text,
@@ -526,7 +526,7 @@ var post;
       FirstnameCntrlr.text =snapshot['FirstName'];
       LastnameCntrlr.text =snapshot['LastName'];
       EmailCtrlr.text = snapshot['Email_ID'];
-      ProductServicectlr.text=snapshot['Product/Services'];
+      ProductServicectlr.text=snapshot['ProductorServices'];
       Ideactlr.text=snapshot['Logo_Ideas'];
       Colorctlr.text=snapshot['Specific_Color'];
       ContentAssistantctlr.text=snapshot['Content_Assistent'];

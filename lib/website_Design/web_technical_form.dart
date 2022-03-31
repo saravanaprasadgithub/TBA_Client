@@ -225,7 +225,6 @@ class _design_technicalformState extends State<design_technicalform> {
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.number,
-              //  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 validator: (String? value){
                   if(value!.isEmpty){
                     return 'Please Enter No.of.Pages';
@@ -239,7 +238,7 @@ class _design_technicalformState extends State<design_technicalform> {
                   },
                   inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
-                  LengthLimitingTextInputFormatter(3),
+                  LengthLimitingTextInputFormatter(2),
                   ],
                 onSaved: (String? value){
                   pages = value!;

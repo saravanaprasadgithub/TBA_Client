@@ -223,7 +223,7 @@ class _mobile_Form3State extends State<mobile_Form3> {
                                 {
                                   'MobileAd_Offline_Campaign':OfflineCampaignsctlr.text,'Best_Content':ContentResponsectlr.text,
                                   'Content_Type':ContentTypectlr.text,'Message_Content':ContentMsgctlr.text,
-                                  'User_Generated Content':UserContentctlr.text,'Client_Holidays_Observe':ClientHolidaysctlr.text,
+                                  'User_Generated_Content':UserContentctlr.text,'Client_Holidays_Observe':ClientHolidaysctlr.text,
                                   'Network_Profiles':NetworkProfilectlr.text,'Expand_New_Network':ExpandNetworkCntrlr.text,
                                   'Focus_Networks':NetworkFocusCntrlr.text,'Measure_Investment':MeasureInvestmentCtrlr.text,
                                 }
