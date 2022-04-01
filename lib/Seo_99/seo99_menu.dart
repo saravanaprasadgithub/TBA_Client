@@ -22,7 +22,7 @@ class _SEO99_MenuState extends State<SEO99_Menu> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.deepPurple,
-          title: Text('SEO Service Requirements',style: TextStyle(fontSize: 20),),
+          title: Text('SEO-99 Service Requirements',style: TextStyle(fontSize: 20),),
           centerTitle: true,
           actions: [
             IconButton(
