@@ -299,7 +299,7 @@ class _ReputaionManagement_form4State extends State<ReputaionManagement_form4> {
                           primary: Colors.orange
                       ),
                       child: Text("Submit",style: TextStyle(fontSize: 20,color: Colors.white),),
-                      onPressed: (){
+                      onPressed: () async{
                         if(_formkey.currentState!.validate())
                         {
                           try{
@@ -327,7 +327,7 @@ class _ReputaionManagement_form4State extends State<ReputaionManagement_form4> {
                                 GetCallCodectlr.clear(),PaymentTypeCntrlr.clear(),ServicePriorityCntrlr.clear(),KeyWordsPriorityctlr.clear(),
                                 Buyreasonsctlr.clear(),BigCompetitorsctlr.clear(),Offersctlr.clear()
                               });
-                              task!.whenComplete(() {
+                             await task!.whenComplete(() {
                                 Fluttertoast.showToast(
                                     timeInSecForIosWeb: 1,
                                     msg: "Your files & Details Uploaded Successfully..!!!",

@@ -40,7 +40,7 @@ class _design_technicalformState extends State<design_technicalform> {
   bool _obscureText = true;
   bool yes = false;
   bool no = true;
-  int val = 2;
+  int? val ;
   Map<String, bool> values = {
     'Name': false,
     'Email': false,

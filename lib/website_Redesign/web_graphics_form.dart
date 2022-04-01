@@ -390,7 +390,7 @@ class _Redesign_graphicsformState extends State<Redesign_graphicsform> {
                         primary: Colors.deepPurple
                     ),
                     child: Text("Submit",style: TextStyle(fontSize: 20),),
-                    onPressed: (){
+                    onPressed: () async{
                       if(task !=null)
                       {
                         try{
@@ -419,7 +419,7 @@ class _Redesign_graphicsformState extends State<Redesign_graphicsform> {
                           ).then((value) => {
                             // busstypectlr.clear(),
                           });
-                          task!.whenComplete(() {
+                        await  task!.whenComplete(() {
                             Fluttertoast.showToast(
                                 timeInSecForIosWeb: 1,
                                 msg: "Your files Uploaded Successfully..!!!",

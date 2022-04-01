@@ -432,7 +432,7 @@ class _SEO_formState extends State<SEO_form> {
                         primary: Colors.orange
                     ),
                     child: Text("Submit",style: TextStyle(fontSize: 20,color: Colors.white),),
-                    onPressed: (){
+                    onPressed: ()async{
                       if(_formkey.currentState!.validate())
                       {
                         try{
@@ -460,7 +460,7 @@ class _SEO_formState extends State<SEO_form> {
                               UniqueServicectlr.clear(),CompetitorsWebsitesctlr.clear(),WebAnalyzeCntrlr.clear(),TargetLocationctlr.clear(),TargetedAudiencectlr.clear(),
                               DomainCntrlr.clear(),LongGoalctlr.clear(),ShortGoalctlr.clear()
                             });
-                            task!.whenComplete(() {
+                           await task!.whenComplete(() {
                               Fluttertoast.showToast(
                                   timeInSecForIosWeb: 1,
                                   msg: "Your files & Details Uploaded Successfully..!!!",

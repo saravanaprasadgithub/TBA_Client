@@ -263,7 +263,7 @@ class _contentformState extends State<contentform> {
                           primary: Colors.orange
                       ),
                       child: Text("Submit",style: TextStyle(fontSize: 20,color: Colors.white),),
-                      onPressed: (){
+                      onPressed: ()async{
                         if(_formkey.currentState!.validate())
                         {
                           try{
@@ -291,7 +291,7 @@ class _contentformState extends State<contentform> {
                               busstypectlr.clear(),Productsctlr.clear(),UniqueServctlr.clear(),Missionctlr.clear(),Descctlr.clear(),
                               Locationctlr.clear(),Testctlr.clear(),SeoCntrlr.clear(),WebupdCntrlr.clear(),AddfileCtrlr.clear(),
                             });
-                            task!.whenComplete(() {
+                           await task!.whenComplete(() {
                               Fluttertoast.showToast(
                                   timeInSecForIosWeb: 1,
                                   msg: "Your files & Details Uploaded Successfully..!!!",
