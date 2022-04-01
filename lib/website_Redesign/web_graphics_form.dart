@@ -391,68 +391,54 @@ class _Redesign_graphicsformState extends State<Redesign_graphicsform> {
                     ),
                     child: Text("Submit",style: TextStyle(fontSize: 20),),
                     onPressed: () async{
-                      if(task !=null)
-                      {
-                        try{
                           uploadFile();
                           uploadFile1();
                           uploadFile2();
                           uploadFile3();
                           uploadFile4();
-                          Fluttertoast.showToast(
-                              timeInSecForIosWeb: 1,
-                              msg: "Wait for Complete Upload..!!!",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              backgroundColor: Colors.deepOrange,
-                              textColor: Colors.white
-                          );
-                          var firebaseUser =  FirebaseAuth.instance.currentUser;
-                          firestoreInstance.collection("Website Re-Design Graphics").doc(firebaseUser!.email).set(
-                              {
-                                "Upload FileName":fileName,
-                                "Upload FileName1":fileName1,
-                                "Upload FileName2":fileName2,
-                                "Upload FileName3":fileName3,
-                                "Upload FileName4":fileName4,
-                              }
-                          ).then((value) => {
-                            // busstypectlr.clear(),
-                          });
-                        await  task!.whenComplete(() {
+                          if(task!=null){
                             Fluttertoast.showToast(
                                 timeInSecForIosWeb: 1,
-                                msg: "Your files Uploaded Successfully..!!!",
+                                msg: "Wait for Complete Upload..!!!",
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.BOTTOM,
-                                backgroundColor: Colors.green,
+                                backgroundColor: Colors.deepOrange,
                                 textColor: Colors.white
                             );
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const Web_ReDesign()),);
+                            var firebaseUser =  FirebaseAuth.instance.currentUser;
+                            firestoreInstance.collection("Website Re-Design Graphics").doc(firebaseUser!.email).set(
+                                {
+                                  "Upload FileName":fileName,
+                                  "Upload FileName1":fileName1,
+                                  "Upload FileName2":fileName2,
+                                  "Upload FileName3":fileName3,
+                                  "Upload FileName4":fileName4,
+                                }
+                            ).then((value) => {
+                              // busstypectlr.clear(),
+                            });
+                            await  task!.whenComplete(() {
+                              Fluttertoast.showToast(
+                                  timeInSecForIosWeb: 1,
+                                  msg: "Your files Uploaded Successfully..!!!",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  backgroundColor: Colors.green,
+                                  textColor: Colors.white
+                              );
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const Web_ReDesign()),);
+                            }
+                            );
+                          }else{
+                            Fluttertoast.showToast(
+                                timeInSecForIosWeb: 1,
+                                msg: "No Files to Upload..!!!",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                backgroundColor: Colors.deepOrange,
+                                textColor: Colors.white
+                            );
                           }
-                          );
-                        }
-                        catch(e){
-                          Fluttertoast.showToast(
-                              timeInSecForIosWeb: 1,
-                              msg: "Check Internet Connection",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              backgroundColor: Colors.deepOrange,
-                              textColor: Colors.white
-                          );
-                        }
-                        return;
-                      }else{
-                        Fluttertoast.showToast(
-                            timeInSecForIosWeb: 1,
-                            msg: "No Files to Upload..!!!",
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.BOTTOM,
-                            backgroundColor: Colors.deepOrange,
-                            textColor: Colors.white
-                        );
-                      }
                     },
                   ),
                 ),
