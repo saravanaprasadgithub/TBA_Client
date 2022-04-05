@@ -559,19 +559,32 @@ class _design_graphicsformState extends State<design_graphicsform> {
   Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
     stream: task.snapshotEvents,
     builder: (context, snapshot) {
-      if (snapshot.hasData) {
-        final snap = snapshot.data!;
-        final progress = snap.bytesTransferred / snap.totalBytes;
-        final percentage = (progress * 100).toStringAsFixed(2);
-        return Text(
-          '$percentage %',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      if(snapshot.hasData){
+        final data =snapshot.data!;
+        double progress = data.bytesTransferred/data.totalBytes;
+        return SizedBox(
+          height: 50,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              LinearProgressIndicator(
+                value: progress,
+                backgroundColor: Colors.grey,
+                color: Colors.green,
+              ),
+              Center(
+                child: Text(
+                  '${(100 * progress).roundToDouble()}%',
+                  style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
         );
-      }
-      else {
+      } else {
         return Container();
       }
-    }
+    },
   );
 }
 
