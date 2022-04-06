@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:path/path.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:first_app/api/uploadapi.dart';
 
 class Payperclick_form extends StatefulWidget {
   const Payperclick_form({Key? key}) : super(key: key);
@@ -33,7 +31,9 @@ class _Payperclick_formState extends State<Payperclick_form> {
   TextEditingController TargetLocationctlr = TextEditingController();
   TextEditingController TargetedAudiencectlr = TextEditingController();
   UploadTask? task;
-  File? file;
+  List<PlatformFile> f = [];
+  PlatformFile? pickedFile;
+  var userid = FirebaseAuth.instance.currentUser;
   int ? val ;
   int ? val1 ;
   bool yes1 = false;
@@ -72,7 +72,7 @@ class _Payperclick_formState extends State<Payperclick_form> {
   }
   @override
   Widget build(BuildContext context) {
-    final fileName = file != null ? basename(file!.path) : 'No File Selected';
+    final fileName= pickedFile!=null ? pickedFile!.name:'No File Selected';
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
@@ -411,18 +411,11 @@ body: Form(
                 if(_formkey.currentState!.validate())
                 {
                   try{
-                    uploadFile();
+                    for(pickedFile in f ){
+                      await uploadFile();
+                    }
                     if(task!=null){
-                      Fluttertoast.showToast(
-                          timeInSecForIosWeb: 1,
-                          msg: "Wait for Complete Upload..!!!",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          backgroundColor: Colors.deepOrange,
-                          textColor: Colors.white
-                      );
-                      var firebaseUser =  FirebaseAuth.instance.currentUser;
-                      firestoreInstance.collection("Pay-Per-Click Form").doc(firebaseUser!.email).set(
+                      firestoreInstance.collection("Pay-Per-Click Form").doc(userid!.email).set(
                           {
                             'UserID':UserIdcntlr.text,'Password':Passwordctlr.text,'GST_No':GSTcntlr.text,'TAX_No':Taxcntlr.text,
                             'PAN_No':Pancntlr.text,'Upload_FileName':fileName,'Website_Link':WebURLctlr.text,'Campaign_Promote':ProductServicectlr.text,
@@ -455,8 +448,7 @@ body: Form(
                           backgroundColor: Colors.deepOrange,
                           textColor: Colors.white
                       );
-                      var firebaseUser =  FirebaseAuth.instance.currentUser;
-                      firestoreInstance.collection("Pay-Per-Click Form").doc(firebaseUser!.email).set(
+                      firestoreInstance.collection("Pay-Per-Click Form").doc(userid!.email).set(
                           {
                             'UserID':UserIdcntlr.text,'Password':Passwordctlr.text,'GST_No':GSTcntlr.text,'TAX_No':Taxcntlr.text,
                             'PAN_No':Pancntlr.text,'Upload_FileName':fileName,'Website_Link':WebURLctlr.text,'Campaign_Promote':ProductServicectlr.text,
@@ -510,8 +502,7 @@ body: Form(
     );
   }
   getdata()async{
-    var firebaseUser =  FirebaseAuth.instance.currentUser;
-    final data =firestoreInstance.collection("Pay-Per-Click Form").doc(firebaseUser!.email);
+    final data =firestoreInstance.collection("Pay-Per-Click Form").doc(userid!.email);
     final snapshot = await data.get();
     if(snapshot.exists){
       UserIdcntlr.text=snapshot['UserID'];
@@ -530,24 +521,23 @@ body: Form(
     }
   }
   Future selectFile() async {
-
     final result = await FilePicker.platform.pickFiles(allowMultiple: true);
-
-    if (result == null) return;
-    final path = result.files.single.path!;
-    setState(() => file = File(path));
+    if(result==null) return;
+    setState(() {
+      f = result.files;
+      pickedFile = result.files.first;
+    });
   }
   Future uploadFile() async {
-    if (file == null) return;
-    final fileName = basename(file!.path);
-    final destination = 'files/$fileName';
-    task = FirebaseApi.uploadFile(destination, file!);
-    setState(() {});
-    if (task == null) return;
+    final file = File(pickedFile!.path!);
+    final path = 'files/${userid!.email}/${pickedFile!.name}';
+    final ref = FirebaseStorage.instance.ref().child(path);
+    setState(() {
+      task=ref.putFile(file);
+    });
     final snapshot = await task!.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
     print('Download-Link: $urlDownload');
-    print(fileName);
   }
 
   Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(

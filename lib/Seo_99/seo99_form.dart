@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:path/path.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:first_app/api/uploadapi.dart';
+
 
 class SEO99_form extends StatefulWidget {
   const SEO99_form({Key? key}) : super(key: key);
@@ -35,7 +34,9 @@ class _SEO99_formState extends State<SEO99_form> {
   TextEditingController DomainCntrlr = TextEditingController();
   UploadTask? task;
   late String details;
-  File? file;
+  List<PlatformFile> f = [];
+  PlatformFile? pickedFile;
+  var userid = FirebaseAuth.instance.currentUser;
   int ? val ;
   int ? val1 ;
   bool yes1 = false;
@@ -73,7 +74,7 @@ class _SEO99_formState extends State<SEO99_form> {
   }
   @override
   Widget build(BuildContext context) {
-    final fileName = file != null ? basename(file!.path) : 'No File Selected';
+    final fileName= pickedFile!=null ? pickedFile!.name:'No File Selected';
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
@@ -436,18 +437,11 @@ class _SEO99_formState extends State<SEO99_form> {
                       if(_formkey.currentState!.validate())
                       {
                         try{
-                          uploadFile();
+                          for(pickedFile in f ){
+                            await uploadFile();
+                          }
                           if(task!=null){
-                            Fluttertoast.showToast(
-                                timeInSecForIosWeb: 1,
-                                msg: "Wait for Complete Upload..!!!",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.BOTTOM,
-                                backgroundColor: Colors.deepOrange,
-                                textColor: Colors.white
-                            );
-                            var firebaseUser =  FirebaseAuth.instance.currentUser;
-                            firestoreInstance.collection("SEO99 Form").doc(firebaseUser!.email).set(
+                            firestoreInstance.collection("SEO99 Form").doc(userid!.email).set(
                                 {
                                   'Analytics_UserID':UserIdcntlr.text,'Analytics_Password':Passwordctlr.text,'Search_Console_UserId':Usercntlr.text,
                                   'Upload_FileName':fileName,'Website_Link':WebURLctlr.text,'Business_Type':BusinessTypectlr.text,'Short_Term_Goal':ShortGoalctlr.text,
@@ -482,8 +476,7 @@ class _SEO99_formState extends State<SEO99_form> {
                                 backgroundColor: Colors.deepOrange,
                                 textColor: Colors.white
                             );
-                            var firebaseUser =  FirebaseAuth.instance.currentUser;
-                            firestoreInstance.collection("SEO99 Form").doc(firebaseUser!.email).set(
+                            firestoreInstance.collection("SEO99 Form").doc(userid!.email).set(
                                 {
                                   'Analytics_UserID':UserIdcntlr.text,'Analytics_Password':Passwordctlr.text,'Search_Console_UserId':Usercntlr.text,
                                   'Upload_FileName':fileName,'Website_Link':WebURLctlr.text,'Business_Type':BusinessTypectlr.text,'Short_Term_Goal':ShortGoalctlr.text,
@@ -539,8 +532,7 @@ class _SEO99_formState extends State<SEO99_form> {
     );
   }
   getdata()async{
-    var firebaseUser =  FirebaseAuth.instance.currentUser;
-    final data =firestoreInstance.collection("SEO99 Form").doc(firebaseUser!.email);
+    final data =firestoreInstance.collection("SEO99 Form").doc(userid!.email);
     final snapshot = await data.get();
     if(snapshot.exists){
       UserIdcntlr.text = snapshot['Analytics_UserID'];
@@ -560,24 +552,23 @@ class _SEO99_formState extends State<SEO99_form> {
     }
   }
   Future selectFile() async {
-
     final result = await FilePicker.platform.pickFiles(allowMultiple: true);
-
-    if (result == null) return;
-    final path = result.files.single.path!;
-    setState(() => file = File(path));
+    if(result==null) return;
+    setState(() {
+      f = result.files;
+      pickedFile = result.files.first;
+    });
   }
   Future uploadFile() async {
-    if (file == null) return;
-    final fileName = basename(file!.path);
-    final destination = 'files/$fileName';
-    task = FirebaseApi.uploadFile(destination, file!);
-    setState(() {});
-    if (task == null) return;
+    final file = File(pickedFile!.path!);
+    final path = 'files/${userid!.email}/${pickedFile!.name}';
+    final ref = FirebaseStorage.instance.ref().child(path);
+    setState(() {
+      task=ref.putFile(file);
+    });
     final snapshot = await task!.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
     print('Download-Link: $urlDownload');
-    print(fileName);
   }
 
   Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(

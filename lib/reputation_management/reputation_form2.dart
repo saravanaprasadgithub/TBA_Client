@@ -6,8 +6,6 @@ import 'package:first_app/reputation_management/reputation_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:first_app/api/uploadapi.dart';
-import 'package:path/path.dart';
 
 class ReputaionManagement_form2 extends StatefulWidget {
   const ReputaionManagement_form2({Key? key}) : super(key: key);
@@ -33,7 +31,10 @@ class _ReputaionManagement_form2State extends State<ReputaionManagement_form2> {
   TextEditingController fontctlr = TextEditingController();
   late String address,fname,lname,email,mobile,state,city,postal;
   UploadTask? task;
-  File? file,file1;
+  List<PlatformFile> f = [];
+  List<PlatformFile> f1 = [];
+  PlatformFile? pickedFile,pickedFile1;
+  var userid = FirebaseAuth.instance.currentUser;
   @override
   void initState() {
     super.initState();
@@ -41,8 +42,8 @@ class _ReputaionManagement_form2State extends State<ReputaionManagement_form2> {
   }
   @override
   Widget build(BuildContext context) {
-    final fileName = file != null ? basename(file!.path) : 'No File Selected';
-    final fileName1 = file1 != null ? basename(file1!.path) : 'No File Selected';
+    final fileName= pickedFile!=null ? pickedFile!.name:'No File Selected';
+    final fileName1= pickedFile1!=null ? pickedFile1!.name:'No File Selected';
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
@@ -380,24 +381,19 @@ class _ReputaionManagement_form2State extends State<ReputaionManagement_form2> {
                         if(_formkey.currentState!.validate())
                         {
                           try{
-                            uploadFile();
-                            uploadFile1();
+                            for(pickedFile in f ){
+                              await uploadFile();
+                            }
+                            for(pickedFile1 in f1){
+                              await  uploadFile1();
+                            }
                             if(task!=null){
-                              Fluttertoast.showToast(
-                                  timeInSecForIosWeb: 1,
-                                  msg: "Wait for Complete Upload..!!!",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.BOTTOM,
-                                  backgroundColor: Colors.deepOrange,
-                                  textColor: Colors.white
-                              );
-                              var firebaseUser =  FirebaseAuth.instance.currentUser;
-                              firestoreInstance.collection("Reputation Management Form2").doc(firebaseUser!.email).set(
+                              firestoreInstance.collection("Reputation Management Form2").doc(userid!.email).set(
                                   {
-                                    'First Name':FirstnameCntrlr.text,'Last Name':LastnameCntrlr.text,'Address1':Addressctlr.text,'Address2':Address1ctlr.text,
-                                    'City':Citycntrlr.text,'State':Statecntrlr.text,'PostalCode':PostalCodeCntrlr.text,'Company Email':EmailCtrlr.text,
-                                    'Company Mobile':MobileCntrlr.text,'Good Receive Email':GoodEmailctlr.text,'Bad Receive Email':BadEmailctlr.text,
-                                    'Preferred Font':fontctlr.text, "Upload FileName":fileName,"Upload FileName1":fileName1,
+                                    'First_Name':FirstnameCntrlr.text,'Last_Name':LastnameCntrlr.text,'Address1':Addressctlr.text,'Address2':Address1ctlr.text,
+                                    'City':Citycntrlr.text,'State':Statecntrlr.text,'PostalCode':PostalCodeCntrlr.text,'Company_Email':EmailCtrlr.text,
+                                    'Company_Mobile':MobileCntrlr.text,'Good_Receive_Email':GoodEmailctlr.text,'Bad_Receive_Email':BadEmailctlr.text,
+                                    'Preferred_Font':fontctlr.text, "Upload_FileName":fileName,"Upload_FileName1":fileName1,
                                   }
                               ).then((value) => {
                                 FirstnameCntrlr.clear(),Addressctlr.clear(),Address1ctlr.clear(),Citycntrlr.clear(),Statecntrlr.clear(),PostalCodeCntrlr.clear(),
@@ -425,8 +421,7 @@ class _ReputaionManagement_form2State extends State<ReputaionManagement_form2> {
                                   backgroundColor: Colors.deepOrange,
                                   textColor: Colors.white
                               );
-                              var firebaseUser =  FirebaseAuth.instance.currentUser;
-                              firestoreInstance.collection("Reputation Management Form2").doc(firebaseUser!.email).set(
+                              firestoreInstance.collection("Reputation Management Form2").doc(userid!.email).set(
                                   {
                                     'First_Name':FirstnameCntrlr.text,'Last_Name':LastnameCntrlr.text,'Address1':Addressctlr.text,'Address2':Address1ctlr.text,
                                     'City':Citycntrlr.text,'State':Statecntrlr.text,'PostalCode':PostalCodeCntrlr.text,'Company_Email':EmailCtrlr.text,
@@ -481,8 +476,7 @@ class _ReputaionManagement_form2State extends State<ReputaionManagement_form2> {
     );
   }
   getdata()async{
-    var firebaseUser =  FirebaseAuth.instance.currentUser;
-    final data =firestoreInstance.collection("Reputation Management Form2").doc(firebaseUser!.email);
+    final data =firestoreInstance.collection("Reputation Management Form2").doc(userid!.email);
     final snapshot = await data.get();
     if(snapshot.exists){
       Address1ctlr.text = snapshot['Address2'];
@@ -503,43 +497,42 @@ class _ReputaionManagement_form2State extends State<ReputaionManagement_form2> {
 
     final result = await FilePicker.platform.pickFiles(allowMultiple: true,type: FileType.custom,
         allowedExtensions: ['jpg','jpeg','png','gif']);
-
-    if (result == null) return;
-    final path = result.files.single.path!;
-    setState(() => file = File(path));
+    if(result==null) return;
+    setState(() {
+      f = result.files;
+      pickedFile = result.files.first;
+    });
   }
   Future selectFile1() async {
-
     final result = await FilePicker.platform.pickFiles(allowMultiple: true,type: FileType.custom,
         allowedExtensions: ['jpg','jpeg','png','gif']);
-
-    if (result == null) return;
-    final path = result.files.single.path!;
-    setState(() => file1 = File(path));
+    if(result==null) return;
+    setState(() {
+      f1 = result.files;
+      pickedFile1 = result.files.first;
+    });
   }
   Future uploadFile() async {
-    if (file == null) return;
-    final fileName = basename(file!.path);
-    final destination = 'files/$fileName';
-    task = FirebaseApi.uploadFile(destination, file!);
-    setState(() {});
-    if (task == null) return;
+    final file = File(pickedFile!.path!);
+    final path = 'files/${userid!.email}/${pickedFile!.name}';
+    final ref = FirebaseStorage.instance.ref().child(path);
+    setState(() {
+      task=ref.putFile(file);
+    });
     final snapshot = await task!.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
     print('Download-Link: $urlDownload');
-    print(fileName);
   }
   Future uploadFile1() async {
-    if (file1 == null) return;
-    final fileName1 = basename(file1!.path);
-    final destination = 'files/$fileName1';
-    task = FirebaseApi.uploadFile(destination, file1!);
-    setState(() {});
-    if (task == null) return;
+    final file = File(pickedFile1!.path!);
+    final path = 'files/${userid!.email}/${pickedFile1!.name}';
+    final ref = FirebaseStorage.instance.ref().child(path);
+    setState(() {
+      task=ref.putFile(file);
+    });
     final snapshot = await task!.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
     print('Download-Link: $urlDownload');
-    print(fileName1);
   }
   Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
     stream: task.snapshotEvents,

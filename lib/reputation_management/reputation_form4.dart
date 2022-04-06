@@ -6,8 +6,7 @@ import 'package:first_app/reputation_management/reputation_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:first_app/api/uploadapi.dart';
-import 'package:path/path.dart';
+
 
 class ReputaionManagement_form4 extends StatefulWidget {
   const ReputaionManagement_form4({Key? key}) : super(key: key);
@@ -34,7 +33,9 @@ class _ReputaionManagement_form4State extends State<ReputaionManagement_form4> {
   TextEditingController Offersctlr = TextEditingController();
   late String details;
   UploadTask? task;
-  File? file;
+  List<PlatformFile> f = [];
+  PlatformFile? pickedFile;
+  var userid = FirebaseAuth.instance.currentUser;
   @override
   void initState() {
     super.initState();
@@ -42,7 +43,7 @@ class _ReputaionManagement_form4State extends State<ReputaionManagement_form4> {
   }
   @override
   Widget build(BuildContext context) {
-    final fileName = file != null ? basename(file!.path) : 'No File Selected';
+    final fileName= pickedFile!=null ? pickedFile!.name:'No File Selected';
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
@@ -303,24 +304,17 @@ class _ReputaionManagement_form4State extends State<ReputaionManagement_form4> {
                         if(_formkey.currentState!.validate())
                         {
                           try{
-                            uploadFile();
+                            for(pickedFile in f ){
+                              await uploadFile();
+                            }
                             if(task!=null){
-                              Fluttertoast.showToast(
-                                  timeInSecForIosWeb: 1,
-                                  msg: "Wait for Complete Upload..!!!",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.BOTTOM,
-                                  backgroundColor: Colors.deepOrange,
-                                  textColor: Colors.white
-                              );
-                              var firebaseUser =  FirebaseAuth.instance.currentUser;
-                              firestoreInstance.collection("Reputation Management Form4").doc(firebaseUser!.email).set(
+                              firestoreInstance.collection("Reputation Management Form4").doc(userid!.email).set(
                                   {
-                                    "Upload FileName":fileName,'Business Hours':BusinessHoursctlr.text,'Business Started Year':StartedYearctlr.text,
-                                    'Business Area':Areactlr.text,'Product Categories':Categoriesctlr.text,'Short Description':Descriptionctlr.text,
-                                    'Birth Year':Birthyearctlr.text,'Verification Code':GetCallCodectlr.text,'Payment Types':PaymentTypeCntrlr.text,
-                                    'Service Priority':ServicePriorityCntrlr.text,'Main Keywords':KeyWordsPriorityctlr.text,'Buying Reason':Buyreasonsctlr.text,
-                                    'Biggest Competitor':BigCompetitorsctlr.text,'Special Offers':Offersctlr.text,
+                                    "Upload_FileName":fileName,'Business_Hours':BusinessHoursctlr.text,'Business_Started_Year':StartedYearctlr.text,
+                                    'Business_Area':Areactlr.text,'Product_Categories':Categoriesctlr.text,'Short_Description':Descriptionctlr.text,
+                                    'Birth_Year':Birthyearctlr.text,'Verification_Code':GetCallCodectlr.text,'Payment_Types':PaymentTypeCntrlr.text,
+                                    'Service_Priority':ServicePriorityCntrlr.text,'Main_Keywords':KeyWordsPriorityctlr.text,'Buying_Reason':Buyreasonsctlr.text,
+                                    'Biggest_Competitor':BigCompetitorsctlr.text,'Special_Offers':Offersctlr.text,
                                   }
                               ).then((value) => {
                                 BusinessHoursctlr.clear(),StartedYearctlr.clear(),Areactlr.clear(),Categoriesctlr.clear(),Descriptionctlr.clear(),Birthyearctlr.clear(),
@@ -349,8 +343,7 @@ class _ReputaionManagement_form4State extends State<ReputaionManagement_form4> {
                                   backgroundColor: Colors.deepOrange,
                                   textColor: Colors.white
                               );
-                              var firebaseUser =  FirebaseAuth.instance.currentUser;
-                              firestoreInstance.collection("Reputation Management Form4").doc(firebaseUser!.email).set(
+                              firestoreInstance.collection("Reputation Management Form4").doc(userid!.email).set(
                                   {
                                     "Upload_FileName":fileName,'Business_Hours':BusinessHoursctlr.text,'Business_Started_Year':StartedYearctlr.text,
                                     'Business_Area':Areactlr.text,'Product_Categories':Categoriesctlr.text,'Short_Description':Descriptionctlr.text,
@@ -408,8 +401,7 @@ class _ReputaionManagement_form4State extends State<ReputaionManagement_form4> {
     );
   }
   getdata()async{
-    var firebaseUser =  FirebaseAuth.instance.currentUser;
-    final data =firestoreInstance.collection("Reputation Management Form4").doc(firebaseUser!.email);
+    final data =firestoreInstance.collection("Reputation Management Form4").doc(userid!.email);
     final snapshot = await data.get();
     if(snapshot.exists){
       BusinessHoursctlr.text = snapshot['Business_Hours'];
@@ -430,21 +422,22 @@ class _ReputaionManagement_form4State extends State<ReputaionManagement_form4> {
   Future selectFile() async {
     final result = await FilePicker.platform.pickFiles(allowMultiple: true,type: FileType.custom,
         allowedExtensions: ['jpg','jpeg','png','gif']);
-    if (result == null) return;
-    final path = result.files.single.path!;
-    setState(() => file = File(path));
+    if(result==null) return;
+    setState(() {
+      f = result.files;
+      pickedFile = result.files.first;
+    });
   }
   Future uploadFile() async {
-    if (file == null) return;
-    final fileName = basename(file!.path);
-    final destination = 'files/$fileName';
-    task = FirebaseApi.uploadFile(destination, file!);
-    setState(() {});
-    if (task == null) return;
+    final file = File(pickedFile!.path!);
+    final path = 'files/${userid!.email}/${pickedFile!.name}';
+    final ref = FirebaseStorage.instance.ref().child(path);
+    setState(() {
+      task=ref.putFile(file);
+    });
     final snapshot = await task!.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
     print('Download-Link: $urlDownload');
-    print(fileName);
   }
   Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
     stream: task.snapshotEvents,

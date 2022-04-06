@@ -2,12 +2,10 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:first_app/api/uploadapi.dart';
 import 'package:first_app/website_Redesign/web_redesign_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:path/path.dart';
 
 class Redesign_Contentform extends StatefulWidget {
   const Redesign_Contentform({Key? key}) : super(key: key);
@@ -32,11 +30,11 @@ class _Redesign_ContentformState extends State<Redesign_Contentform> {
   final firestoreInstance = FirebaseFirestore.instance;
   late String bussinesstype;
   UploadTask? task;
-  File? file;
-
+  List<PlatformFile> f = [];
+  PlatformFile? pickedFile;
+  var userid = FirebaseAuth.instance.currentUser;
   getdata() async{
-    var firebaseUser =  FirebaseAuth.instance.currentUser;
-    final data =firestoreInstance.collection("Website Re-Design Content").doc(firebaseUser!.email);
+    final data =firestoreInstance.collection("Website Re-Design Content").doc(userid!.email);
     final snapshot = await data.get();
     if(snapshot.exists){
       busstypectlr.text = snapshot['Business_Type'];
@@ -59,14 +57,7 @@ class _Redesign_ContentformState extends State<Redesign_Contentform> {
 
   @override
   Widget build(BuildContext context) {
-    final fileName;
-   // fileName = file != null ? basename(file!.path) : 'No File Selected';
-    if(file!=null){
-      fileName =basename(file!.path);
-    }
-    else{
-      fileName ='No File Selected';
-    }
+    final fileName= pickedFile!=null ? pickedFile!.name:'No File Selected';
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
@@ -267,18 +258,11 @@ class _Redesign_ContentformState extends State<Redesign_Contentform> {
                         if(_formkey.currentState!.validate())
                         {
                           try{
-                            uploadFile();
+                            for(pickedFile in f ){
+                              await uploadFile();
+                            }
                           if(task!=null){
-                            Fluttertoast.showToast(
-                                timeInSecForIosWeb: 1,
-                                msg: "Wait for Complete Upload..!!!",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.BOTTOM,
-                                backgroundColor: Colors.deepOrange,
-                                textColor: Colors.white
-                            );
-                            var firebaseUser =  FirebaseAuth.instance.currentUser;
-                            firestoreInstance.collection("Website Re-Design Content").doc(firebaseUser!.email).set(
+                            firestoreInstance.collection("Website Re-Design Content").doc(userid!.email).set(
                                 {
                                   'Business_Type':busstypectlr.text,'Products':Productsctlr.text,
                                   'Unique_Service':UniqueServctlr.text,'Misson':Missionctlr.text,
@@ -313,8 +297,7 @@ class _Redesign_ContentformState extends State<Redesign_Contentform> {
                                 backgroundColor: Colors.deepOrange,
                                 textColor: Colors.white
                             );
-                            var firebaseUser =  FirebaseAuth.instance.currentUser;
-                            firestoreInstance.collection("Website Re-Design Content").doc(firebaseUser!.email).set(
+                            firestoreInstance.collection("Website Re-Design Content").doc(userid!.email).set(
                                 {
                                   'Business_Type':busstypectlr.text,'Products':Productsctlr.text,
                                   'Unique_Service':UniqueServctlr.text,'Misson':Missionctlr.text,
@@ -372,21 +355,22 @@ class _Redesign_ContentformState extends State<Redesign_Contentform> {
   }
   Future selectFile() async {
     final result = await FilePicker.platform.pickFiles(allowMultiple: true);
-    if (result == null) return;
-    final path = result.files.single.path!;
-    setState(() => file = File(path));
+    if(result==null) return;
+    setState(() {
+      f = result.files;
+      pickedFile = result.files.first;
+    });
   }
   Future uploadFile() async {
-    if (file == null) return;
-    final fileName = basename(file!.path);
-    final destination = 'files/$fileName';
-    task = FirebaseApi.uploadFile(destination, file!);
-    setState(() {});
-    if (task == null) return;
+    final file = File(pickedFile!.path!);
+    final path = 'files/${userid!.email}/${pickedFile!.name}';
+    final ref = FirebaseStorage.instance.ref().child(path);
+    setState(() {
+      task=ref.putFile(file);
+    });
     final snapshot = await task!.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
     print('Download-Link: $urlDownload');
-    print(fileName);
   }
 
   Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(

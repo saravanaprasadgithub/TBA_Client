@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:path/path.dart';
-import 'package:first_app/api/uploadapi.dart';
 
 class design_graphicsform extends StatefulWidget {
   const design_graphicsform({Key? key}) : super(key: key);
@@ -78,15 +76,21 @@ class _design_graphicsformState extends State<design_graphicsform> {
     });
   }
   UploadTask? task;
-  File? file,file1,file2,file3,file4;
+  List<PlatformFile> f = [];
+  List<PlatformFile> f1 = [];
+  List<PlatformFile> f2 = [];
+  List<PlatformFile> f3 = [];
+  List<PlatformFile> f4 = [];
+  PlatformFile? pickedFile,pickedFile1,pickedFile2,pickedFile3,pickedFile4;
+  var userid = FirebaseAuth.instance.currentUser;
   final firestoreInstance = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
-    final fileName = file != null ? basename(file!.path) : 'No File Selected';
-    final fileName1 = file1 != null ? basename(file1!.path) : 'No File Selected';
-    final fileName2 = file2 != null ? basename(file2!.path) : 'No File Selected';
-    final fileName3 = file3 != null ? basename(file3!.path) : 'No File Selected';
-    final fileName4 = file4 != null ? basename(file4!.path) : 'No File Selected';
+    final fileName= pickedFile!=null ? pickedFile!.name:'No File Selected';
+    final fileName1= pickedFile1!=null ? pickedFile1!.name:'No File Selected';
+    final fileName2= pickedFile2!=null ? pickedFile2!.name:'No File Selected';
+    final fileName3= pickedFile3!=null ? pickedFile3!.name:'No File Selected';
+    final fileName4= pickedFile4!=null ? pickedFile4!.name:'No File Selected';
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
@@ -391,22 +395,23 @@ class _design_graphicsformState extends State<design_graphicsform> {
                     ),
                     child: Text("Submit",style: TextStyle(fontSize: 20),),
                     onPressed: ()async{
-                          uploadFile();
-                          uploadFile1();
-                          uploadFile2();
-                          uploadFile3();
-                          uploadFile4();
+                      for(pickedFile in f ){
+                        await uploadFile();
+                      }
+                      for(pickedFile1 in f1 ){
+                        await uploadFile1();
+                      }
+                      for(pickedFile2 in f2 ){
+                        await uploadFile2();
+                      }
+                      for(pickedFile3 in f3 ){
+                        await  uploadFile3();
+                      }
+                      for(pickedFile4 in f4 ){
+                        await  uploadFile4();
+                      }
                           if(task !=null){
-                            Fluttertoast.showToast(
-                                timeInSecForIosWeb: 1,
-                                msg: "Wait for Complete Upload..!!!",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.BOTTOM,
-                                backgroundColor: Colors.deepOrange,
-                                textColor: Colors.white
-                            );
-                            var firebaseUser =  FirebaseAuth.instance.currentUser;
-                            firestoreInstance.collection("Website Design Graphics").doc(firebaseUser!.email).set(
+                            firestoreInstance.collection("Website Design Graphics").doc(userid!.email).set(
                                 {
                                   "Upload FileName":fileName,
                                   "Upload FileName1":fileName1,
@@ -451,111 +456,105 @@ class _design_graphicsformState extends State<design_graphicsform> {
     );
   }
   Future selectFile() async {
-
     final result = await FilePicker.platform.pickFiles(allowMultiple: true,type: FileType.custom,
         allowedExtensions: ['jpg','jpeg','png','gif']);
-
-    if (result == null) return;
-    final path = result.files.single.path!;
-    setState(() => file = File(path));
+    if(result==null) return;
+    setState(() {
+      f = result.files;
+      pickedFile = result.files.first;
+    });
   }
   Future selectFile1() async {
-
     final result = await FilePicker.platform.pickFiles(allowMultiple: true,type: FileType.custom,
         allowedExtensions: ['jpg','jpeg','png','gif']);
-
-    if (result == null) return;
-    final path = result.files.single.path!;
-    setState(() => file1 = File(path));
+    if(result==null) return;
+    setState(() {
+      f1 = result.files;
+      pickedFile1 = result.files.first;
+    });
   }
   Future selectFile2() async {
-
     final result = await FilePicker.platform.pickFiles(allowMultiple: true,type: FileType.custom,
         allowedExtensions: ['jpg','jpeg','png','gif']);
-
-    if (result == null) return;
-    final path = result.files.single.path!;
-    setState(() => file2 = File(path));
+    if(result==null) return;
+    setState(() {
+      f2 = result.files;
+      pickedFile2 = result.files.first;
+    });
   }
   Future selectFile3() async {
-
     final result = await FilePicker.platform.pickFiles(allowMultiple: true,type: FileType.custom,
         allowedExtensions: ['jpg','jpeg','png','gif']);
-
-    if (result == null) return;
-    final path = result.files.single.path!;
-    setState(() => file3 = File(path));
+    if(result==null) return;
+    setState(() {
+      f3 = result.files;
+      pickedFile3 = result.files.first;
+    });
   }
   Future selectFile4() async {
-
     final result = await FilePicker.platform.pickFiles(allowMultiple: true,type: FileType.custom,
         allowedExtensions: ['jpg','jpeg','png','gif']);
-
-    if (result == null) return;
-    final path = result.files.single.path!;
-    setState(() => file4 = File(path));
+    if(result==null) return;
+    setState(() {
+      f4 = result.files;
+      pickedFile4 = result.files.first;
+    });
   }
   Future uploadFile() async {
-    if (file == null) return;
-    final fileName = basename(file!.path);
-    final destination = 'files/$fileName';
-    task = FirebaseApi.uploadFile(destination, file!);
-    setState(() {});
-    if (task == null) return;
+    final file = File(pickedFile!.path!);
+    final path = 'files/${userid!.email}/${pickedFile!.name}';
+    final ref = FirebaseStorage.instance.ref().child(path);
+    setState(() {
+      task=ref.putFile(file);
+    });
     final snapshot = await task!.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
     print('Download-Link: $urlDownload');
-    print(fileName);
   }
   Future uploadFile1() async {
-    if (file1 == null) return;
-    final fileName1 = basename(file1!.path);
-    final destination = 'files/$fileName1';
-    task = FirebaseApi.uploadFile(destination, file1!);
-    setState(() {});
-    if (task == null) return;
+    final file = File(pickedFile1!.path!);
+    final path = 'files/${userid!.email}/${pickedFile1!.name}';
+    final ref = FirebaseStorage.instance.ref().child(path);
+    setState(() {
+      task=ref.putFile(file);
+    });
     final snapshot = await task!.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
     print('Download-Link: $urlDownload');
-    print(fileName1);
   }
   Future uploadFile2() async {
-    if (file2 == null) return;
-    final fileName2 = basename(file2!.path);
-    final destination = 'files/$fileName2';
-    task = FirebaseApi.uploadFile(destination, file2!);
-    setState(() {});
-    if (task == null) return;
+    final file = File(pickedFile2!.path!);
+    final path = 'files/${userid!.email}/${pickedFile2!.name}';
+    final ref = FirebaseStorage.instance.ref().child(path);
+    setState(() {
+      task=ref.putFile(file);
+    });
     final snapshot = await task!.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
     print('Download-Link: $urlDownload');
-    print(fileName2);
   }
   Future uploadFile3() async {
-    if (file3 == null) return;
-    final fileName3 = basename(file3!.path);
-    final destination = 'files/$fileName3';
-    task = FirebaseApi.uploadFile(destination, file3!);
-    setState(() {});
-    if (task == null) return;
+    final file = File(pickedFile3!.path!);
+    final path = 'files/${userid!.email}/${pickedFile3!.name}';
+    final ref = FirebaseStorage.instance.ref().child(path);
+    setState(() {
+      task=ref.putFile(file);
+    });
     final snapshot = await task!.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
     print('Download-Link: $urlDownload');
-    print(fileName3);
   }
   Future uploadFile4() async {
-    if (file4 == null) return;
-    final fileName4 = basename(file4!.path);
-    final destination = 'files/$fileName4';
-    task = FirebaseApi.uploadFile(destination, file4!);
-    setState(() {});
-    if (task == null) return;
+    final file = File(pickedFile4!.path!);
+    final path = 'files/${userid!.email}/${pickedFile4!.name}';
+    final ref = FirebaseStorage.instance.ref().child(path);
+    setState(() {
+      task=ref.putFile(file);
+    });
     final snapshot = await task!.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
     print('Download-Link: $urlDownload');
-    print(fileName4);
   }
-
   Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
     stream: task.snapshotEvents,
     builder: (context, snapshot) {
