@@ -36,11 +36,10 @@ class _seach_engine_formState extends State<seach_engine_form> {
   final firestoreInstance = FirebaseFirestore.instance;
   late String goals;
   bool _obscureText = true;
-  int ? val ;
   int ? val1 ;
   int ? val2;
   int ? val3;
-  var Rtext;
+  var Rtext,Rtext1,Rtext2;
   bool yes2 = false;
   bool yes1 = false;
   bool yes = false;
@@ -307,6 +306,7 @@ class _seach_engine_formState extends State<seach_engine_form> {
                     groupValue: val1,
                     onChanged: (value) {
                       setState(() {
+                        Rtext2='Yes';
                         showWidget1();
                         val1 = value as int;
                       });
@@ -322,6 +322,7 @@ class _seach_engine_formState extends State<seach_engine_form> {
                     groupValue: val1,
                     onChanged: (value) {
                       setState(() {
+                        Rtext2='No';
                         hideWidget1();
                         val1 = value as int;
                       });
@@ -397,6 +398,7 @@ class _seach_engine_formState extends State<seach_engine_form> {
                     groupValue: val2,
                     onChanged: (value) {
                       setState(() {
+                        Rtext1='Yes';
                         showWidget2();
                         val2 = value as int;
                       });
@@ -412,6 +414,7 @@ class _seach_engine_formState extends State<seach_engine_form> {
                     groupValue: val2,
                     onChanged: (value) {
                       setState(() {
+                        Rtext1='No';
                         hideWidget2();
                         val2 = value as int;
                       });
@@ -536,7 +539,8 @@ class _seach_engine_formState extends State<seach_engine_form> {
                                   'Best_Selling':BestSellingctlr.text,'Promotion_Discount':PromotionDiscountctlr.text,
                                   'Specific_Keywords':SpecificKeywordsctlr.text,'Google_Analytics_MailId':MailIdcntlr.text,
                                   'Google_Analytics_Password':PasswordCntlr.text,'Edit_Website':Rtext,'Gmap_Id':MailIdcntlr1.text,
-                                  'Gmap_Password':PasswordCntlr1.text,'NewGmap_Account':detailscntlr1.text,'NewAnalytics_Account':detailscntlr.text
+                                  'Gmap_Password':PasswordCntlr1.text,'NewGmap_Account':detailscntlr1.text,'NewAnalytics_Account':detailscntlr.text,
+                                  'map_status':Rtext1,'Analytics_Status':Rtext2
                                 }
                             ).then((value) => {
                               Advertisingctlr.clear(),GoogleAdwordsctlr.clear(),MarketingGoalsctlr.clear(),Competitorsctlr.clear(),UniqueSellingctlr.clear(),
@@ -610,6 +614,24 @@ class _seach_engine_formState extends State<seach_engine_form> {
       PasswordCntlr1.text=snapshot['Gmap_Password'];
       detailscntlr1.text=snapshot['NewGmap_Account'];
       detailscntlr.text=snapshot['NewAnalytics_Account'];
+      Rtext2=snapshot['Analytics_Status'];
+      Rtext1=snapshot['map_status'];
+      Rtext=snapshot['Edit_Website'];
+      if(Rtext=='Yes'){setState(() {
+        val3=19;
+      });}else{setState(() {
+        val3=20;
+      });}
+      if(Rtext1=='Yes'){setState(() {
+        val2=3; showWidget2();
+      });}else{setState(() {
+        val2=4;hideWidget2();
+      });}
+      if(Rtext2=='Yes'){setState(() {
+        val1=1; showWidget1();
+      });}else{setState(() {
+        val1=2;hideWidget1();
+      });}
     }
   }
 }

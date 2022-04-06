@@ -40,6 +40,7 @@ class _Payperclick_formState extends State<Payperclick_form> {
   bool _obscureText = true;
   bool yes = false;
   bool no = true;
+  var GAds,NoGads;
   void showWidget(){
     setState(() {
       yes = true ;
@@ -101,6 +102,7 @@ body: Form(
             groupValue: val,
             onChanged: (value) {
               setState(() {
+                GAds="Yes";
                 showWidget();
                 val = value as int;
               });
@@ -116,6 +118,7 @@ body: Form(
             groupValue: val,
             onChanged: (value) {
               setState(() {
+                GAds="No";
                 hideWidget();
                 val = value as int;
               });
@@ -169,10 +172,11 @@ body: Form(
           //onTap: showWidget,
           title: Text("Yes",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
           leading: Radio(
-            value: 1,
+            value: 3,
             groupValue: val1,
             onChanged: (value) {
               setState(() {
+                NoGads="Yes";
                 showWidget1();
                 val1 = value as int;
               });
@@ -184,10 +188,11 @@ body: Form(
           // onTap: showTextWidget,
           title: Text("No",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
           leading: Radio(
-            value: 2,
+            value: 4,
             groupValue: val1,
             onChanged: (value) {
               setState(() {
+                NoGads="No";
                 hideWidget1();
                 val1 = value as int;
               });
@@ -420,7 +425,8 @@ body: Form(
                             'UserID':UserIdcntlr.text,'Password':Passwordctlr.text,'GST_No':GSTcntlr.text,'TAX_No':Taxcntlr.text,
                             'PAN_No':Pancntlr.text,'Upload_FileName':fileName,'Website_Link':WebURLctlr.text,'Campaign_Promote':ProductServicectlr.text,
                             'Unique_Service':UniqueServicectlr.text,'Campaign_Budget':Budgetctlr.text,'Campaign_Goal':CampaignGoalctlr.text,
-                            'Ad_Campaign': AdCampaignCntrlr.text,'Campaign_Location':TargetLocationctlr.text,'Targeted_Audience':TargetedAudiencectlr.text
+                            'Ad_Campaign': AdCampaignCntrlr.text,'Campaign_Location':TargetLocationctlr.text,'Targeted_Audience':TargetedAudiencectlr.text,
+                            'GAdwords':GAds,'NoGAdwords':NoGads
                           }
                       ).then((value) => {
                         UserIdcntlr.clear(),Passwordctlr.clear(),GSTcntlr.clear(),Taxcntlr.clear(),Pancntlr.clear(),WebURLctlr.clear(),ProductServicectlr.clear(),
@@ -453,7 +459,8 @@ body: Form(
                             'UserID':UserIdcntlr.text,'Password':Passwordctlr.text,'GST_No':GSTcntlr.text,'TAX_No':Taxcntlr.text,
                             'PAN_No':Pancntlr.text,'Upload_FileName':fileName,'Website_Link':WebURLctlr.text,'Campaign_Promote':ProductServicectlr.text,
                             'Unique_Service':UniqueServicectlr.text,'Campaign_Budget':Budgetctlr.text,'Campaign_Goal':CampaignGoalctlr.text,
-                            'Ad_Campaign': AdCampaignCntrlr.text,'Campaign_Location':TargetLocationctlr.text,'Targeted_Audience':TargetedAudiencectlr.text
+                            'Ad_Campaign': AdCampaignCntrlr.text,'Campaign_Location':TargetLocationctlr.text,'Targeted_Audience':TargetedAudiencectlr.text,
+                            'GAdwords':GAds,'NoGAdwords':NoGads
                           }
                       ).then((value) => {
                         UserIdcntlr.clear(),Passwordctlr.clear(),GSTcntlr.clear(),Taxcntlr.clear(),Pancntlr.clear(),WebURLctlr.clear(),ProductServicectlr.clear(),
@@ -518,6 +525,28 @@ body: Form(
       AdCampaignCntrlr.text=snapshot['Ad_Campaign'];
       TargetLocationctlr.text=snapshot['Campaign_Location'];
       TargetedAudiencectlr.text=snapshot['Targeted_Audience'];
+      GAds=snapshot['GAdwords'];
+      NoGads=snapshot['NoGAdwords'];
+      if(GAds=="Yes"){
+        setState(() {
+          val=1;showWidget();
+        });
+      }else{
+        setState(() {
+          val=2;hideWidget();
+        });
+      }
+      if(NoGads=="Yes"){
+        setState(() {
+        val1=3;
+        showWidget1();
+        });
+      }else{
+        setState(() {
+          val1=4;
+          hideWidget1();
+        });
+      }
     }
   }
   Future selectFile() async {

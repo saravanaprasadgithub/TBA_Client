@@ -37,6 +37,7 @@ class _SEO99_formState extends State<SEO99_form> {
   List<PlatformFile> f = [];
   PlatformFile? pickedFile;
   var userid = FirebaseAuth.instance.currentUser;
+  var GAreports,GSConsole;
   int ? val ;
   int ? val1 ;
   bool yes1 = false;
@@ -271,6 +272,7 @@ class _SEO99_formState extends State<SEO99_form> {
                   groupValue: val,
                   onChanged: (value) {
                     setState(() {
+                      GAreports="Yes";
                       showWidget();
                       val = value as int;
                     });
@@ -286,6 +288,7 @@ class _SEO99_formState extends State<SEO99_form> {
                   groupValue: val,
                   onChanged: (value) {
                     setState(() {
+                      GAreports="No";
                       hideWidget();
                       val = value as int;
                     });
@@ -340,10 +343,11 @@ class _SEO99_formState extends State<SEO99_form> {
                 //onTap: showWidget,
                 title: Text("Yes",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
                 leading: Radio(
-                  value: 1,
+                  value: 3,
                   groupValue: val1,
                   onChanged: (value) {
                     setState(() {
+                      GSConsole="Yes";
                       showWidget1();
                       val1 = value as int;
                     });
@@ -355,10 +359,11 @@ class _SEO99_formState extends State<SEO99_form> {
                 // onTap: showTextWidget,
                 title: Text("No",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
                 leading: Radio(
-                  value: 2,
+                  value: 4,
                   groupValue: val1,
                   onChanged: (value) {
                     setState(() {
+                      GSConsole="No";
                       hideWidget1();
                       val1 = value as int;
                     });
@@ -447,7 +452,7 @@ class _SEO99_formState extends State<SEO99_form> {
                                   'Upload_FileName':fileName,'Website_Link':WebURLctlr.text,'Business_Type':BusinessTypectlr.text,'Short_Term_Goal':ShortGoalctlr.text,
                                   'Unique_Service':UniqueServicectlr.text,'Competitors_Websites':CompetitorsWebsitesctlr.text,'Search_Console_Password':PasswordCntlr.text,
                                   'WebAnalyze': WebAnalyzeCntrlr.text,'Targeted_Location':TargetLocationctlr.text,'Targeted_Audience':TargetedAudiencectlr.text,
-                                  'Long_Term_Goal':LongGoalctlr.text,'Web_Domain':DomainCntrlr.text
+                                  'Long_Term_Goal':LongGoalctlr.text,'Web_Domain':DomainCntrlr.text,'GAReports':GAreports,'GSConsole':GSConsole
                                 }
                             ).then((value) => {
                               UserIdcntlr.clear(),Passwordctlr.clear(),Usercntlr.clear(),PasswordCntlr.clear(),WebURLctlr.clear(),BusinessTypectlr.clear(),
@@ -482,7 +487,7 @@ class _SEO99_formState extends State<SEO99_form> {
                                   'Upload_FileName':fileName,'Website_Link':WebURLctlr.text,'Business_Type':BusinessTypectlr.text,'Short_Term_Goal':ShortGoalctlr.text,
                                   'Unique_Service':UniqueServicectlr.text,'Competitors_Websites':CompetitorsWebsitesctlr.text,'Search_Console_Password':PasswordCntlr.text,
                                   'WebAnalyze': WebAnalyzeCntrlr.text,'Targeted_Location':TargetLocationctlr.text,'Targeted_Audience':TargetedAudiencectlr.text,
-                                  'Long_Term_Goal':LongGoalctlr.text,'Web_Domain':DomainCntrlr.text
+                                  'Long_Term_Goal':LongGoalctlr.text,'Web_Domain':DomainCntrlr.text,'GAReports':GAreports,'GSConsole':GSConsole
                                 }
                             ).then((value) => {
                               UserIdcntlr.clear(),Passwordctlr.clear(),Usercntlr.clear(),PasswordCntlr.clear(),WebURLctlr.clear(),BusinessTypectlr.clear(),
@@ -549,6 +554,30 @@ class _SEO99_formState extends State<SEO99_form> {
       TargetedAudiencectlr.text =snapshot['Targeted_Audience'];
       LongGoalctlr.text=snapshot['Long_Term_Goal'];
       DomainCntrlr.text=snapshot['Web_Domain'];
+      GAreports=snapshot['GAReports'];
+      GSConsole=snapshot['GSConsole'];
+      if(GAreports=='Yes'){
+        setState(() {
+          val=1;
+          showWidget();
+        });
+      }else{
+        setState(() {
+          val=2;
+          hideWidget();
+        });
+      }
+      if(GSConsole=='Yes'){
+        setState(() {
+          val1=3;
+          showWidget1();
+        });
+      }else{
+        setState(() {
+          val1=4;
+          hideWidget1();
+        });
+      }
     }
   }
   Future selectFile() async {

@@ -29,7 +29,7 @@ class _creative_formState extends State<creative_form> {
   int ? val ;
   int ? val1 ;
   int ? val2;
-var post;
+var post,color,logo;
   bool yes = false;
   bool yes1 = false;
   bool yes2 = false;
@@ -282,6 +282,7 @@ var post;
                     groupValue: val,
                     onChanged: (value) {
                       setState(() {
+                        logo="Yes";
                         showWidget();
                         val = value as int;
                       });
@@ -297,6 +298,7 @@ var post;
                     groupValue: val,
                     onChanged: (value) {
                       setState(() {
+                        logo='No';
                         hideWidget();
                         val = value as int;
                       });
@@ -330,6 +332,7 @@ var post;
                     groupValue: val1,
                     onChanged: (value) {
                       setState(() {
+                        color='Yes';
                         showWidget1();
                         val1 = value as int;
                       });
@@ -345,6 +348,7 @@ var post;
                     groupValue: val1,
                     onChanged: (value) {
                       setState(() {
+                        color='No';
                         hideWidget1();
                         val1 = value as int;
                       });
@@ -378,7 +382,6 @@ var post;
                     groupValue: val2,
                     onChanged: (value) {
                       setState(() {
-                        //showWidget1();
                         post="Yes";
                         val2 = value as int?  ;
                         print(post);
@@ -395,7 +398,6 @@ var post;
                     groupValue: val2,
                     onChanged: (value) {
                       setState(() {
-                       // hideWidget1();
                         post = "No";
                         val2 = value as int?;
                         print(post);
@@ -466,7 +468,7 @@ var post;
                                   'LastName':LastnameCntrlr.text,'Email_ID':EmailCtrlr.text,
                                   'Brochure_Type':getCheckboxItems(),'Logo_Ideas':Ideactlr.text,
                                   'Specific_Color':Colorctlr.text,'Content_Assistent':ContentAssistantctlr.text,
-                                  'Create_Social_MediaPost':post,
+                                  'Create_Social_MediaPost':post,'Color':color,'Logo':logo
                                 }
                             ).then((value) => {
                               Urlctlr.clear(),Linkctlr.clear(),Addressctlr.clear(),FirstnameCntrlr.clear(),LastnameCntrlr.clear(),EmailCtrlr.clear(),
@@ -530,6 +532,40 @@ var post;
       Ideactlr.text=snapshot['Logo_Ideas'];
       Colorctlr.text=snapshot['Specific_Color'];
       ContentAssistantctlr.text=snapshot['Content_Assistent'];
+      post=snapshot['Create_Social_MediaPost'];
+      color=snapshot['Color'];
+      logo=snapshot['Logo'];
+      if(post=="Yes"){
+        setState(() {
+          val2=5;
+        });
+      }else{
+        setState(() {
+          val2=6;
+        });
+      }
+      if(color=="Yes"){
+        setState(() {
+          val1=3;
+          showWidget1();
+        });
+      }else{
+        setState(() {
+          val1=4;
+          hideWidget1();
+        });
+      }
+      if(logo=="Yes"){
+        setState(() {
+          val=1;
+          showWidget();
+        });
+      }else{
+        setState(() {
+          val=2;
+          hideWidget();
+        });
+      }
     }
   }
 }

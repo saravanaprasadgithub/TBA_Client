@@ -34,7 +34,7 @@ class _Redesign_technicalformState extends State<Redesign_technicalform> {
   TextEditingController SecretIdCntrlr = TextEditingController();
   TextEditingController AdditionalCntrlr = TextEditingController();
   TextEditingController ContactformCntrlr = TextEditingController();
-  late String suggtxt,pages,name,url,password,link,address,fname,lname,email,mobile;
+  late String suggtxt,pages,name,url,password,link,address,fname,lname,email,mobile,selectval;
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   bool _obscureText = true;
@@ -97,6 +97,19 @@ class _Redesign_technicalformState extends State<Redesign_technicalform> {
       KeyIdCntrlr.text = snapshot['Key_ID'];
       SecretIdCntrlr.text= snapshot['Secret_KeyID'];
       AdditionalCntrlr.text=snapshot['Additional_Contact_Information'];
+      selectval=snapshot['Selectedval'];
+      print(selectval);
+      if(selectval=='Yes'){
+        setState(() {
+          val=1;
+          showWidget();
+        });
+      }else{
+        setState(() {
+          val =2;
+          showTextWidget();
+        });
+      }
     }
   }
   @override
@@ -131,6 +144,7 @@ class _Redesign_technicalformState extends State<Redesign_technicalform> {
                 onChanged: (value) {
                   setState(() {
                     showWidget();
+                    selectval='Yes';
                     val = value as int;
                   });
                 },
@@ -146,6 +160,7 @@ class _Redesign_technicalformState extends State<Redesign_technicalform> {
                 onChanged: (value) {
                   setState(() {
                     showTextWidget();
+                    selectval='No';
                     val = value as int;
                   });
                 },
@@ -529,7 +544,7 @@ class _Redesign_technicalformState extends State<Redesign_technicalform> {
                             'LinkedIn_ID':LinkedinCntrlr.text,'Youtube_ID':YoutubeCntrlr.text,
                             'Key_ID':KeyIdCntrlr.text,'Secret_KeyID':SecretIdCntrlr.text,
                             'Additional_Contact_Information':AdditionalCntrlr.text,
-                            'Contact_Form':getCheckboxItems(),
+                            'Contact_Form':getCheckboxItems(),'Selectedval':selectval
                           }
                       ).then((value) => {
                         Suggtxtctlr.clear(),Urlctlr.clear(),Namectlr.clear(),Passwordctlr.clear(),Numctlr.clear(),
