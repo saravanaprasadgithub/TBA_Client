@@ -503,7 +503,7 @@ class _Redesign_graphicsformState extends State<Redesign_graphicsform> {
   }
   Future uploadFile() async {
     final file = File(pickedFile!.path!);
-    final path = 'files/${userid!.email}/${pickedFile!.name}';
+    final path = 'Website Re-Design Graphics/${userid!.email}/${pickedFile!.name}';
     final ref = FirebaseStorage.instance.ref().child(path);
     setState(() {
       task=ref.putFile(file);
@@ -514,7 +514,7 @@ class _Redesign_graphicsformState extends State<Redesign_graphicsform> {
   }
   Future uploadFile1() async {
     final file = File(pickedFile1!.path!);
-    final path = 'files/${userid!.email}/${pickedFile1!.name}';
+    final path = 'Website Re-Design Graphics/${userid!.email}/${pickedFile1!.name}';
     final ref = FirebaseStorage.instance.ref().child(path);
     setState(() {
       task=ref.putFile(file);
@@ -525,7 +525,7 @@ class _Redesign_graphicsformState extends State<Redesign_graphicsform> {
   }
   Future uploadFile2() async {
     final file = File(pickedFile2!.path!);
-    final path = 'files/${userid!.email}/${pickedFile2!.name}';
+    final path = 'Website Re-Design Graphics/${userid!.email}/${pickedFile2!.name}';
     final ref = FirebaseStorage.instance.ref().child(path);
     setState(() {
       task=ref.putFile(file);
@@ -536,7 +536,7 @@ class _Redesign_graphicsformState extends State<Redesign_graphicsform> {
   }
   Future uploadFile3() async {
     final file = File(pickedFile3!.path!);
-    final path = 'files/${userid!.email}/${pickedFile3!.name}';
+    final path = 'Website Re-Design Graphics/${userid!.email}/${pickedFile3!.name}';
     final ref = FirebaseStorage.instance.ref().child(path);
     setState(() {
       task=ref.putFile(file);
@@ -547,7 +547,7 @@ class _Redesign_graphicsformState extends State<Redesign_graphicsform> {
   }
   Future uploadFile4() async {
     final file = File(pickedFile4!.path!);
-    final path = 'files/${userid!.email}/${pickedFile4!.name}';
+    final path = 'Website Re-Design Graphics/${userid!.email}/${pickedFile4!.name}';
     final ref = FirebaseStorage.instance.ref().child(path);
     setState(() {
       task=ref.putFile(file);

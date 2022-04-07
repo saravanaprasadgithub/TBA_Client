@@ -590,7 +590,7 @@ class _SEO99_formState extends State<SEO99_form> {
   }
   Future uploadFile() async {
     final file = File(pickedFile!.path!);
-    final path = 'files/${userid!.email}/${pickedFile!.name}';
+    final path = 'SEO99 Form/${userid!.email}/${pickedFile!.name}';
     final ref = FirebaseStorage.instance.ref().child(path);
     setState(() {
       task=ref.putFile(file);

@@ -514,7 +514,7 @@ class _ReputaionManagement_form2State extends State<ReputaionManagement_form2> {
   }
   Future uploadFile() async {
     final file = File(pickedFile!.path!);
-    final path = 'files/${userid!.email}/${pickedFile!.name}';
+    final path = 'Reputation Management Form2/${userid!.email}/${pickedFile!.name}';
     final ref = FirebaseStorage.instance.ref().child(path);
     setState(() {
       task=ref.putFile(file);
@@ -525,7 +525,7 @@ class _ReputaionManagement_form2State extends State<ReputaionManagement_form2> {
   }
   Future uploadFile1() async {
     final file = File(pickedFile1!.path!);
-    final path = 'files/${userid!.email}/${pickedFile1!.name}';
+    final path = 'Reputation Management Form2/${userid!.email}/${pickedFile1!.name}';
     final ref = FirebaseStorage.instance.ref().child(path);
     setState(() {
       task=ref.putFile(file);
