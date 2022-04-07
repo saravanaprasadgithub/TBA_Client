@@ -220,14 +220,14 @@ class _ContentMarketing_form2State extends State<ContentMarketing_form2> {
               ),
               ListTile(
                 //onTap: showWidget,
-                title: Text(" Feed the Brain",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
+                title: Text("Feed the Brain",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500)),
                 leading: Radio(
                   value: 7,
                   groupValue: Val3,
                   onChanged: (value) {
                     setState(() {
                       //showWidget1();
-                      Rtext3=" Feed the Brain";
+                      Rtext3="Feed the Brain";
                       Val3 = value as int?  ;
                       print(Rtext3);
                     });
@@ -636,7 +636,7 @@ class _ContentMarketing_form2State extends State<ContentMarketing_form2> {
                               {
                             'Company_Rewards':CompanyRewardsctlr.text,'Security_Information':Informationctlr.text,'Experience_Details':Experiencectlr.text,
                             'Company_Information':Importantinfoctlr.text,'Extra_Feautres':Practicesctlr.text,'Site_Goal':Rtext10,'Industry_Quiz':Rtext9,
-                            'FactsorStories':Rtext8,'buzzworthy_topics':Rtext7,'step_by_step/DIY posts':Rtext6,'Tips/Articles':Rtext5,'Enargy_Level_Communication':Rtext4,
+                            'FactsorStories':Rtext8,'buzzworthy_topics':Rtext7,'step_by_stepDIY_posts':Rtext6,'Tips_Articles':Rtext5,'Enargy_Level_Communication':Rtext4,
                             'Emotion_Communication':Rtext3,'Complexity_Level_Communication':Rtext2,'Voice_Communication':Rtext1,'Tone_Communication':Rtext
                               }
                           ).then((value) => {
@@ -693,6 +693,88 @@ class _ContentMarketing_form2State extends State<ContentMarketing_form2> {
       Experiencectlr.text=snapshot['Experience_Details'];
       Importantinfoctlr.text=snapshot['Company_Information'];
       Practicesctlr.text=snapshot['Extra_Feautres'];
+      Rtext=snapshot['Tone_Communication'];
+      Rtext1=snapshot['Voice_Communication'];
+      Rtext2=snapshot['Complexity_Level_Communication'];
+      Rtext3=snapshot['Emotion_Communication'];
+      Rtext4=snapshot['Enargy_Level_Communication'];
+      Rtext5=snapshot['Tips_Articles'];
+      Rtext6=snapshot['step_by_stepDIY_posts'];
+      Rtext7=snapshot['buzzworthy_topics'];
+      Rtext8=snapshot['FactsorStories'];
+      Rtext9=snapshot['Industry_Quiz'];
+      Rtext10=snapshot['Site_Goal'];
+      if(Rtext=='Authoritative'){setState(() {
+        Val=1;
+      });}else{setState(() {
+        Val=2;
+      });}
+      if(Rtext1=='Edgy'){setState(() {
+        Val1=3;
+      });}else{setState(() {
+        Val1=4;
+      });}
+      if(Rtext2=='Economical'){setState(() {
+        Val2=5;
+      });}else{setState(() {
+        Val2=6;
+      });}
+      if(Rtext3=='Feed the Brain'){setState(() {
+        Val3=7;
+      });}else{setState(() {
+        Val3=8;
+      });}
+      if(Rtext4=='Dry'){setState(() {
+        Val4=9;
+      });}else{setState(() {
+        Val4=10;
+      });}
+      if(Rtext5=='Yes'){setState(() {
+        Val5=11;
+      });}else{setState(() {
+        Val5=12;
+      });}
+      if(Rtext6=='Yes'){setState(() {
+        Val6=13;
+      });}else{setState(() {
+        Val6=14;
+      });}
+      if(Rtext7=='Yes'){setState(() {
+        Val7=15;
+      });}else{setState(() {
+        Val7=16;
+      });}
+      if(Rtext8=='Yes'){setState(() {
+        Val8=17;
+      });}else{setState(() {
+        Val8=18;
+      });}
+      if(Rtext9=='Yes'){setState(() {
+        Val9=19;
+      });}else{setState(() {
+        Val9=20;
+      });}
+      if(Rtext10=='Brand Awareness / Lead Generation'){setState(() {
+        Val10=21;
+      });}
+      if(Rtext10=='Customer Acquisition'){setState(() {
+        Val10=22;
+      });}
+      if(Rtext10=='Thought Leadership'){setState(() {
+        Val10=23;
+      });}
+      if(Rtext10=='Engagement'){setState(() {
+        Val10=24;
+      });}
+      if(Rtext10=='Customer Retention / Loyalty'){setState(() {
+        Val10=25;
+      });}
+      if(Rtext10=='Sales'){setState(() {
+        Val10=26;
+      });}
+      if(Rtext10=='Other'){setState(() {
+        Val10=27;
+      });}
     }
   }
 }
