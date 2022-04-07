@@ -2,13 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:first_app/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'multiple_file.dart';
 
-
-void main() async{
+Future <void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
- await Firebase.initializeApp();
   await SharedPreferences.getInstance();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
